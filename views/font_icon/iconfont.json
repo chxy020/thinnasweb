@@ -1,0 +1,23 @@
+{
+  "id": "1907020",
+  "name": "劲群后台",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4818701",
+      "name": "显示隐藏-01",
+      "font_class": "hide",
+      "unicode": "e683",
+      "unicode_decimal": 59011
+    },
+    {
+      "icon_id": "4818702",
+      "name": "显示隐藏-02",
+      "font_class": "show",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    }
+  ]
+}
