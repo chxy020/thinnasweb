@@ -6,17 +6,18 @@
     <title>thinNAS</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon.ico">
+
     <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
 
-    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="../css/scosun.css" />
-
     <link rel="stylesheet" href="../layuiadmin/font/iconfont.css"><!-- 2020.3.31 添加新字体 -->
 
-    <script src="../js/scosun.js" type="text/javascript" charset="utf-8"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="../css/scosun.css" /> -->
+    <!-- <script src="../js/scosun.js" type="text/javascript" charset="utf-8"></script> -->
+    
+    <script src="../layuiadmin/layui/layui.js"></script>
     <script src="../js/jquery-3.1.1.min.js"></script>
 </head>
 
@@ -325,143 +326,8 @@
     </div>
 </div>
 
-<script src="../layuiadmin/layui/layui.js"></script>
-<script>
-    layui.config({
-        base: '../layuiadmin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use('index', function () {
-        var $ = layui.$,
-      setter =layui.setter;
-        window.element = layui.element;
-        var url = setter.baseUrl;
-        console.log(url)
-        $.ajax({
-            async: false,
-            type: "get",
-            url: url + "/permission/getpremission",
-            datatype: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
 
-            //成功的回调函数
-            success: function (msg) {
-                var data = msg.data;
-                if (msg.code != 0) {
-                    // location.href = "user/login.html"
-                    console.log(msg.code);
-                }
-                if (isEmptyObject(data) != 0) {
-
-                    if ($.inArray("user", data) == -1) {
-                        $('#user').addClass('layui-hide');
-                    }
-                    if ($.inArray("role", data) == -1) {
-                        $('#role').addClass('layui-hide');
-                    }
-                    if ($.inArray("meet", data) == -1) {
-                        $('#meet').addClass('layui-hide');
-                    }
-                    if ($.inArray("meeting", data) == -1) {
-                        $('#meeting').addClass('layui-hide');
-                    }
-                    if ($.inArray("person", data) == -1) {
-                        $('#person').addClass('layui-hide');
-                    }
-                    if ($.inArray("type", data) == -1) {
-                        $('#type').addClass('layui-hide');
-                    }
-                    if ($.inArray("rule", data) == -1) {
-                        $('#rule').addClass('layui-hide');
-                    }
-                    if ($.inArray("user", data) == -1 && $.inArray("role", data) == -1) {
-                        $('#avirGroup').addClass('layui-hide');
-                    }
-
-
-                } else {
-                    console.log("2")
-                    $('#user').addClass('layui-hide');
-                    $('#role').addClass('layui-hide');
-                    $('#avirGroup').addClass('layui-hide');
-                }
-            },
-            error: function (error) {
-                console.log(error)
-            },
-        })
-
-
-        function isEmptyObject(obj) {
-
-            var jlength = 0;
-            for (var key in obj) {
-                if (key != "null") {
-                    jlength++;
-                }
-            };
-            return jlength
-        };
-        $.ajax({
-            async: false,
-            type: "get",
-            url: url + "/user/getuser",
-            datatype: 'json',
-
-            xhrFields: {
-                withCredentials: true
-            },
-            //成功的回调函数
-            success: function (msg) {
-                if (msg.code == 0) {
-                    $('#username').text(msg.data.anotherName)
-                }
-                // if (msg.code == 20090) {
-                //     layer.msg(msg.msg, {
-                //         offset: "15px",
-                //         icon: 2,
-                //         time: 1000
-                //     }, function () {
-                //         parent.location.href = "user/login.html"
-                //     })
-                // }
-                // if (msg.code == 300) {
-                //     layer.msg(msg.msg, {
-                //         offset: "15px",
-                //         icon: 2,
-                //         time: 1000
-                //     }, function () {
-                //         parent.location.href = "user/login.html"
-                //     })
-                // }
-
-            },
-            error: function (error) {
-                console.log(error)
-            },
-        })
-        $("#logout").click(function () {
-            $.ajax({
-                async: false,
-                type: "get",
-                url: url + "/quit",
-                datatype: 'json',
-                xhrFields: {
-                    withCredentials: true
-                },
-                //成功的回调函数
-                success: function (msg) {
-                    location.href = "user/login.html"
-                },
-                error: function (error) {
-                    console.log(error)
-                },
-            })
-        })
-    })
-</script>
+<script src="index.js"></script>
 </body>
 
 </html>
