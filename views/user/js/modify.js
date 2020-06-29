@@ -1,5 +1,9 @@
-layui.use(['laydate','form'], function(){
-    var laydate = layui.laydate;
+layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+}).extend({
+    setter: "config"
+}).use(['setter','form'], function(){
+    // var laydate = layui.laydate;
     var  form = layui.form;
     //监听提交
     form.on('submit(login)', function(data){

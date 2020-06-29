@@ -2,10 +2,9 @@ layui.config({
     base: '../layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
-}).use('index', function () {
+}).use(['index','laydate','form'],function () {
     var $ = layui.$,
     setter = layui.setter;
-    
     window.element = layui.element;
     var url = setter.baseUrl;
     console.log(url)
