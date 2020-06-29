@@ -1,193 +1,30 @@
-body{
-    background-color: #fff;
-}
-.login-bg{
-    background:#fff url(../images/banner_04.jpg) no-repeat center;
-    background-size: cover;
-    overflow: hidden;
-}
-
-.layui-anim-up{
-    margin: 100px auto 0 auto;
-    padding: 30px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    width: 400px;
-/* height: 670px; */
-line-height: 20px;
-border-radius: 8px;
-box-shadow: 0px 0px 16px 1px rgba(217, 217, 217, 1);
-border: 1px solid rgba(255, 0, 0, 0);
-}
-.login_logo{
-
-    height: 64px;
-    line-height: 64px;
-    color:#3691FF;
-    font-size: 28px;
-    text-align: center;
-    
-}
-.login_message{
-    margin-top:5px;
-    height: 50px;
-line-height: 50px;
-color:#3691FF;
-font-size: 24px;
-text-align: center;
-}
-.login_vis{
-    line-height: 22px;
-color:#5E5E5E;
-font-size: 14px;
-text-align: center;
-margin-bottom: 30px;
-}
-
-
-.layadmin-user-jump-change {
-    float: right;
-}
-.layadmin-link {
-    color: #3691FF!important;
-}
-.width2{
-    padding-right: 110px;
-}
-.positionr{
-    position: relative;
-}
-.layadmin-user-login-codeimg{
-    position: absolute;
-    right:0;
-    top:0;
-    width: 100px;
-    height: 40px;
-    cursor: pointer;
-}
-.login .iconfont{
-    position: absolute;
-    right:10px;top:10px;
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
-    color: #b0b0b0;
-    cursor: pointer;
-}
-
-.login input[type=text],
-.login input[type=file],
-.login input[type=password],
-.login input[type=email], select {
-    border: 1px solid #e6e6e6;
-    vertical-align: middle;
-    border-radius: 3px;
-    height: 40px;
-    padding: 0px 16px;
-    font-size: 14px!important;
-    color: #555555;
-    outline:none;
-    width:100%;
-    box-sizing: border-box;
-}
-.login input[type=text]:focus,
-.login input[type=file]:focus,
-.login input[type=password]:focus,
-.login input[type=email]:focus, select:focus {
-    border: 1px solid #3691FF;
-}
-.login input[type=submit],
-.login input[type=button]{
-    display: inline-block;
-    vertical-align: middle;
-    padding: 12px 24px;
-    margin: 0px;
-    font-size: 18px;
-    line-height: 24px;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    color: #ffffff;
-    background-color: #3691FF;
-    /* background-color: #3691FF; */
-    border-radius: 3px;
-    border: none;
-    -webkit-appearance: none;
-    outline:none;
-    width:100%;
-}
-.login .layui-btn {
-    height: 40px;
-    line-height: 40px;
-    padding: 0 10px;
-    background-color: #3691FF;
-    border-radius: 3px;
-    font-size: 14px;
-}
-.login .layui-btn:hover {
-    background-color: #0060d1;
-}
-
-.login .layui-btn-primary {
-    border: 1px solid #e6e6e6;
-    background-color: #fff;
-    color: #555;
-}
-.login .layui-btn-primary:hover {
-    border: 1px solid #e6e6e6;
-    background-color: #eeeeee;
-}
-
-.login hr {
-    background: #fff 0 0 no-repeat;
-}
-.login hr.hr15 {
-    height: 15px;
-    border: none;
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-}
-.login hr.hr20 {
-    height: 20px;
-    border: none;
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-}
-.width150{
-    padding-right: 150px;
-}
-.layadmin-user-login-code{
-    position: absolute;
-    right:0;
-    top:0;
-    width: 140px;
-    height: 50px;
-    cursor: pointer;
-}
-.text1{
-    font-size: 12px;
-    color: #FF990B;
-    margin-bottom: 13px;
-}.text2{
-    font-size: 12px;
-    color: rgba(38, 50, 56, 0.43);
-    text-align: center;
-    margin-top: 20px;
-}
-.login .layui-layer-btn {
-    text-align: center;
-    padding: 0;
-    pointer-events: auto;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.login .layui-layer-btn a {
-    height: 32px;
-    line-height: 32px;
-}
-
-
+body {background-color:#fff;}
+.login-bg {background:#fff url(../images/banner_04.jpg) no-repeat center;background-size:cover;overflow:hidden;}
+.layui-anim-up {margin:100px auto 0 auto;padding:30px;background-color:#ffffff;box-sizing:border-box;width:400px;/* height:670px;*/line-height:20px;border-radius:8px;box-shadow:0px 0px 16px 1px rgba(217,217,217,1);border:1px solid rgba(255,0,0,0);}
+.login_logo {height:64px;line-height:64px;color:#3691FF;font-size:28px;text-align:center;}
+.login_message {margin-top:5px;height:50px;line-height:50px;color:#3691FF;font-size:24px;text-align:center;}
+.login_vis {line-height:22px;color:#5E5E5E;font-size:14px;text-align:center;margin-bottom:30px;}
+.iconfont.icon-show:hover {color:#ff6600;}
+.iconfont.icon-hide:hover {color:#ff6600;}
+.layadmin-user-jump-change {float:right;}
+.layadmin-link {color:#3691FF!important;}
+.width2 {padding-right:110px;}
+.positionr {position:relative;}
+.layadmin-user-login-codeimg {position:absolute;right:0;top:0;width:100px;height:40px;cursor:pointer;}
+.login .iconfont {position:absolute;right:10px;top:10px;width:20px;height:20px;font-size:20px;color:#b0b0b0;cursor:pointer;}
+.login input[type=text],.login input[type=file],.login input[type=password],.login input[type=email],select {border:1px solid #e6e6e6;vertical-align:middle;border-radius:3px;height:40px;padding:0px 16px;font-size:14px!important;color:#555555;outline:none;width:100%;box-sizing:border-box;}
+.login input[type=text]:focus,.login input[type=file]:focus,.login input[type=password]:focus,.login input[type=email]:focus,select:focus {border:1px solid #3691FF;}
+.login input[type=submit],.login input[type=button] {display:inline-block;vertical-align:middle;padding:12px 24px;margin:0px;font-size:18px;line-height:24px;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;color:#ffffff;background-color:#3691FF;border-radius:3px;border:none;-webkit-appearance:none;outline:none;width:100%;}
+.login .layui-btn {height:40px;line-height:40px;padding:0 10px;background-color:#3691FF;border-radius:3px;font-size:14px;}
+.login .layui-btn:hover {background-color:#0060d1;}
+.login .layui-btn-primary {border:1px solid #e6e6e6;background-color:#fff;color:#555;}
+.login .layui-btn-primary:hover {border:1px solid #e6e6e6;background-color:#eeeeee;}
+.login hr {background:#fff 0 0 no-repeat;}
+.login hr.hr15 {height:15px;border:none;margin:0px;padding:0px;width:100%;}
+.login hr.hr20 {height:20px;border:none;margin:0px;padding:0px;width:100%;}
+.width150 {padding-right:150px;}
+.layadmin-user-login-code {position:absolute;right:0;top:0;width:140px;height:50px;cursor:pointer;}
+.text1 {font-size:12px;color:#FF990B;margin-bottom:13px;}
+.text2 {font-size:12px;color:rgba(38,50,56,0.43);text-align:center;margin-top:20px;}
+.login .layui-layer-btn {text-align:center;padding:0;pointer-events:auto;user-select:none;-webkit-user-select:none;}
+.login .layui-layer-btn a {height:32px;line-height:32px;}
