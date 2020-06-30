@@ -1,0 +1,7 @@
+﻿39.107.249.187
+root
+Hzsj!1234
+
+端口22
+
+/home/tomcat7/webapps/ADMINM/static

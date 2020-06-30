@@ -7,7 +7,9 @@ layui.config({
     var form = layui.form;
     var $ = layui.$;
     var setter = layui.setter;
-    var url = setter.baseUrl;
+    var server = setter.baseUrl;
+
+    var saveAccount = false;
 
     var active = {
         forgetPop: function() {
@@ -32,36 +34,98 @@ layui.config({
         active[type] ? active[type].call(this) : '';
     });
 
-    
+    form.on('checkbox(login-form-checkbox)', function(data){
+        var checked = data.elem.checked;
+        saveAccount = checked;
+    });
+
     //监听提交
-    form.on('submit(login)', function(data){
+    $("#login").bind('click',function(evt){
         // alert(888)
         // layer.msg(JSON.stringify(data.field),function(){
         //     location.href='./index.html'
         // });
+        login();
         return false;
     });
 
 
+    function saveAccountName(){
+        var name = $("#username").val();
+        if(saveAccount && name){
+            window.localStorage.setItem("__accountname",name);
+        }else{
+            window.localStorage.setItem("__accountname","");
+        }
+    }
+
+    function isSaveAccountName(){
+        var name = window.localStorage.getItem("__accountname") || "";
+        if(name){
+            saveAccount = true;
+            $("#accountcheckbox").prop("checked",true);
+            $("#username").val(name);
+        }else{
+            saveAccount = false;
+            $("#accountcheckbox").prop("checked",false);
+        }
+        layui.form.render("checkbox");
+    }
+
     function getImageCode(){
+        console.log("getImageCode----");
+        // http://39.107.249.187:8080/ADMINM/code.do
+        var t = new Date().getTime();
+        $("#codeImg").attr("src",server + "/ADMINM/code.do?t=" + t);
+    }
+    
+    function login(){
+        // KEYDATA格式qwer+用户名+,fh,+密码Q+,fh,+图片验证码
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var code = "qwer"+username+",fh,"+password+"Q"+",fh,"+$("#code").val();
+        // data:{KEYDATA:"qweradmin,fh,Zj666Q,fh,zykj",tm:new Date().getTime()},
+        console.log(123123)
         $.ajax({
-            async: false,
-            type: "get",
-            url: url + "/permission/getpremission",
-            datatype: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
+            type: "POST",
+            url: server + "/ADMINM/login_login",
+            dataType: 'json',
+            async: true,
+            data: {KEYDATA:code,tm:new Date().getTime()},
+            // xhrFields: {
+            //     withCredentials: true
+            // },
+            // contentType: "application/json;charset=utf-8",
+            // data: JSON.stringify({
+            //     "KEYDATA":"qweradmin,fh,Zj666Q,fh,zykj"
+            // }),
+            // data:{
+            //     KEYDATA:"qweradmin,fh,Zj666Q,fh,zykj"
+            // },
             //成功的回调函数
-            success: function (msg) {
-                var data = msg.data;
-                if (msg.code != 0) {
+            success: function (data) {
+                var msg = "";
+                if("success" == data.result){
+                    saveAccountName();
+                    // window.location.href="main/index";
+                    alert("登录成功");
+                    return;
+                }else if("usererror" == data.result){
+                    msg = "用户名或密码有误";
+                }else if("codeerror" == data.result){
+                    msg = "验证码输入有误";
+                }else{
+                    msg = "缺少参数";
                 }
+                layer.msg(msg);
             },
             error: function (error) {
                 console.log(error)
             }
-        })
+        });
+
     }
-    
+
+    isSaveAccountName();
+    getImageCode();
 });

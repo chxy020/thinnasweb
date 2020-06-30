@@ -1,0 +1,8 @@
+﻿
+图片验证码
+http://39.107.249.187:8080/ADMINM/code.do
+
+
+登录
+http://39.107.249.187:8080/ADMINM/login_login?KEYDATA=qweradmin,fh,Zj666Q,fh,zykj
+KEYDATA格式qwer+用户名+,fh,+密码Q+,fh,+图片验证码
