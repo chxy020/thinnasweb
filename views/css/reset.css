@@ -1,0 +1,80 @@
+.clear { height: 0px; line-height: 0px; clear: both; }
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+*+html .clearfix { overflow: hidden; }
+* html .clearfix { height: 1%; }
+
+.layui-fluid {
+        padding: 10px 10px 0;
+}
+.layui-card {
+box-shadow: none;
+}
+.layui-card-body {
+padding: 10px 0;
+}
+
+.pt10{
+        padding:10px 0 0;
+    }.layui-input, .layui-select, .layui-textarea {
+        height: 34px;
+    }
+
+    .layui-btn {
+        height: 34px;
+        line-height: 34px;
+        padding: 0 10px;
+        display: block;
+        float: left;
+    }
+    .layui-btn-primary {
+        border: 1px solid #C9C9C9;
+        background-color: #fff;
+        color: #555;
+    }
+    .layui-btn-primary:hover {
+        border-color: #009688;
+        color: #333;
+    }
+    .layui-btn-primary:hover .layui-icon {
+        color: #009688;
+    }
+    .layui-btn .layui-icon {
+        margin-right:0;
+        font-size: 20px;
+    }
+    .layui-table td, .layui-table th {
+        min-width: auto;
+    }
+    .layui-table-cell {
+        padding: 0 10px;
+    }
+    .switchStyle{
+        display:inline-block
+    }
+
+.switchStyle .layui-form-switch {
+    position: relative;
+    height: 10px;
+    line-height: 10px;
+    min-width: 20px;
+    padding: 0 4px;
+}
+
+.switchStyle .layui-form-switch i {
+    left: -1px;
+    top: -3px;
+}
+.switchStyle .layui-form-onswitch i {
+    left: 13px;
+    margin-left: 0;
+    background-color: #3691FF!important;
+}
+.switchStyle .layui-form-onswitch em {
+    margin-left: 0;
+    margin-right: 0;
+    color: #3691FF!important;
+}
+.switchStyle .layui-form-onswitch {
+    border-color: #3691FF;
+    background-color: #fff;
+}

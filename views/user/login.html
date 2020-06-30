@@ -31,7 +31,7 @@
         </div>
         <div class="layui-form-item positionr">
             <input name="password" placeholder="请输入密码" type="password" lay-verify="required" class="layui-input">
-            <span class="iconfont icon-hide"></span>
+            <!-- <span class="iconfont icon-hide"></span> -->
             <span class="iconfont icon-show"></span>
         </div>
         <div class="layui-form-item width2 positionr">
@@ -47,6 +47,24 @@
 </div>
 
 <script src="js/login.js"></script>
-
+<script>
+//登录框位置
+function wLoanWrapPosition(params,contDiv) {
+    var windowH=$(window).height();
+    console.log("1",windowH);
+    console.log("1",params);
+    if(windowH > params){
+        $(contDiv).css({'margin-top':(windowH-params)/2});
+    }else{
+        $(contDiv).css({'margin-top':'20px'});
+        $('.login-bg').css({'height':'540px'});
+    }
+}
+wLoanWrapPosition(540,'.layui-anim-up');
+//浏览器窗口变化时 位置重置
+$(window).resize(function() {
+    wLoanWrapPosition(540,'.layui-anim-up');
+});
+</script>
 </body>
 </html>
