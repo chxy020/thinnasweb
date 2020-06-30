@@ -9,6 +9,8 @@ layui.config({
     var setter = layui.setter;
     var url = setter.baseUrl;
 
+    var saveAccount = false;
+
     var active = {
         forgetPop: function() {
             layer.open({
@@ -32,7 +34,11 @@ layui.config({
         active[type] ? active[type].call(this) : '';
     });
 
-    
+    form.on('checkbox(login-form-checkbox)', function(data){
+        var checked = data.elem.checked;
+        saveAccount = checked;
+    });
+
     //监听提交
     form.on('submit(login)', function(data){
         // alert(888)
@@ -42,6 +48,24 @@ layui.config({
         return false;
     });
 
+
+    function saveAccountName(){
+        var name = $("#username").val();
+        if(saveAccount && name){
+            window.localStorage.setItem("__accountname",name);
+        }else{
+            window.localStorage.setItem("__accountname","");
+        }
+    }
+
+    function isSaveAccountName(){
+        var name = window.localStorage.getItem("__accountname") || "";
+        if(name){
+            saveAccount = true;
+        }else{
+            saveAccount = false;
+        }
+    }
 
     function getImageCode(){
         $.ajax({
