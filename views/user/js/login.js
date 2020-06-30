@@ -7,7 +7,7 @@ layui.config({
     var form = layui.form;
     var $ = layui.$;
     var setter = layui.setter;
-    var url = setter.baseUrl;
+    var server = setter.baseUrl;
 
     var saveAccount = false;
 
@@ -68,24 +68,7 @@ layui.config({
     }
 
     function getImageCode(){
-        $.ajax({
-            async: false,
-            type: "get",
-            url: url + "/permission/getpremission",
-            datatype: 'json',
-            xhrFields: {
-                withCredentials: true
-            },
-            //成功的回调函数
-            success: function (msg) {
-                var data = msg.data;
-                if (msg.code != 0) {
-                }
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        })
+        http://39.107.249.187:8080/ADMINM/code.do
     }
     
 });
