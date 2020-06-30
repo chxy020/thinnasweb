@@ -32,11 +32,11 @@ padding: 10px 0;
         color: #555;
     }
     .layui-btn-primary:hover {
-        border-color: #009688;
-        color: #333;
+        border-color: #3691FF;
+        color: #3691FF;
     }
     .layui-btn-primary:hover .layui-icon {
-        color: #009688;
+        color: #3691FF;
     }
     .layui-btn .layui-icon {
         margin-right:0;
@@ -77,4 +77,25 @@ padding: 10px 0;
 .switchStyle .layui-form-onswitch {
     border-color: #3691FF;
     background-color: #fff;
+}
+
+
+
+
+/* pop */
+.mr10{
+    margin-right: 10px;
+}
+.layui-form-label span{
+    font-size: 14px;
+    color: #f00;
+}
+.tipsT{
+    display: inline-block;
+    color: #555;
+    padding-top: 8px;
+    line-height: 140%;
+}
+.tipsT span{
+    color: #f00;
 }
