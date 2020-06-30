@@ -14,7 +14,7 @@ layui.config({
     //  var url="http://127.0.0.1:8083";
     var devices = {};
     var arrangeList = [];
-    var divHeight = $(window).height()-110;
+
     function isEmptyObject(obj) {
         var jlength = 0;
         for (var key in obj) {
@@ -36,7 +36,8 @@ layui.config({
 
     table.render({
         elem: '#test-table-operate',
-        height: divHeight,
+        // height: divHeight,
+        height: 'full-100',//必须留着
         url: url + "/ruletemplate/findRuleTemplateBylayui" //数据接口
             ,
 
@@ -60,10 +61,10 @@ layui.config({
                     field: 'id',
                     title: '序号',
                     unresize: 'false',
-                    width:80,
+                    width:60,
                 },
                 {
-                    width: 440,
+                    width: 100,
                     title: '操作',
                     toolbar: '#test-table-operate-barDemo',
                 },
@@ -80,9 +81,8 @@ layui.config({
                     field: 'roomname',
                     title: '角色',
                     align: 'left',
-
                     templet: function(data) {
-                            return "<div style='position: relative;padding-right:40px'>"+data.name + "<span class='layui-badge' style='margin-left:5px;background-color: #ff6600;position: absolute;right:0;top: 5px;';>2</span></div>"
+                            return data.name + "<span class='layui-badge' style='margin-left:5px;background-color: #ff6600;'>2</span>"
                     },
                 },
                 {
@@ -94,6 +94,9 @@ layui.config({
                     field: 'roomname',
                     title: '最近登录',
                     align: 'left',
+                    templet: function(data) {
+                        return data.name + "<i class='layui-icon' style='vertical-align:middle;color:#3691FF;font-size:1.6rem;margin-left:5px'>&#xe60e;</i>"
+                    },
                 },
                 {
                     field: 'modifytime',
@@ -192,15 +195,11 @@ layui.config({
             limits: [5, 10, 15],
             done: function(res, curr, count) {
                 table_data = res.data;
-
                 layer.closeAll('loading');
                 arrangeList.length = 0;
                 // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
                 // layer.close(index);    //返回数据关闭loading
             },
-
-
-
 
         });
     }
