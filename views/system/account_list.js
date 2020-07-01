@@ -9,9 +9,7 @@ layui.config({
         form = layui.form;
         $ = layui.jquery;
 
-    // #test-table-operate
     var url = setter.baseUrl;
-    //  var url="http://127.0.0.1:8083";
     var devices = {};
     var arrangeList = [];
 
@@ -24,27 +22,17 @@ layui.config({
         };
         return jlength
     };
-
-
-    //表格里开关
+    //表格里滑动开关
     form.on('submit(formDemo)', function(data){
         layer.msg(JSON.stringify(data.field));
         return false;
     });
 
-
-
     table.render({
         elem: '#test-table-operate',
-        // height: divHeight,
         height: 'full-100',//必须留着
-        url: url + "/ruletemplate/findRuleTemplateBylayui" //数据接口
-            ,
-
-        method: 'get',
-        // where:{
-        //     stauts:0
-        // },
+        url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+        ,method: 'get',
         xhrFields: {
             withCredentials: true
         },
@@ -82,7 +70,7 @@ layui.config({
                     title: '角色',
                     align: 'left',
                     templet: function(data) {
-                            return data.name + "<span class='layui-badge' style='margin-left:5px;background-color: #ff6600;'>2</span>"
+                            return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
                     },
                 },
                 {
@@ -95,7 +83,7 @@ layui.config({
                     title: '最近登录',
                     align: 'left',
                     templet: function(data) {
-                        return data.name + "<i class='layui-icon' style='vertical-align:middle;color:#3691FF;font-size:1.6rem;margin-left:5px'>&#xe60e;</i>"
+                        return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
                     },
                 },
                 {
@@ -129,7 +117,7 @@ layui.config({
     window.reloads = function() {
         table.render({
             elem: '#test-table-operate',
-            // height: 'full-200',
+            height: 'full-100',
             url: url + "/ruletemplate/findRuleTemplateBylayui" //数据接口
             ,
 
@@ -147,43 +135,55 @@ layui.config({
                 [ //表头
                     {
                         type: 'checkbox',
-                        // fixed: 'left'
-                    },
-                    // {
-                    //     field: 'id',
-                    //     title: 'ID',
-                    //     //align: 'center',
-                    //     unresize: 'false',
-                    //     width:80,
-                    // },
-                    {
-                        field: 'name',
-                        title: '编排规则名称',
-                        align: 'left',
-                    }, {
-                    field: 'roomname',
-                    title: '会议室名称',
-                    align: 'left',
-                },
-                    {
-                        //align: 'right',
-                        //flxed: 'right',
-                        title: '编排设定',
-                        toolbar: '#table-zone-list',
+                        fixed: 'left',
                     },
                     {
-                        field: 'modifytime',
-                        title: '更新时间',
-                        align: 'left',
-
+                        field: 'id',
+                        title: '序号',
+                        unresize: 'false',
+                        width:60,
                     },
                     {
                         width: 100,
-                        //align: 'right',
-                        flxed: 'right',
                         title: '操作',
                         toolbar: '#test-table-operate-barDemo',
-                    }
+                    },
+                    {
+                        field: 'name',
+                        title: '姓名',
+                        align: 'left',
+                    }, {
+                        field: 'roomname',
+                        title: '手机号',
+                        align: 'left',
+                    },
+                    {
+                        field: 'roomname',
+                        title: '角色',
+                        align: 'left',
+                        templet: function(data) {
+                                return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
+                        },
+                    },
+                    {
+                        field: 'roomname',
+                        title: '备注',
+                        align: 'left',
+                    },
+                    {
+                        field: 'roomname',
+                        title: '最近登录',
+                        align: 'left',
+                        templet: function(data) {
+                            return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
+                        },
+                    },
+                    {
+                        field: 'modifytime',
+                        title: '创建时间',
+                        align: 'left',
+                    },
+                    
                 ]
             ],
 
@@ -333,75 +333,187 @@ layui.config({
     })
     var $ = layui.$,
         active = {
+            //点击搜索
+            search: function() {
+                table.render({
+                    elem: '#test-table-operate',
+                    height: 'full-100',
+                    url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+                        ,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    where: {
+                        "rule": $('#demoReload').val(),
+                        "status":0
+                    },
+                    method: 'get',
+                    page: {
+                        layout: ['prev', 'page', 'next', 'count', 'skip']
+                    },
+                    cols: [
+                        [ //表头
+                            {
+                                type: 'checkbox',
+                                fixed: 'left',
+                            },
+                            {
+                                field: 'id',
+                                title: '序号',
+                                unresize: 'false',
+                                width:60,
+                            },
+                            {
+                                width: 100,
+                                title: '操作',
+                                toolbar: '#test-table-operate-barDemo',
+                            },
+                            {
+                                field: 'name',
+                                title: '姓名',
+                                align: 'left',
+                            }, {
+                                field: 'roomname',
+                                title: '手机号',
+                                align: 'left',
+                            },
+                            {
+                                field: 'roomname',
+                                title: '角色',
+                                align: 'left',
+                                templet: function(data) {
+                                        return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
+                                },
+                            },
+                            {
+                                field: 'roomname',
+                                title: '备注',
+                                align: 'left',
+                            },
+                            {
+                                field: 'roomname',
+                                title: '最近登录',
+                                align: 'left',
+                                templet: function(data) {
+                                    return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
+                                },
+                            },
+                            {
+                                field: 'modifytime',
+                                title: '创建时间',
+                                align: 'left',
+                            },
+                            
+                        ]
+                    ],
+
+                    event: true,
+                    page: true,
+                    limit: 15,
+                    skin: 'line',
+                    even: true,
+                    limits: [5, 10, 15],
+                    done: function(res, curr, count) {
+                        table_data = res.data;
+
+                        layer.closeAll('loading');
+                        arrangeList.length = 0;
+                        // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+                        // layer.close(index);    //返回数据关闭loading
+                    },
+
+
+
+
+                });
+            },
+            //点击添加
             add: function() {
                 layer.open({
                     type: 2,
-                    title: '规则_新建',
-                    area: ['70%', '75%'],
-                    btn: ['确定', '取消'],
+                    title: '新增账号',
+                    area: ['500px', '400px'],
+                    btn: ['保存', '取消'],
+                    btnAlign: 'c',
                     maxmin: true,
-                    content: 'group.html',
+                    content: 'account_add_pop.html',
                     yes: function(index, layero) {
                         var submit = layero.find('iframe').contents().find("#ruleclick");
                         submit.click();
-
                     }
-                    // content: '/gkzytb/franchiser/rigthColumnJsonList'
                 });
-
             },
-            getCheckData: function() { //获取选中数据
-                // var checkStatus = table.checkStatus('test-table-operate'),
-                //     data = checkStatus.data;
-                // layer.alert(JSON.stringify(data));
-                // console.log(checkStatus.data)
-                var cb = $(".layui-form-checkbox");
-                $(".layui-form-checkbox").each(function() {
-                    // if (flag) {
-                    $(this).click();
-                    // } else {
-                    //     $(this).removeClass('layui-form-checked')
-                    // }
-                })
-
-
-            },
-            getCheckLength: function() { //获取选中数目
-                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;您正在执行删除规则列表操作，是否继续进行该操作？',{title:'温馨提示'}, function () {
-                    $.ajax({
+            //点击删除
+            del: function() { 
+                if ( arrangeList.length == 0 ) {
+                    return layer.msg("请选择再批量删除")
+                }
+                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {//获取选中数目
+                $.ajax({
                         async: false,
                         type: "post",
-                        url: url + "/ruletemplate/batchRemove",
+                        url: url+"/roomtemplate/batchRemove",
                         dataType: "json",
-                        xhrFields: {
-                            withCredentials: true
-                        },
                         //成功的回调函数
                         data: {
-                            "ruleid": arrangeList.join(",")
-
+                            "roomid":arrangeList.join(",")
+                        },
+                        xhrFields: {
+                            withCredentials: true
                         },
                         success: function(msg) {
                             if (msg.code == 0) {
                                 layer.msg("删除成功");
-                                reloads(); // 父页面刷新
-
+                                reloaddata(); // 父页面刷新
                             } else {
                                 layer.msg(msg.msg);
-
-
                             }
-
+                
                         },
                         //失败的回调函数
                         error: function() {
                             console.log("error")
                         }
                     })
-
-                });
-
+                })
             },
+            //重置密码
+            del: function() { 
+                if ( arrangeList.length == 0 ) {
+                    return layer.msg("请选择再批量重置密码")
+                }
+                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将自动发送随机密码到指定的手机上？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'重置密码',btnAlign:'c'}, function() {//获取选中数目
+                $.ajax({
+                        async: false,
+                        type: "post",
+                        url: url+"/roomtemplate/batchRemove",
+                        dataType: "json",
+                        //成功的回调函数
+                        data: {
+                            "roomid":arrangeList.join(",")
+                        },
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function(msg) {
+                            if (msg.code == 0) {
+                                layer.msg("删除成功");
+                                reloaddata(); // 父页面刷新
+                            } else {
+                                layer.msg(msg.msg);
+                            }
+                
+                        },
+                        //失败的回调函数
+                        error: function() {
+                            console.log("error")
+                        }
+                    })
+                })
+            },
+
+
+            
             isAll: function() {
                 layer.confirm('您将要进行列表清空操作,执行后您的所有记录将被删除,请谨慎操作,是否确认?', function(index) {
                     $.ajax({
@@ -437,89 +549,7 @@ layui.config({
                 }); //验证是否全选
 
             },
-            search: function() {
-                table.render({
-                    elem: '#test-table-operate',
-                    // height: 'full-200',
-                    url: url+ "/ruletemplate/ruletemplateSearch" //数据接口
-                        ,
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                    where: {
-                        "rule": $('#demoReload').val(),
-                        "status":0
-                    },
 
-                    method: 'get',
-                    page: {
-                        layout: ['prev', 'page', 'next', 'count', 'skip']
-                    },
-                    cols: [
-                        [ //表头
-                            {
-                                type: 'checkbox',
-                                // fixed: 'left'
-                            },
-                            // {
-                            //     field: 'id',
-                            //     title: 'ID',
-                            //     //align: 'center',
-                            //     unresize: 'false',
-                            //     width:80,
-                            // },
-                            {
-                                field: 'name',
-                                title: '编排规则名称',
-                                align: 'left',
-                            }, {
-                            field: 'roomname',
-                            title: '会议室名称',
-                            align: 'left',
-                        },
-                            {
-                                //align: 'right',
-                                //flxed: 'right',
-                                title: '编排设定',
-                                toolbar: '#table-zone-list',
-                            },
-                            {
-                                field: 'modifytime',
-                                title: '更新时间',
-                                align: 'left',
-
-                            },
-                            {
-                                width: 100,
-                                //align: 'right',
-                                flxed: 'right',
-                                title: '操作',
-                                toolbar: '#test-table-operate-barDemo',
-                            }
-                        ]
-                    ],
-
-                    event: true,
-                    page: true,
-                    limit: 15,
-                    skin: 'line',
-                    even: true,
-                    limits: [5, 10, 15],
-                    done: function(res, curr, count) {
-                        table_data = res.data;
-
-                        layer.closeAll('loading');
-                        arrangeList.length = 0;
-                        // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-                        // layer.close(index);    //返回数据关闭loading
-                    },
-
-
-
-
-                });
-
-            }
 
         };
 

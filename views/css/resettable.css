@@ -1,0 +1,30 @@
+ .switchStyle{
+        display:inline-block
+    }
+
+.switchStyle .layui-form-switch {
+    position: relative;
+    height: 10px;
+    line-height: 10px;
+    min-width: 20px;
+    padding: 0 4px;
+}
+
+.switchStyle .layui-form-switch i {
+    left: -1px;
+    top: -3px;
+}
+.switchStyle .layui-form-onswitch i {
+    left: 13px;
+    margin-left: 0;
+    background-color: #3691FF!important;
+}
+.switchStyle .layui-form-onswitch em {
+    margin-left: 0;
+    margin-right: 0;
+    color: #3691FF!important;
+}
+.switchStyle .layui-form-onswitch {
+    border-color: #3691FF;
+    background-color: #fff;
+}
