@@ -47,11 +47,29 @@ layui.config({
                 var data = msg.data;
                 if (msg.code != 0) {
                 }
+                smsBtnTimeCount();
             },
             error: function (error) {
-                console.log(error)
+                console.log(error);
+                smsBtnTimeCount();
             }
         })
+    }
+
+    var time = 60;
+    function smsBtnTimeCount(){
+        $("#LAY-user-getsmscode").attr("disabled","disabled");
+        $("#LAY-user-getsmscode").text(time + "秒后重新获取");
+        setTimeout(function(){
+            time--;
+            if(time == 0){
+                time = 60;
+                $("#LAY-user-getsmscode").removeAttr("disabled");
+                $("#LAY-user-getsmscode").text("获取验证码");
+            }else{
+                smsBtnTimeCount();
+            }     
+        },1000);
     }
     
 });

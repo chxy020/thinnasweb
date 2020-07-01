@@ -49,6 +49,17 @@ layui.config({
         return false;
     });
 
+    $("#pwdeye").bind('click',function(){
+        if($(this).hasClass("icon-hide")){
+            $(this).removeClass("icon-hide");
+            $(this).addClass("icon-show");
+            $("#password").attr("type","text");
+        }else{
+            $(this).removeClass("icon-show");
+            $(this).addClass("icon-hide");
+            $("#password").attr("type","password");
+        }
+    });
 
     function saveAccountName(){
         var name = $("#username").val();
