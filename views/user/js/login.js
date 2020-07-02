@@ -11,6 +11,9 @@ layui.config({
 
     var saveAccount = false;
 
+    $("#username").val("admin");
+    $("#password").val("Zj666");
+
     var active = {
         forgetPop: function() {
             layer.open({
@@ -118,8 +121,10 @@ layui.config({
                 var msg = "";
                 if("success" == data.result){
                     saveAccountName();
+
+                    location.href = "../index.html"
                     // window.location.href="main/index";
-                    alert("登录成功");
+                    // alert("登录成功");
                     return;
                 }else if("usererror" == data.result){
                     msg = "用户名或密码有误";
