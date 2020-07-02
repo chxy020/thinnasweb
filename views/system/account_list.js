@@ -4,7 +4,6 @@ layui.config({
     index: 'lib/index' //主入口模块
 }).use(['index', 'table', 'jquery','form'], function() {
     var table = layui.table,
-        admin = layui.admin,
         setter = layui.setter,
         form = layui.form;
         $ = layui.jquery;
@@ -23,20 +22,73 @@ layui.config({
         return jlength
     };
     //表格里滑动开关
-    form.on('submit(formDemo)', function(data){
-        layer.msg(JSON.stringify(data.field));
-        return false;
-    });
+    // form.on('submit(formDemo)', function(data){
+    //     layer.msg(JSON.stringify(data.field));
+    //     return false;
+    // });
 
+ //监听指定开关
+    form.on('switch(switchTest)', function(data){
+        layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+        offset: '6px'
+        });
+        layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+    });
+    
+
+
+    //表格加载渲染
     table.render({
         elem: '#test-table-operate',
         height: 'full-100',//必须留着
-        url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-        ,method: 'get',
+        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+        method: 'get',
         xhrFields: {
             withCredentials: true
-        },
-        page: {
+        }
+        ,data: [
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:'李四',
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:2,
+                jz:2,//1是开 2是禁止
+                name:'李四',
+                moble:'15201466512',
+                jues:"超级管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:3,
+                jz:1,//1是开 2是禁止
+                name:'李四',
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:4,
+                jz:1,//1是开 2是禁止
+                name:'李四',
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+        ]
+        ,page: {
             layout: ['prev', 'page', 'next', 'count', 'skip']
         },
         cols: [
@@ -61,12 +113,12 @@ layui.config({
                     title: '姓名',
                     align: 'left',
                 }, {
-                    field: 'roomname',
+                    field: 'moble',
                     title: '手机号',
                     align: 'left',
                 },
                 {
-                    field: 'roomname',
+                    field: 'jues',
                     title: '角色',
                     align: 'left',
                     templet: function(data) {
@@ -74,27 +126,27 @@ layui.config({
                     },
                 },
                 {
-                    field: 'roomname',
+                    field: 'beizi',
                     title: '备注',
                     align: 'left',
                 },
                 {
-                    field: 'roomname',
+                    field: 'denglv',
                     title: '最近登录',
                     align: 'left',
                     templet: function(data) {
-                        return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
+                        return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
                     },
                 },
                 {
-                    field: 'modifytime',
+                    field: 'time',
                     title: '创建时间',
                     align: 'left',
                 },
                 
             ]
         ],
-
+        
         event: true,
         page: true,
         limit: 15,
@@ -109,22 +161,14 @@ layui.config({
             // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
             // layer.close(index);    //返回数据关闭loading
         },
-
-
-
-
     });
+    //表格刷新渲染
     window.reloads = function() {
         table.render({
             elem: '#test-table-operate',
-            height: 'full-100',
-            url: url + "/ruletemplate/findRuleTemplateBylayui" //数据接口
-            ,
-
-            method: 'get',
-            where:{
-                stauts:0
-            },
+            height: 'full-100',//必须留着
+            url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+            ,method: 'get',
             xhrFields: {
                 withCredentials: true
             },
@@ -183,10 +227,8 @@ layui.config({
                         title: '创建时间',
                         align: 'left',
                     },
-                    
                 ]
             ],
-
             event: true,
             page: true,
             limit: 15,
@@ -203,19 +245,16 @@ layui.config({
 
         });
     }
-
     window.onkeyup = function(ev) {
         var key = ev.keyCode || ev.which;
         if (key == 27) { //按下Escape
             layer.closeAll('iframe'); //关闭所有的iframe层
-
         }
         if (key == 13) { //按下Escape
             $('#search').click();
 
         }
     }
-
     //监听表格复选框选择
     table.on('checkbox(test-table-operate)', function(obj) {
         console.log(obj)
@@ -255,14 +294,12 @@ layui.config({
     //监听工具条
     table.on('tool(test-table-operate)', function(obj) {
         var data = obj.data;
-        if (obj.event === 'detail') {
-            layer.msg('ID：' + data.id + ' 的查看操作');
-        } else if (obj.event === 'del') {
+        if (obj.event === 'del') {
             /**
              * @param {Object} index
              * 编排规则的借口提供之后需要接入删除
              */
-            layer.confirm('真的删除行么', function (index) {
+            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
                 $.ajax({
                     async: false,
                     type: "get",
@@ -293,43 +330,38 @@ layui.config({
                 })
                 layer.close(index);
             });
-        } else if (obj.event === 'zonelist') {
-
-            layer.open({
-                type: 2,
-                //title: '收藏管理 (考生姓名：张无忌)',
-                title: false,
-                shadeClose: false,
-                // maxmin: true,//弹出框之外的地方是否可以点击
-                area: ['100%', '100%'],
-                // closeBtn: 1,
-                closeBtn: false,
-                offset: '0',
-                content: 'territory_rules.html?ruleid=' + data.id + '&roomid=' + data.roomid + "&name=" + data.name,
-                success: function (layero, index) {
-                    // var body = layui.layer.getChildFrame('body', index);
-                    // var roomid;
-                    // // 取到弹出层里的元素，并把编辑的内容放进去
-                    // body.find("#ruleid").val(data.id);
-                    // body.find("#roomid").val(data.roomid); //将选中的数据的id传到编辑页面的隐藏域，便于根据ID修改数据
-                }
-            });
         } else if (obj.event === 'edit') {
-
             layer.open({
                 type: 2,
-                title: '规则_编辑',
-                area: ['70%', '75%'],
-                btn: ['确定', '取消'],
+                title: '编辑账号',
+                area: ['500px', '400px'],
+                btn: ['保存', '取消'],
+                btnAlign: 'c',
                 maxmin: true,
-                content: 'arrangemanUpdate.html?ruleid=' + data.id + '&roomid=' + data.roomid + "&name=" + data.name,
-                yes: function (index, layero) {
-                    var submit = layero.find('iframe').contents().find("#ruleclick");
-                    submit.click();
-
+                content: 'account_edit_pop.html',
+                // content: 'account_edit_pop.html?id=" + data.id,
+                yes: function(index, layero) {
                 }
             });
+        } else if (obj.event === 'switch') {
+            console.log("data.id=====",data.id)
+            console.log("data.jz=====",data.jz)
+            if(data.jz==1){
+                data.jz=2
+                console.log("data.jz=====11",data.jz)
+                //把数据提交到接口里
+            }else{
+                data.jz=1
+                console.log("data.jz=====22",data.jz)
+                //把数据提交到接口里
+            }
+        } else if (obj.event === 'openlog'){
+            console.log("data.id=====",data.id)
+            console.log("00000000000000")
+            //在主窗口打开 操作日志 页面 
+            // top.layui.index.openTabsPage("system/operation_log.html", '操作日志');
         }
+
     })
     var $ = layui.$,
         active = {
@@ -406,7 +438,6 @@ layui.config({
                             
                         ]
                     ],
-
                     event: true,
                     page: true,
                     limit: 15,
@@ -421,10 +452,6 @@ layui.config({
                         // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
                         // layer.close(index);    //返回数据关闭loading
                     },
-
-
-
-
                 });
             },
             //点击添加
@@ -452,7 +479,7 @@ layui.config({
                 $.ajax({
                         async: false,
                         type: "post",
-                        url: url+"/roomtemplate/batchRemove",
+                        // url: url+"/roomtemplate/batchRemove",
                         dataType: "json",
                         //成功的回调函数
                         data: {
@@ -478,7 +505,7 @@ layui.config({
                 })
             },
             //重置密码
-            del: function() { 
+            resetPassword: function() { 
                 if ( arrangeList.length == 0 ) {
                     return layer.msg("请选择再批量重置密码")
                 }
@@ -486,7 +513,7 @@ layui.config({
                 $.ajax({
                         async: false,
                         type: "post",
-                        url: url+"/roomtemplate/batchRemove",
+                        // url: url+"/roomtemplate/batchRemove",
                         dataType: "json",
                         //成功的回调函数
                         data: {
@@ -497,7 +524,7 @@ layui.config({
                         },
                         success: function(msg) {
                             if (msg.code == 0) {
-                                layer.msg("删除成功");
+                                layer.msg("删除发送成功");
                                 reloaddata(); // 父页面刷新
                             } else {
                                 layer.msg(msg.msg);
@@ -511,53 +538,37 @@ layui.config({
                     })
                 })
             },
-
-
-            
-            isAll: function() {
-                layer.confirm('您将要进行列表清空操作,执行后您的所有记录将被删除,请谨慎操作,是否确认?', function(index) {
-                    $.ajax({
-                        async: false,
-                        type: "get",
-                        url: url + "/ruletemplate/empty",
-                        dataType: "json",
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        //成功的回调函数
-                        data: {
-
-                        },
-                        success: function(msg) {
-                            if (msg.code == 0) {
-                                layer.msg("清空成功");
-                                reloads(); // 父页面刷新
-
-                            } else {
-                                layer.msg(msg.msg);
-
-
-                            }
-
-                        },
-                        //失败的回调函数
-                        error: function() {
-                            console.log("error")
-                        }
-                    })
-                    layer.close(index);
-                }); //验证是否全选
-
+            //刷新
+            refresh: function() {
+                reloads();
+                // reloaddata(); // 父页面刷新
             },
+            
 
 
         };
-
+    //给页面里的layui-dS 绑定事件
     $('.layui-ds').on('click', function() {
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });
 
-
+    /*右侧菜单HOVER显示提示文字*/
+    var subtips;
+    $('.pop_text button').each(function(){
+        var _id = $(this).attr('id');
+        var _data = $(this).attr('data');
+        $("#" + _id).hover(function() {
+            openMsg();
+        }, function() {
+            if(subtips){
+                layer.close(subtips);
+            }
+        });
+        function openMsg() {
+            subtips = layer.tips(_data, '#'+_id,{tips:[3,'#666'],time: 30000});
+        }
+    })
+    /*右侧菜单HOVER显示提示文字 end*/
 
 });
