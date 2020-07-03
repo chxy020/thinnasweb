@@ -31,6 +31,7 @@
                     <i class="layui-icon layui-icon-refresh-3"></i>
                     <dl class="layui-nav-child">
                         <dd><a lay-href="set/user/info.html"><i class="layui-icon layui-icon-refresh-3"></i>使用教程</a></dd>
+                        <dd><a lay-href="set/user/info.html"><i class="layui-icon layui-icon-refresh-3"></i>常见问题</a></dd>
                         <dd><a lay-href="set/user/password.html"><i class="layui-icon layui-icon-refresh-3"></i>修改密码</a></dd>
                         <dd><a lay-href="set/user/phone.html"><i class="layui-icon layui-icon-refresh-3"></i>退出登录</a></dd>
                     </dl>
@@ -41,40 +42,25 @@
         <!-- 侧边菜单 -->
         <div class="layui-side layui-side-menu">
             <div class="">
-               
-                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
-                    lay-filter="layadmin-system-side-menu">
-                    <li data-name="component" class="layui-nav-item">
-                        <a href="javascript:;" lay-tips="数据分析" lay-direction="2">
-                            <i class="layui-icon layui-icon-refresh-3"></i>
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+                    <li data-name="get" class="layui-nav-item">
+                        <a href="javascript:;" lay-href="system/account_list.html" lay-tips="数据分析" lay-direction="2">
+                            <i class="layui-icon layui-icon-auz"></i>
                             <cite>数据分析</cite>
                         </a>
-                        <dl class="layui-nav-child">
-                            <dd><a lay-href="systemindex/systemindex.html">数据分析</a></dd>
-                        </dl>
                     </li>
-                    <li data-name="home" class="layui-nav-item ">
-                        <a href="javascript:;" lay-tips="用户管理" lay-direction="2">
-                            <i class="layui-icon layui-icon-refresh-3"></i>
+                    <li data-name="get" class="layui-nav-item">
+                        <a href="javascript:;" lay-href="system/account_list.html" lay-tips="用户管理" lay-direction="2">
+                            <i class="layui-icon layui-icon-auz"></i>
                             <cite>用户管理</cite>
                         </a>
-                        <dl class="layui-nav-child">
-                            <dd id="meet"><a lay-href="arrange/meet/meet.html">用户管理</a></dd>
-                        </dl>
                     </li>
-                    <li data-name="component" class="layui-nav-item ">
-                        <a href="javascript:;" lay-tips="设备管理" lay-direction="2">
-                            <i class="layui-icon layui-icon-refresh-3"></i>
+                    <li data-name="get" class="layui-nav-item">
+                        <a href="javascript:;" lay-href="system/account_list.html" lay-tips="设备管理" lay-direction="2">
+                            <i class="layui-icon layui-icon-auz"></i>
                             <cite>设备管理</cite>
                         </a>
-                        <dl class="layui-nav-child">
-                            <dd id="meeting"><a lay-href="arrange/meeting/meeting_room.html">设备管理</a></dd>
-                        </dl>
                     </li>
-
-                    
-
-                    
                     <li data-name="component" class="layui-nav-item ">
                         <a href="javascript:;" lay-tips="系统管理" lay-direction="2">
                             <i class="layui-icon layui-icon-refresh-3"></i>
@@ -87,54 +73,11 @@
                             <dd data-name="property"><a lay-href="arrange/typelist/typelist.html">C端用户日志</a></dd>
                         </dl>
                     </li>
-                    <!-- <li data-name="component" class="layui-nav-item ">
-                        <a href="javascript:;" lay-tips="操作日志" lay-direction="2">
-                            <i class="layui-icon layui-icon-refresh-3"></i>
-                            <cite>操作日志</cite>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd><a lay-href="arrange/attendersort/sortattendee.html">C端用户日志</a></dd>
-                        </dl>
-                    </li> -->
-                    
-                    
-                    <li data-name="component" class="layui-nav-item ">
-                        <a href="javascript:;" lay-tips="售后服务" lay-direction="2">
-                            <i class="layui-icon layui-icon-refresh-3"></i>
+                    <li data-name="get" class="layui-nav-item">
+                        <a href="javascript:;" lay-href="system/account_list.html" lay-tips="售后服务" lay-direction="2">
+                            <i class="layui-icon layui-icon-auz"></i>
                             <cite>售后服务</cite>
                         </a>
-                        <dl class="layui-nav-child">
-                            <dd id="rules"><a lay-href="arrange/arrangeman/arrangeman.html">售后服务</a></dd>
-                        </dl>
-                    </li>
-                    <li data-name="component" class="layui-nav-item">
-                        <a href="javascript:;" lay-tips="账号信息" lay-direction="2">
-                            <i class="layui-icon layui-icon-refresh-3"></i>
-                            <cite>账号信息</cite>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd data-name="grid"><a lay-href="arrange/seatproduct/seatproductlists.html">账号信息</a></dd>
-                        </dl>
-                    </li>
-                    <li data-name="component" class="layui-nav-item"  >
-                        <a  href="javascript:;" lay-tips="设置" lay-direction="2">
-                            <i class="layui-icon layui-icon-refresh-3"></i>
-                            <cite>设置</cite>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd data-name="grid">
-                                <a lay-href="arrange/facerecognition/facerecognitionlist.html">使用教程管理</a>
-                            </dd>
-                            <dd data-name="grid">
-                                <a lay-href="arrange/signin/signinlist.html">常见问题编辑</a>
-                            </dd>
-                            <dd data-name="grid">
-                                <a lay-href="arrange/signin/signinlist.html">修改密码</a>
-                            </dd>
-                            <dd data-name="grid">
-                                <a lay-href="arrange/signin/signinlist.html">退出登录</a>
-                            </dd>
-                        </dl>
                     </li>
                 </ul>
             </div>
@@ -163,7 +106,7 @@
             </div>
         </div>
         <!-- 主体内容 -->
-        <div class="layui-body" id="LAY_app_body" style="top:50px;">
+        <div class="layui-body" id="LAY_app_body" style="top:95px;">
             <div class="layadmin-tabsbody-item layui-show">
                 <iframe src="systemindex/systemindex.html" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
