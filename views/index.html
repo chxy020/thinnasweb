@@ -1,31 +1,23 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>thinNAS--</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon.ico">
-
+    <link rel="alternate icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
-
-    <link rel="stylesheet" href="../layuiadmin/font/iconfont.css"><!-- 2020.3.31 添加新字体 -->
-
-    <!-- <link rel="stylesheet" type="text/css" href="../css/scosun.css" /> -->
-    <!-- <script src="../js/scosun.js" type="text/javascript" charset="utf-8"></script> -->
-    
     <script src="../layuiadmin/layui/layui.js"></script>
     <script src="../js/jquery-3.1.1.min.js"></script>
 </head>
-
 <body class="layui-layout-body">
-
 <div id="LAY_app">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
+            <div class="layui-logo layui-icon" lay-href="systemindex/systemindex.html ">
+                <span>ThinNAS运营系统</span>
+            </div>
             <!-- 头部区域 -->
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item layadmin-flexible" lay-unselect>
@@ -33,38 +25,14 @@
                         <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
                     </a>
                 </li>
-
-                <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;" layadmin-event="refresh" title="刷新">
-                        <i class="layui-icon layui-icon-refresh-3"></i>
-                    </a>
-                </li>
-
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-                <!--
-                2020.3.31 去掉
-                <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:;" layadmin-event="theme">
-                        <i class="layui-icon layui-icon-theme"></i>
-                    </a>
-                </li>-->
-
-                <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:;" layadmin-event="fullscreen">
-                        <i class="layui-icon layui-icon-screen-full"></i>
-                    </a>
-                </li>
                 <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;">
-                        <cite id="username"></cite>
-                    </a>
+                    <i class="layui-icon layui-icon-refresh-3"></i>
                     <dl class="layui-nav-child">
-                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                        <dd><a lay-href="set/user/phone.html">换绑手机</a></dd>
-                        <hr>
-                        <dd layadmin-event="1" id="logout"><a>退出</a></dd>
+                        <dd><a lay-href="set/user/info.html"><i class="layui-icon layui-icon-refresh-3"></i>使用教程</a></dd>
+                        <dd><a lay-href="set/user/password.html"><i class="layui-icon layui-icon-refresh-3"></i>修改密码</a></dd>
+                        <dd><a lay-href="set/user/phone.html"><i class="layui-icon layui-icon-refresh-3"></i>退出登录</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -73,15 +41,12 @@
         <!-- 侧边菜单 -->
         <div class="layui-side layui-side-menu">
             <div class="">
-                <div class="layui-logo layui-icon" lay-href="systemindex/systemindex.html ">
-                    <span><img src="../layuiadmin/style/res/logo.svg" /></span>
-                </div>
+               
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
                     lay-filter="layadmin-system-side-menu">
-                    <!-- 控制台 // 20.04.06 dh 新加 -->
                     <li data-name="component" class="layui-nav-item">
                         <a href="javascript:;" lay-tips="数据分析" lay-direction="2">
-                            <i class="layui-icon iconfont icon-kongzhitai"></i>
+                            <i class="layui-icon layui-icon-refresh-3"></i>
                             <cite>数据分析</cite>
                         </a>
                         <dl class="layui-nav-child">
@@ -90,7 +55,7 @@
                     </li>
                     <li data-name="home" class="layui-nav-item ">
                         <a href="javascript:;" lay-tips="用户管理" lay-direction="2">
-                            <i class="layui-icon iconfont icon-wodehuiyi"></i>
+                            <i class="layui-icon layui-icon-refresh-3"></i>
                             <cite>用户管理</cite>
                         </a>
                         <dl class="layui-nav-child">
@@ -99,35 +64,43 @@
                     </li>
                     <li data-name="component" class="layui-nav-item ">
                         <a href="javascript:;" lay-tips="设备管理" lay-direction="2">
-                            <i class="layui-icon iconfont icon-wodehuichang"></i>
+                            <i class="layui-icon layui-icon-refresh-3"></i>
                             <cite>设备管理</cite>
                         </a>
                         <dl class="layui-nav-child">
                             <dd id="meeting"><a lay-href="arrange/meeting/meeting_room.html">设备管理</a></dd>
                         </dl>
                     </li>
+
+                    
+
+                    
                     <li data-name="component" class="layui-nav-item ">
                         <a href="javascript:;" lay-tips="系统管理" lay-direction="2">
-                            <i class="layui-icon iconfont icon-canhuirenyuan"></i>
+                            <i class="layui-icon layui-icon-refresh-3"></i>
                             <cite>系统管理</cite>
                         </a>
                         <dl class="layui-nav-child">
                             <dd ><a lay-href="system/account_list.html">账号管理</a></dd>
                             <dd data-name="property"><a lay-href="arrange/typelist/typelist.html">角色权限</a></dd>
+                            <dd data-name="property"><a lay-href="arrange/typelist/typelist.html">操作日志</a></dd>
+                            <dd data-name="property"><a lay-href="arrange/typelist/typelist.html">C端用户日志</a></dd>
                         </dl>
                     </li>
-                    <li data-name="component" class="layui-nav-item ">
+                    <!-- <li data-name="component" class="layui-nav-item ">
                         <a href="javascript:;" lay-tips="操作日志" lay-direction="2">
-                            <i class="layui-icon iconfont icon-zhinengpaixu"></i>
+                            <i class="layui-icon layui-icon-refresh-3"></i>
                             <cite>操作日志</cite>
                         </a>
                         <dl class="layui-nav-child">
                             <dd><a lay-href="arrange/attendersort/sortattendee.html">C端用户日志</a></dd>
                         </dl>
-                    </li>
+                    </li> -->
+                    
+                    
                     <li data-name="component" class="layui-nav-item ">
                         <a href="javascript:;" lay-tips="售后服务" lay-direction="2">
-                            <i class="layui-icon iconfont icon-bianpaiguize"></i>
+                            <i class="layui-icon layui-icon-refresh-3"></i>
                             <cite>售后服务</cite>
                         </a>
                         <dl class="layui-nav-child">
@@ -136,7 +109,7 @@
                     </li>
                     <li data-name="component" class="layui-nav-item">
                         <a href="javascript:;" lay-tips="账号信息" lay-direction="2">
-                            <i class="layui-icon iconfont icon-dianzizhuopai"></i>
+                            <i class="layui-icon layui-icon-refresh-3"></i>
                             <cite>账号信息</cite>
                         </a>
                         <dl class="layui-nav-child">
@@ -145,7 +118,7 @@
                     </li>
                     <li data-name="component" class="layui-nav-item"  >
                         <a  href="javascript:;" lay-tips="设置" lay-direction="2">
-                            <i class="layui-icon iconfont icon-canhuibaodao"></i>
+                            <i class="layui-icon layui-icon-refresh-3"></i>
                             <cite>设置</cite>
                         </a>
                         <dl class="layui-nav-child">
@@ -167,9 +140,7 @@
             </div>
         </div>
 
-        <!-- 页面标签 -->
-        <!-- 20203.31 去掉-->
-        <div class="layadmin-pagetabs" id="LAY_app_tabs" style="display:none">
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
             <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
             <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
             <div class="layui-icon layadmin-tabs-control layui-icon-down">
@@ -191,8 +162,6 @@
                 </ul>
             </div>
         </div>
-
-
         <!-- 主体内容 -->
         <div class="layui-body" id="LAY_app_body" style="top:50px;">
             <div class="layadmin-tabsbody-item layui-show">
@@ -204,9 +173,6 @@
         <div class="layadmin-body-shade" layadmin-event="shade"></div>
     </div>
 </div>
-
-
 <script src="index.js"></script>
 </body>
-
 </html>
