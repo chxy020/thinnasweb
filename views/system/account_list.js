@@ -50,7 +50,48 @@ layui.config({
             {
                 id:1,
                 jz:1,//1是开 2是禁止
-                name:'李四',
+                name:"运营管运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
                 moble:'15201466512',
                 jues:"运营、管理员",
                 beizi:"无",
@@ -58,19 +99,23 @@ layui.config({
                 time:"2020-7-2"
             },
             {
-                id:2,
-                jz:2,//1是开 2是禁止
-                name:'李四',
-                moble:'15201466512',
-                jues:"超级管理员",
-                beizi:"无",
-                denglv:"1分钟前",
-                time:"2020-7-2"
-            },
-            {
-                id:3,
+                id:1,
                 jz:1,//1是开 2是禁止
-                name:'李四',
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    
+                ],
                 moble:'15201466512',
                 jues:"运营、管理员",
                 beizi:"无",
@@ -78,15 +123,569 @@ layui.config({
                 time:"2020-7-2"
             },
             {
-                id:4,
+                id:1,
                 jz:1,//1是开 2是禁止
-                name:'李四',
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
                 moble:'15201466512',
                 jues:"运营、管理员",
                 beizi:"无",
                 denglv:"1分钟前",
                 time:"2020-7-2"
             },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            
+            {
+                id:1,
+                jz:1,//1是开 2是禁止
+                name:"运营管理员",
+                namelist:[{
+                        name:"张三",
+                        tel:"152000000"
+                    },
+                    {
+                        name:"李四",
+                        tel:"152000001"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                    {
+                        name:"王五",
+                        tel:"152000002"
+                    },
+                ],
+                moble:'15201466512',
+                jues:"运营、管理员",
+                beizi:"无",
+                denglv:"1分钟前",
+                time:"2020-7-2"
+            },
+            
+            
         ]
         ,page: {
             layout: ['prev', 'page', 'next', 'count', 'skip']
@@ -121,8 +720,17 @@ layui.config({
                     field: 'jues',
                     title: '角色',
                     align: 'left',
+                    // toolbar: '#test-table-operate-barDemoMore',
                     templet: function(data) {
-                            return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
+                            var htmlStr = "";
+                            for (i = 0; i < data.namelist.length; i++) { 
+                                console.log("000")
+                                htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
+                            }
+                            console.log("htmlStr====",htmlStr);
+                            var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
+                            console.log("contStr====",contStr);
+                            return data.name + contStr
                     },
                 },
                 {
@@ -349,9 +957,11 @@ layui.config({
             if(data.jz==1){
                 data.jz=2
                 console.log("data.jz=====11",data.jz)
+                layer.msg("账号已禁用")
                 //把数据提交到接口里
             }else{
                 data.jz=1
+                layer.msg("账号已启用")
                 console.log("data.jz=====22",data.jz)
                 //把数据提交到接口里
             }
@@ -524,7 +1134,7 @@ layui.config({
                         },
                         success: function(msg) {
                             if (msg.code == 0) {
-                                layer.msg("删除发送成功");
+                                layer.msg("密码发送成功");
                                 reloaddata(); // 父页面刷新
                             } else {
                                 layer.msg(msg.msg);
@@ -543,9 +1153,6 @@ layui.config({
                 reloads();
                 // reloaddata(); // 父页面刷新
             },
-            
-
-
         };
     //给页面里的layui-dS 绑定事件
     $('.layui-ds').on('click', function() {
@@ -570,5 +1177,33 @@ layui.config({
         }
     })
     /*右侧菜单HOVER显示提示文字 end*/
+
+    /* 点击查看更多操作 三部分组成 CSS html js 3.10 */
+    // if($(".layui-table-header table tr").length==1){
+    //     $(".layui-table-header").css("min-height",195)
+    // }else{
+    //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateA").css("top",-55);
+    //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateArr").css({"top":49,"background-image":"url('../../../images/tips_darr.png')"});
+    // }
+    $('.moreOperate').each(function(){
+        $(this).hover(function() {
+            var X = $(this).offset().left;
+            var parentX = $(this).parent().offset().left;
+
+            console.log(X)
+            console.log(parentX)
+            $(this).children(".moreOperateA").css("left",X-parentX-37).show();
+        }, function() {
+            $(this).children(".moreOperateA").hide();
+        });
+    })
+
+
+
+
+    /* 点击查看更多操作 三部分组成 CSS html js end 3.10 */
+
+
+
 
 });

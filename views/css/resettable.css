@@ -1,30 +1,20 @@
- .switchStyle{
-        display:inline-block
-    }
-
-.switchStyle .layui-form-switch {
-    position: relative;
-    height: 10px;
-    line-height: 10px;
-    min-width: 20px;
-    padding: 0 4px;
-}
-
-.switchStyle .layui-form-switch i {
-    left: -1px;
-    top: -3px;
-}
-.switchStyle .layui-form-onswitch i {
-    left: 13px;
-    margin-left: 0;
-    background-color: #3691FF!important;
-}
-.switchStyle .layui-form-onswitch em {
-    margin-left: 0;
-    margin-right: 0;
-    color: #3691FF!important;
-}
-.switchStyle .layui-form-onswitch {
-    border-color: #3691FF;
-    background-color: #fff;
-}
+ /*表格中开关 样式 高度颜色与默认的不同*/
+.switchStyle {display:inline-block}
+.switchStyle .layui-form-switch {position:relative;height:10px;line-height:10px;min-width:20px;padding:0 4px;}
+.switchStyle .layui-form-switch i {left:-1px;top:-3px;}
+.switchStyle .layui-form-onswitch i {left:13px;margin-left:0;background-color:#3691FF!important;}
+.switchStyle .layui-form-onswitch em {margin-left:0;margin-right:0;color:#3691FF!important;}
+.switchStyle .layui-form-onswitch {border-color:#3691FF;background-color:#fff;}
+/*表格中的鼠标悬停 展示TABLE样式*/
+.tableb {border-collapse:collapse;width:100%;border:none;color:#3c3c3c;}
+.tableb th,.tableb td {border-top:1px solid #d9d9d9;font-size:14px;color:#333;padding:5px 10px!important;text-align: left;}
+.tableb tr:last-child td{border:none}
+.tableb td {background-color:#fff!important;}
+.tableb th {background-color:#eee;text-align:left;font-weight:700;}
+/* 点击查看更多操作 三部分组成 CSS html js  3.10 */
+.layui-table-cell {overflow:visible;}
+.moreOperate {display:inline-block;padding-top:2px;box-sizing:content-box!important}
+.moreOperateA {display:none;position:absolute;left:10px;top:23px;z-index:9999;padding-top:10px;}
+.moreOperateAa {background-color:#fff;border:1px solid #ccc;padding:5px 10px;max-height:161px;overflow:auto;}
+.moreOperateArr {position:absolute;left:43px;top:3px;width:17px;height:9px;background:url(../images/tips_arr.png) no-repeat center top;}
+/* 点击查看更多操作 三部分组成 CSS html js  3.10  end*/
