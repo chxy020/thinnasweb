@@ -12,7 +12,10 @@ layui.config({
         async: false,
         type: "POST",
         url: server + "/ADMINM/main/index",
+        // url: server + "/ADMINM/role",
         datatype: 'json',
+        // contentType:"application/x-www-form-urlencoded",
+        // crossDomain:true, //设置跨域为true
         xhrFields: {
             withCredentials: true
         },

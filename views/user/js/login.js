@@ -106,6 +106,9 @@ layui.config({
             dataType: 'json',
             async: true,
             data: {KEYDATA:code,tm:new Date().getTime()},
+            xhrFields: {
+                withCredentials: true
+            },
             // xhrFields: {
             //     withCredentials: true
             // },
