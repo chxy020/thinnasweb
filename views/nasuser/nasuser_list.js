@@ -112,7 +112,7 @@ layui.config({
                     // toolbar: '#test-table-operate-barDemoMore',
                     templet: function(data) {
                         // console.log(data)
-                        return data.ROLE_NAME;
+                        return data.sex;
                             // var htmlStr = "";
                             // for (i = 0; i < data.namelist.length; i++) { 
                             //     console.log("000")
@@ -144,7 +144,7 @@ layui.config({
                     align: 'left',
                 },
                 {
-                    field: 'usercount',
+                    field: 'usecount',
                     title: '使用设备数',
                     align: 'left',
                 },
