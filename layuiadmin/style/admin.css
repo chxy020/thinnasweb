@@ -7,7 +7,7 @@ html {background-color:#f2f2f2;color:#666}
 .layui-layout-admin .layui-header .layui-nav .layui-nav-child a {color:#333}
 .layui-layout-admin .layui-side {width:180px;top:55px;z-index:1001}
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item,.layui-layout-admin .layui-logo {height:55px;line-height:55px}
-.layui-layout-admin .layui-logo {position:fixed;left:0;top:0;z-index:1002;width:180px;height:55px;box-sizing:border-box;overflow:hidden;font-weight:300;background-repeat:no-repeat;background-position:center center}
+.layui-layout-admin .layui-logo {position:fixed;left:0;top:0;z-index:1002;width:180px;height:55px;box-sizing:border-box;overflow:hidden;font-weight:700;background-repeat:no-repeat;background-position:center center}
 .layadmin-pagetabs,.layui-layout-admin .layui-body,.layui-layout-admin .layui-footer,.layui-layout-admin .layui-layout-left {left:180px}
 .layadmin-pagetabs {position:fixed;top:55px;right:0;z-index:999}
 .layadmin-pagetabs .layui-breadcrumb {padding:0 15px}

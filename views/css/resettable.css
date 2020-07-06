@@ -12,7 +12,7 @@
 .tableb td {background-color:#fff!important;}
 .tableb th {background-color:#eee;text-align:left;font-weight:700;}
 /* 点击查看更多操作 三部分组成 CSS html js  3.10 */
-.layui-table-cell {overflow:visible;}
+/* .layui-table-cell {overflow:visible;} */
 .moreOperate {display:inline-block;padding-top:2px;box-sizing:content-box!important}
 .moreOperateA {display:none;position:absolute;left:10px;top:23px;z-index:9999;padding-top:10px;}
 .moreOperateAa {background-color:#fff;border:1px solid #ccc;padding:5px 10px;max-height:161px;overflow:auto;}

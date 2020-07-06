@@ -66,14 +66,12 @@ layui.config({
                 jz:1,//1是开 2是禁止
                 phone:"13800138000",
                 nikename:'张三',
-                sex:"男",
-                status:"启用",
-                logintime:"1分钟前",
-                regtime:"2020-7-2 12:12",
-                usecount:10,
-                havecount:5,
-                ssd:"5T",
-                activecount:30
+                role:"超级管理员",
+                time:'2018-10-11 21:30',
+                xytime:'50mS',
+                ip:'120.111.265.158【深圳】',
+                opent:'添加',
+                opencont:'导入成功'
             },
         ]
         ,page: {
@@ -91,14 +89,10 @@ layui.config({
                     unresize: 'false',
                     width:60,
                 },
-                {
-                    width: 100,
-                    title: '操作',
-                    toolbar: '#test-table-operate-barDemo',
-                },
+                
                 {
                     field: 'phone',
-                    title: '手机号',
+                    title: '操作账号',
                     align: 'left',
                 }, {
                     field: 'nikename',
@@ -106,64 +100,35 @@ layui.config({
                     align: 'left',
                 },
                 {
-                    field: 'sex',
-                    title: '性别',
-                    align: 'left',
-                    // toolbar: '#test-table-operate-barDemoMore',
-                    templet: function(data) {
-                        // console.log(data)
-                        return data.sex;
-                            // var htmlStr = "";
-                            // for (i = 0; i < data.namelist.length; i++) { 
-                            //     console.log("000")
-                            //     htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
-                            // }
-                            // console.log("htmlStr====",htmlStr);
-                            // var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
-                            // console.log("contStr====",contStr);
-                            // return data.name + contStr
-                    },
-                },
-                {
-                    field: 'status',
-                    title: '状态',
+                    field: 'role',
+                    title: '角色',
                     align: 'left',
                 },
                 {
-                    field: 'logintime',
-                    title: '最近登录',
-                    align: 'left',
-                    // templet: function(data) {
-                    //     // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                    //     return data.logintime + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                    // },
-                },
-                {
-                    field: 'regtime',
-                    title: '注册时间',
+                    field: 'time',
+                    title: '操作时间',
                     align: 'left',
                 },
                 {
-                    field: 'usecount',
-                    title: '使用设备数',
+                    field: 'xytime',
+                    title: '响应时长',
                     align: 'left',
                 },
                 {
-                    field: 'havecount',
-                    title: '管理设备数',
+                    field: 'ip',
+                    title: 'IP地址',
                     align: 'left',
                 },
                 {
-                    field: 'ssd',
-                    title: '可用空间',
+                    field: 'opent',
+                    title: '操作类型',
                     align: 'left',
                 },
                 {
-                    field: 'activecount',
-                    title: '近7天活跃次数',
+                    field: 'opencont',
+                    title: '操作内容',
                     align: 'left',
                 }
-                
             ]
         ],
         // parseData: function(res){

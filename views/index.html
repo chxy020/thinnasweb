@@ -15,7 +15,7 @@
 <div id="LAY_app">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
-            <div class="layui-logo layui-icon" lay-href="systemindex/systemindex.html ">
+            <div class="layui-logo layui-icon" lay-href="system/account_list.html">
                 <span>ThinNAS运营系统</span>
             </div>
             <!-- 头部区域 -->
@@ -44,7 +44,7 @@
             <div class="">
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
                     <li data-name="get" class="layui-nav-item">
-                        <a href="javascript:;" lay-href="system/account_list.html" lay-tips="数据分析" lay-direction="2">
+                        <a href="javascript:;" lay-href="" lay-tips="数据分析" lay-direction="2">
                             <i class="layui-icon layui-icon-auz"></i>
                             <cite>数据分析</cite>
                         </a>
@@ -68,13 +68,13 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd ><a lay-href="system/account_list.html">账号管理</a></dd>
-                            <dd data-name="property"><a lay-href="arrange/typelist/typelist.html">角色权限</a></dd>
-                            <dd data-name="property"><a lay-href="arrange/typelist/typelist.html">操作日志</a></dd>
-                            <dd data-name="property"><a lay-href="arrange/typelist/typelist.html">C端用户日志</a></dd>
+                            <dd data-name="property"><a lay-href="system/role_list.html">角色权限</a></dd>
+                            <dd data-name="property"><a lay-href="system/log_list.html">操作日志</a></dd>
+                            <dd data-name="property"><a lay-href="system/clog_list.html">C端用户日志</a></dd>
                         </dl>
                     </li>
                     <li data-name="get" class="layui-nav-item">
-                        <a href="javascript:;" lay-href="system/account_list.html" lay-tips="售后服务" lay-direction="2">
+                        <a href="javascript:;" lay-href="" lay-tips="售后服务" lay-direction="2">
                             <i class="layui-icon layui-icon-auz"></i>
                             <cite>售后服务</cite>
                         </a>
@@ -100,7 +100,7 @@
             </div>
             <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
                 <ul class="layui-tab-title" id="LAY_app_tabsheader">
-                    <li lay-id="systemindex/systemindex.html" lay-attr="systemindex/systemindex.html" class="layui-this"><i
+                    <li lay-id="system/account_list.html" lay-attr="system/account_list.html" class="layui-this"><i
                             class="layui-icon layui-icon-home"></i></li>
                 </ul>
             </div>
@@ -108,7 +108,7 @@
         <!-- 主体内容 -->
         <div class="layui-body" id="LAY_app_body" style="top:95px;">
             <div class="layadmin-tabsbody-item layui-show">
-                <iframe src="systemindex/systemindex.html" frameborder="0" class="layadmin-iframe"></iframe>
+                <iframe src="system/account_list.html" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
 

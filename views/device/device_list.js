@@ -61,7 +61,7 @@ layui.config({
     //表格加载渲染
     table.render({
         elem: '#test-table-operate',
-        height: 'full-100',//必须留着
+        height: 'full-60',//必须留着
         // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
         // url: server + "/ADMINM/user/listUsers",
         method: 'get',

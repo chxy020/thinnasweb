@@ -709,16 +709,12 @@ layui.config({
                 },
                 {
                     field: 'name',
-                    title: '姓名',
-                    align: 'left',
-                }, {
-                    field: 'moble',
-                    title: '手机号',
+                    title: '角色姓名',
                     align: 'left',
                 },
                 {
                     field: 'jues',
-                    title: '角色',
+                    title: '成员',
                     align: 'left',
                     // toolbar: '#test-table-operate-barDemoMore',
                     templet: function(data) {
@@ -735,22 +731,10 @@ layui.config({
                 },
                 {
                     field: 'beizi',
-                    title: '备注',
+                    title: '描述',
                     align: 'left',
                 },
-                {
-                    field: 'denglv',
-                    title: '最近登录',
-                    align: 'left',
-                    templet: function(data) {
-                        return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                    },
-                },
-                {
-                    field: 'time',
-                    title: '创建时间',
-                    align: 'left',
-                },
+                
                 
             ]
         ],
