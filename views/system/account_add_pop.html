@@ -10,49 +10,55 @@
     <link rel="stylesheet" href="./../css/reset.css">
     <script src="../../layuiadmin/layui/layui.js"></script>
     <script src="../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../js/jquery_ex.js"></script>
 </head>
 <body>
-<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0; ">
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span>*</span>姓名：</label>
-        <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input" id="roomname" name="ids">
+<form method="post" class="layui-form" >
+    <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0; ">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span>姓名：</label>
+            <div class="layui-input-block">
+                <input type="text" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input" id="NAME" name="NAME">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span>手机号：</label>
+            <div class="layui-input-block">
+                <input type="text" lay-verify="required" maxlength="11" placeholder="请输入手机号" autocomplete="off" class="layui-input" id="PHONE" name="PHONE">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span>角色：</label>
+            <div class="layui-input-block">
+                <!-- <select name="city" xm-select="select1" xm-select-skin="normal">
+                </select> -->
+                <select id="roleselset" lay-verify="required" name="ROLE_ID">
+                    <option value="">选择角色</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span>密码：</label>
+            <div class="layui-input-block">
+                <p class="tipsT">账号首次创建成功后，将自动发送<span>初始随机密码</span>到填写的手机上，该用户收到后可自行登录修改</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <input type="text" placeholder="请输入备注" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span>*</span>状态：</label>
+            <div class="switchStyle">
+                <input type="checkbox" checked="" value="1" lay-skin="switch" id="STATUS" ><!--开-->
+                <!-- <input type="checkbox" lay-skin="switch"> --><!--关-->
+            </div>
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span>*</span>手机号：</label>
-        <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input" id="roomname" name="ids">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span>*</span>角色：</label>
-        <div class="layui-input-block">
-            <select name="city" xm-select="select1" xm-select-skin="normal">
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span>*</span>密码：</label>
-        <div class="layui-input-block">
-            <p class="tipsT">账号首次创建成功后，将自动发送<span>初始随机密码</span>到填写的手机上，该用户收到后可自行登录修改</p>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">备注：</label>
-        <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input" id="roomname" name="ids">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span>*</span>状态：</label>
-        <div class="switchStyle">
-            <input type="checkbox" checked="" lay-skin="switch"><!--开-->
-            <!-- <input type="checkbox" lay-skin="switch"> --><!--关-->
-        </div>
-    </div>
-</div>
-
+    <button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">登 录</button>
+</form>
 <script src="account_add_pop.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

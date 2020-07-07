@@ -42,6 +42,16 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
       'echarts', //echarts 核心包
       'echartsTheme' //echarts 主题
     ]
+
+    //验证为手机号
+    ,isTel:function(val){
+      var reg = /^1[3|4|5|6|7|8]\d{9}$/;
+      var b = false;
+      if(val !== ""){
+        b = reg.test(val);
+      }
+      return b;
+    }
     
     //全局配置url
     ,baseUrl:'http://39.107.249.187:8080'
