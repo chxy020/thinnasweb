@@ -2,12 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>thinNAS--</title>
+    <!-- <title>thinNAS</title> -->
+    <title>后台管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="alternate icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="font_icon/iconfont.css"><!-- 阿里自定义图标 -->
     <script src="../layuiadmin/layui/layui.js"></script>
     <script src="../js/jquery-3.1.1.min.js"></script>
 </head>
@@ -15,8 +17,9 @@
 <div id="LAY_app">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
-            <div class="layui-logo layui-icon" lay-href="system/account_list.html">
-                <span>ThinNAS运营系统</span>
+            <div class="layui-logo layui-icon layui-side" lay-href="system/account_list.html">
+                <!-- <span>ThinNAS运营系统</span> -->
+                <span>后台管理后台管理</span>
             </div>
             <!-- 头部区域 -->
             <ul class="layui-nav layui-layout-left">
@@ -28,12 +31,12 @@
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
                 <li class="layui-nav-item" lay-unselect>
-                    <i class="layui-icon layui-icon-refresh-3"></i>
+                    <i class="layui-icon iconfont icon-shezhi"></i>
                     <dl class="layui-nav-child">
-                        <dd><a lay-href="set/user/info.html"><i class="layui-icon layui-icon-refresh-3"></i>使用教程</a></dd>
-                        <dd><a lay-href="set/user/info.html"><i class="layui-icon layui-icon-refresh-3"></i>常见问题</a></dd>
-                        <dd><a lay-href="set/user/password.html"><i class="layui-icon layui-icon-refresh-3"></i>修改密码</a></dd>
-                        <dd><a lay-href="set/user/phone.html"><i class="layui-icon layui-icon-refresh-3"></i>退出登录</a></dd>
+                        <dd><a lay-href="set/user/info.html"><i class="layui-icon iconfont icon-shiyongjiaocheng"></i>使用教程</a></dd>
+                        <dd><a lay-href="set/user/info.html"><i class="layui-icon iconfont icon-changjianwenti"></i>常见问题</a></dd>
+                        <dd><a lay-href="set/user/password.html"><i class="layui-icon iconfont icon-xiugaimima"></i>修改密码</a></dd>
+                        <dd><a lay-href="set/user/phone.html"><i class="layui-icon iconfont icon-exit-logon"></i>退出登录</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -41,29 +44,37 @@
 
         <!-- 侧边菜单 -->
         <div class="layui-side layui-side-menu">
+            
             <div class="">
+                <div class="layui-head">
+                    <a href="javascript:;" lay-href="">
+                        <img src="images/headImg.png" width="40"/>
+                        <p>15201466512</p>
+                        <p>超级管理员</p>
+                    </a>
+                </div>
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
                     <li data-name="get" class="layui-nav-item">
                         <a href="javascript:;" lay-href="" lay-tips="数据分析" lay-direction="2">
-                            <i class="layui-icon layui-icon-auz"></i>
+                            <i class="layui-icon iconfont icon-data-analysis"></i>
                             <cite>数据分析</cite>
                         </a>
                     </li>
                     <li data-name="get" class="layui-nav-item">
                         <a href="javascript:;" lay-href="nasuser/nasuser_list.html" lay-tips="用户管理" lay-direction="2">
-                            <i class="layui-icon layui-icon-auz"></i>
+                            <i class="layui-icon iconfont icon-yonghuguanli"></i>
                             <cite>用户管理</cite>
                         </a>
                     </li>
                     <li data-name="get" class="layui-nav-item">
                         <a href="javascript:;" lay-href="device/device_list.html" lay-tips="设备管理" lay-direction="2">
-                            <i class="layui-icon layui-icon-auz"></i>
+                            <i class="layui-icon iconfont icon-shebeishebeiguanli"></i>
                             <cite>设备管理</cite>
                         </a>
                     </li>
                     <li data-name="component" class="layui-nav-item ">
                         <a href="javascript:;" lay-tips="系统管理" lay-direction="2">
-                            <i class="layui-icon layui-icon-refresh-3"></i>
+                            <i class="layui-icon iconfont icon-xitongguanli"></i>
                             <cite>系统管理</cite>
                         </a>
                         <dl class="layui-nav-child">
@@ -75,7 +86,7 @@
                     </li>
                     <li data-name="get" class="layui-nav-item">
                         <a href="javascript:;" lay-href="" lay-tips="售后服务" lay-direction="2">
-                            <i class="layui-icon layui-icon-auz"></i>
+                            <i class="layui-icon iconfont icon-fuwu2"></i>
                             <cite>售后服务</cite>
                         </a>
                     </li>
