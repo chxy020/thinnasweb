@@ -1,5 +1,4 @@
-/** layui-v2.4.5 MIT License By https://www.layui.com */
-.layui-inline,img {display:inline-block;vertical-align:middle}
+/** layui-v2.4.5 MIT License By https://www.layui.com */ .layui-inline,img {display:inline-block;vertical-align:middle}
 h1,h2,h3,h4,h5,h6 {font-weight:400}
 .layui-edge,.layui-header,.layui-inline,.layui-main {position:relative}
 .layui-elip,.layui-form-checkbox span,.layui-form-pane .layui-form-label {text-overflow:ellipsis;white-space:nowrap}
@@ -184,10 +183,6 @@ a cite {font-style:normal;*cursor:pointer}
 .layui-icon-export:before {content:"\e67d"}
 .layui-icon-print:before {content:"\e66d"}
 .layui-icon-slider:before {content:"\e714"}
-.layui-icon-addition:before {content:"\e624"}
-.layui-icon-subtraction:before {content:"\e67e"}
-.layui-icon-service:before {content:"\e626"}
-.layui-icon-transfer:before {content:"\e691"}
 .layui-main {width:1140px;margin:0 auto}
 .layui-header {z-index:1000;height:60px}
 .layui-header a:hover {transition:all .5s;-webkit-transition:all .5s}
@@ -899,10 +894,8 @@ body .layui-util-face .layui-layer-content {padding:0;background-color:#fff;colo
 .layui-slider-vertical .layui-slider-wrap-btn {margin-left:0;margin-bottom:-20px}
 .layui-slider-vertical .layui-slider-tips {margin-left:-8px}
 .layui-slider>span {margin-left:8px}
-}
 .layui-tree {line-height:22px}
 .layui-tree .layui-form-checkbox {margin:0 !important}
-
 .layui-tree-set {width:100%;position:relative}
 .layui-tree-pack {display:none;padding-left:20px;position:relative}
 .layui-tree-iconClick,.layui-tree-main {display:inline-block;vertical-align:middle}
@@ -985,6 +978,18 @@ to {transform:translate3d(0,0,0);opacity:1}
 @keyframes layui-fadeout {0% {opacity:1}
 100% {opacity:0}
 }
-.layui-tree {
-        line-height: 22px;
-}
+/* dh 20.04.05 修改*//*.layui-anim-fadeout {-webkit-animation-name:layui-fadeout;animation-name:layui-fadeout    .layui-input:focus,}
+*/.layui-anim-fadeout {-webkit-animation-name:layui-fadeout;animation-name:layui-fadeout}
+/* 列表页表格边框改为白色 dh 20.04.05 修改*/.layui-table td,.layui-table th,.layui-table-col-set,.layui-table-fixed-r,.layui-table-grid-down,.layui-table-header,.layui-table-page,.layui-table-tips-main,.layui-table-tool,.layui-table-total,.layui-table-view,.layui-table[lay-skin=line],.layui-table[lay-skin=row] {border-color:#fff;}
+/* 列表页翻页居右 dh 20.04.05 修改*/.layui-table-page {padding:7px 0 0;text-align:right;border-top:2px solid #efefef;}
+/* 首页 左侧菜单 更多透明度 dh 20.04.06 修改*/.layui-nav .layui-nav-more {border-top-color:rgba(255,255,255,.2);}
+.layui-form-select dl dd.layui-this {background-color:#f2f2f2;color:#000;}
+.layui-form-checked,.layui-form-checked:hover {border-color:#ffce00;}
+.layui-form-checked[lay-skin=primary] i {border-color:#ffce00 !important;background-color:#ffce00;/*color:#000;复选框 里对勾黑色*/    color:#fff;}
+.layui-form-checkbox[lay-skin=primary]:hover i {border-color:#d2d2d2;color:#fff;}
+/* 重置layui 无数据情况 */.noData {text-align:center;color:#666;line-height:auto;}
+.noData .icon-wuneirong,.noData .icon-lsh-empty_content {color:#f2f2f2;display:block;font-size:90px;margin-top:30px;margin-bottom:10px;}
+.noData2 {position:fixed;top:66px;left:0px;width:100%;height:190px;background-color:#ffffff;z-index:9999;}
+.layui-form-checked i,.layui-form-checked:hover i {color:#ffce00;}
+.layui-form-checked span,.layui-form-checked:hover span {background-color:#ffce00;color:#333}
+.layui-btn-primary:hover {border-color:#c9c9c9;background:#f2f2f2;color:#000;}

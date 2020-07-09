@@ -780,9 +780,9 @@ layui.config({
                         width:60,
                     },
                     {
-                        width: 100,
                         title: '操作',
                         toolbar: '#test-table-operate-barDemo',
+                        align: 'left',
                     },
                     {
                         field: 'name',
@@ -1057,7 +1057,7 @@ layui.config({
                     btn: ['保存', '取消'],
                     btnAlign: 'c',
                     maxmin: true,
-                    content: 'account_add_pop.html',
+                    content: 'role_add_pop.html',
                     yes: function(index, layero) {
                         var submit = layero.find('iframe').contents().find("#ruleclick");
                         submit.click();
