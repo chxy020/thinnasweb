@@ -155,13 +155,16 @@ layui.config({
                 },
                 {
                     field: 'ssd',
-                    title: '可用空间',
+                    // title: '可用空间',
+                    title: '可用空间<i class="layui-icon alone-tips m5" lay-tips="包含自有设备空间、共享空间、安全云空间等">&#xe60b;</i>',
                     align: 'left',
+                    width:100,
                 },
                 {
                     field: 'activecount',
-                    title: '近7天活跃次数',
+                    title: '近7天活跃次数<i class="layui-icon alone-tips m5" lay-tips="最近7天内，打开APP次数，含电视APP">&#xe60b;</i>',
                     align: 'left',
+                    width:120,
                 }
                 
             ]
@@ -184,12 +187,17 @@ layui.config({
         even: true,
         limits: [5, 10, 15],
         done: function(res, curr, count) {
-            table_data = res.data;
 
+
+
+            table_data = res.data;
             layer.closeAll('loading');
             arrangeList.length = 0;
             // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
             // layer.close(index);    //返回数据关闭loading
+
+
+
         },
     });
     //表格刷新渲染

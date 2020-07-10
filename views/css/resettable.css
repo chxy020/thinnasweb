@@ -18,3 +18,17 @@
 .moreOperateAa {background-color:#fff;border:1px solid #ccc;padding:5px 10px;max-height:161px;overflow:auto;}
 .moreOperateArr {position:absolute;left:43px;top:3px;width:17px;height:9px;background:url(../images/tips_arr.png) no-repeat center top;}
 /* 点击查看更多操作 三部分组成 CSS html js  3.10  end*/
+
+
+.layui-layer-tips .layui-layer-content {
+
+        background-color: #666!important;
+    }
+    .layui-layer-tips i.layui-layer-TipsB, .layui-layer-tips i.layui-layer-TipsT {
+        border-right-color: #666!important;
+    }
+
+    .x-admin-sm .layui-icon.m5{
+            margin-left: 5px;
+            font-size: 14px;
+    }
