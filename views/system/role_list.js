@@ -83,11 +83,15 @@ layui.config({
                         align: 'left',
                     },
                     {
-                        field: 'roomname',
+                        field: 'member',
                         title: '成员',
                         align: 'left',
                         templet: function(data) {
-                            return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
+                            var names = [];
+                            data.member.forEach(function(item){
+                                names.push(item.name);
+                            });
+                            return names.join(',') + "<span class='layui-badge table-icon-style2'>" + names.length + "</span>";
                         },
                     },
                     {
