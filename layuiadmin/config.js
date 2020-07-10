@@ -55,7 +55,7 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
 		,getUrlParam:function(name,uri) {
 			 //构造一个含有目标参数的正则表达式对象
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-			var uri = window.location.search;
+			var uri = decodeURI(window.location.search);
 			//匹配目标参数
 			var r = uri.substr(1).match(reg);
 			if (r != null) return r[2]; return null;//返回参数值

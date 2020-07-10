@@ -15,11 +15,15 @@ layui.config({
     // var server = setter.baseUrl;
 
     var server = setter.baseUrl;
-    var uri = window.location.search;
+    // var uri = window.location.search;
     
-    var role_ID = setter.getUrlParam("role_ID",uri) || "";
+    var role_ID = setter.getUrlParam("role_ID") || "";
+    var role_NAME = setter.getUrlParam("role_NAME") || "";
+
+    var treeData = [];
 
     if(role_ID){
+        $("#role_NAME").val(role_NAME);        
         //编辑
         $.Ajax({
             async: false,
@@ -29,7 +33,7 @@ layui.config({
             data:{"ROLE_ID":role_ID},
             success: function(obj) {
                 if(obj.code == 1){
-                    changeRoleHtml(obj.data || {});
+                    buildTreeData(obj.data || []);
                 }else{
                     layer.msg(obj.msg || "获取角色详情错误");
                 }
@@ -38,6 +42,92 @@ layui.config({
         });
     }
 
+    //监听提交
+    form.on('submit(submit)', function(data){
+        // alert(888)
+        // layer.msg(JSON.stringify(data.field),function(){
+        //     location.href='index.html'
+        // });
+
+        // console.log(data.field)
+        // var condi = {};
+        // condi = data.field;
+        // if(role_ID){
+        //     //编辑
+        //     editRole(condi);
+        // }else{
+        //     addRole(condi);
+        // }
+        
+        var checkData = tree.getChecked('menutree');
+
+        console.log(checkData)
+
+        return false;
+    });
+
+    function buildTreeData(data){
+        if(data && data.length > 0){
+            data.forEach(function(obj){
+                var node = {
+                    id:obj.menu_ID,
+                    title:obj.menu_NAME,
+                    checked:false,
+                    children:[]
+                };
+                if(obj.subMenu && obj.subMenu.length > 0){
+                    obj.subMenu.forEach(function(cnode){
+                        var n = {
+                            id:cnode.menu_ID,
+                            title:cnode.menu_NAME,
+                            checked:false,
+                            children:[]
+                        }
+                        node.children.push(n);
+                        if(cnode.subMenu && cnode.subMenu.length > 0){
+                            getChildrenNode(cnode,n.children);
+                        }
+                    });
+                    
+                }
+                treeData.push(node);
+            });
+        }
+        console.log(treeData);
+        initTree(treeData);
+    }
+
+    function getChildrenNode(data,child){
+        data.subMenu.forEach(function(cnode,index){
+            var n = {
+                id:cnode.menu_ID,
+                title:cnode.menu_NAME,
+                checked:false,
+                children:[]
+            }
+            child.push(n);
+            if(cnode.subMenu && cnode.subMenu.length > 0){
+                getChildrenNode(cnode,n.children)
+            }
+        });
+    }
+
+    function initTree(data){
+        //树型组件基本演示
+        tree.render({
+            elem: '#test12'
+            ,data: data
+            ,showCheckbox: true  //是否显示复选框
+            ,id: 'menutree'
+            ,isJump: true //是否允许点击节点时弹出新窗口跳转
+            ,click: function(obj){
+                // var data = obj.data;
+                // console.log(data)
+                // //获取当前点击的节点数据
+                // layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
+            }
+        });
+    }
 
     
     //模拟数据
@@ -184,40 +274,13 @@ layui.config({
             ,field: ''
         }]
         }]
-    }]
-    //树型组件基本演示
-    tree.render({
-        elem: '#test12'
-        ,data: data
-        ,showCheckbox: true  //是否显示复选框
-        ,id: 'demoId1'
-        ,isJump: true //是否允许点击节点时弹出新窗口跳转
-        ,click: function(obj){
-        var data = obj.data;  //获取当前点击的节点数据
-        layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
-        }
-    });
+    }];
+
+    
 
 
 
-    //监听提交
-    form.on('submit(submit)', function(data){
-        // alert(888)
-        // layer.msg(JSON.stringify(data.field),function(){
-        //     location.href='index.html'
-        // });
-        console.log(data.field)
-        var condi = {};
-        condi = data.field;
-        if(role_ID){
-            //编辑
-            editRole(condi);
-        }else{
-            addRole(condi);
-        }
-        
-        return false;
-    });
+    
 
     function changeRoleHtml(obj){
         $("#ROLE_NAME").val(obj.ROLE_NAME || "");

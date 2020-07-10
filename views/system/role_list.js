@@ -95,8 +95,8 @@ layui.config({
                         },
                     },
                     {
-                        field: 'roomname',
-                        title: '描述',
+                        field: 'BZ',
+                        title: '备注',
                         align: 'left',
                     }
                 ]
@@ -248,7 +248,7 @@ layui.config({
                 btn: ['保存', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
-                content: 'role_menu.html?role_ID='+data.role_ID,
+                content: 'role_menu.html?role_ID='+data.role_ID+"&role_NAME="+data.role_NAME,
                 yes: function(index, layero) {
                     var submit = layero.find('iframe').contents().find("#submit");
                     submit.click();
