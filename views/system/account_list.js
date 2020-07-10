@@ -379,7 +379,7 @@ layui.config({
                         console.log("error")
                     }
                 })
-                layer.close(index);
+                // layer.close(index);
             });
         } else if (obj.event === 'edit') {
             layer.open({

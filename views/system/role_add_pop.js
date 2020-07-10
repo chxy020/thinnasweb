@@ -47,6 +47,9 @@ layui.config({
         console.log(data.field)
         var condi = {};
         condi = data.field;
+        //写死组id
+        condi.PARENT_ID = 1;
+
         if(role_ID){
             //编辑
             editRole(condi);
@@ -59,7 +62,7 @@ layui.config({
 
     function changeRoleHtml(obj){
         $("#ROLE_NAME").val(obj.ROLE_NAME || "");
-        $("#ROLE_BZ").val(obj.ROLE_BZ || "");
+        $("#BZ").val(obj.BZ || "");
     }
 
     function addRole(condi){

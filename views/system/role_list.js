@@ -202,7 +202,7 @@ layui.config({
                     url: server + "/ADMINM/role/delete",
                     dataType: "json",
                     data: {
-                        "USER_ID": data.USER_ID
+                        "ROLE_ID": data.role_ID
                     },
                     //成功的回调函数
                     success: function (msg) {
@@ -219,7 +219,7 @@ layui.config({
                         console.log("error")
                     }
                 })
-                layer.close(index);
+                // layer.close(index);
             });
         } else if (obj.event === 'edit') {
             layer.open({
