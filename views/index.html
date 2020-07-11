@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="font_icon/iconfont.css"><!-- 阿里自定义图标 -->
     <script src="../layuiadmin/layui/layui.js"></script>
     <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/jquery_ex.js"></script>
 </head>
 <body class="layui-layout-body">
 <div id="LAY_app">
@@ -36,7 +37,7 @@
                         <dd><a lay-href="set/user/info.html"><i class="layui-icon iconfont icon-shiyongjiaocheng"></i>使用教程</a></dd>
                         <dd><a lay-href="set/user/info.html"><i class="layui-icon iconfont icon-changjianwenti"></i>常见问题</a></dd>
                         <dd><a lay-href="set/user/password.html"><i class="layui-icon iconfont icon-xiugaimima"></i>修改密码</a></dd>
-                        <dd><a lay-href="set/user/phone.html"><i class="layui-icon iconfont icon-exit-logon"></i>退出登录</a></dd>
+                        <dd class="layui-ds" data-type="loginout" ><a href="javascript:;"><i class="layui-icon iconfont icon-exit-logon"></i>退出登录</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -89,6 +90,24 @@
                             <i class="layui-icon iconfont icon-fuwu2"></i>
                             <cite>售后服务</cite>
                         </a>
+                    </li>
+                    <li data-name="get" class="layui-nav-item">
+                        <a href="javascript:;" lay-href="" lay-tips="账号信息" lay-direction="2">
+                            <i class="layui-icon iconfont icon-fuwu2"></i>
+                            <cite>账号信息</cite>
+                        </a>
+                    </li>
+                    <li data-name="component" class="layui-nav-item ">
+                        <a href="javascript:;" lay-tips="设置" lay-direction="2">
+                            <i class="layui-icon iconfont icon-xitongguanli"></i>
+                            <cite>设置</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd ><a lay-href="system/account_list.html">使用教程管理</a></dd>
+                            <dd data-name="property"><a lay-href="system/role_list.html">常见问题编辑</a></dd>
+                            <dd data-name="property"><a lay-href="system/log_list.html">修改密码</a></dd>
+                            <dd data-name="property"><a lay-href="system/clog_list.html">退出登录</a></dd>
+                        </dl>
                     </li>
                 </ul>
             </div>

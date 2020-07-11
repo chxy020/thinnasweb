@@ -61,32 +61,71 @@ layui.config({
         
         var checkData = tree.getChecked('menutree');
 
-        console.log(checkData)
+        console.log(checkData);
+
+        var menusIds = [];
+        getTreeCheckedIds(checkData,menusIds);
+
+        var condi = {};
+        condi.ROLE_ID = role_ID;
+        condi.menuIds = menusIds.join(',');
+        console.log(menusIds);
+        saveRoleMenuIds(condi);
+        // {"ROLE_ID":ROLE_ID,"menuIds":ids};
 
         return false;
     });
 
     function buildTreeData(data){
+        var checkids = [];
         if(data && data.length > 0){
             data.forEach(function(obj){
                 var node = {
                     id:obj.menu_ID,
                     title:obj.menu_NAME,
-                    checked:false,
+                    checked:obj.hasMenu || false,
+                    // checked:false,
+                    spread:true,
                     children:[]
                 };
+                // if(obj.hasMenu){
+                //     checkids.push(obj.menu_ID);
+                // }
                 if(obj.subMenu && obj.subMenu.length > 0){
+                    obj.subMenu.forEach(function(cnode){
+                        if(!cnode.hasMenu){
+                            node.checked = false;
+                        }
+                    });
+                    if(obj.hasMenu == node.checked && node.checked){
+                        //子集都是tree,只要父级为tree,不然复选框错误
+                        obj.subMenu.forEach(function(cnode){
+                            cnode.hasMenu = false;
+                        });
+                    }
+
                     obj.subMenu.forEach(function(cnode){
                         var n = {
                             id:cnode.menu_ID,
                             title:cnode.menu_NAME,
-                            checked:false,
+                            // checked:false,
+                            checked:cnode.hasMenu || false,
+                            // spread:true,
                             children:[]
-                        }
+                        };
+                        // if(!cnode.hasMenu){
+                        //     node.checked = false;
+                        // }
+                        // if(cnode.hasMenu){
+                        //     checkids.push(cnode.menu_ID);
+                        // }
+
                         node.children.push(n);
-                        if(cnode.subMenu && cnode.subMenu.length > 0){
-                            getChildrenNode(cnode,n.children);
-                        }
+
+                        //无限级树checked赋值有问题，暂不处理。我们就二级
+                        // if(cnode.subMenu && cnode.subMenu.length > 0){
+                        //     getChildrenNode(cnode,n.children);
+                        // }
                     });
                     
                 }
@@ -95,19 +134,36 @@ layui.config({
         }
         console.log(treeData);
         initTree(treeData);
+
+        // setTimeout(function(){
+        //     tree.setChecked("menutree", checkids);
+        // },1000)
+       
+        // console.log("checkids----",checkids)
+        // // setChecked
+        // layui.form.render();
     }
 
     function getChildrenNode(data,child){
+        
         data.subMenu.forEach(function(cnode,index){
             var n = {
                 id:cnode.menu_ID,
                 title:cnode.menu_NAME,
-                checked:false,
+                // checked:false,
+                // checked:cnode.hasMenu || false,
+                // spread:true,
                 children:[]
+            }
+            // if(!cnode.hasMenu){
+            //     child.checked = false;
+            // }
+            if(cnode.hasMenu){
+                checkids.push(cnode.menu_ID);
             }
             child.push(n);
             if(cnode.subMenu && cnode.subMenu.length > 0){
-                getChildrenNode(cnode,n.children)
+                getChildrenNode(cnode,n.children,checkids)
             }
         });
     }
@@ -125,6 +181,57 @@ layui.config({
                 // console.log(data)
                 // //获取当前点击的节点数据
                 // layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
+            }
+        });
+    }
+
+
+    function getTreeCheckedIds(data,menusIds){
+        if(data && data.length > 0){
+            data.forEach(function(obj){
+                menusIds.push(obj.id);
+                if(obj.children && obj.children.length > 0){
+                    obj.children.forEach(function(cnode){
+                        menusIds.push(cnode.id);
+                        if(cnode.children && cnode.children.length > 0){
+                            getTreeChildrenCheckedIds(cnode,menusIds);
+                        }
+                    });
+                    
+                }
+            });
+        }
+    }
+
+    function getTreeChildrenCheckedIds(data,menusIds){
+        data.children.forEach(function(cnode){
+            menusIds.push(cnode.id);
+            if(cnode.children && cnode.children.length > 0){
+                getTreeChildrenCheckedIds(cnode,menusIds);
+            }
+        });
+    }
+
+    function saveRoleMenuIds(condi){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/role/saveMenuqx",
+            dataType: "json",
+            method: 'post',
+            data:condi,
+            success: function(obj) {
+                if(obj.code == 1){
+                    layer.msg("角色栏目设置成功");
+
+                    setTimeout(function(){
+                        //刷新父页面
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name);
+               		    parent.layer.close(index);
+                    },1500);
+                }else{
+                    layer.msg(obj.msg || "角色栏目设置失败");
+                }
             }
         });
     }
@@ -153,10 +260,12 @@ layui.config({
             ,children: [{
                 title: '五级1-1-3-1-1'
                 ,id: 30
+                ,checked: true
                 ,field: ''
             },{
                 title: '五级1-1-3-1-2'
                 ,id: 31
+                ,checked: false
                 ,field: ''
             }]
             }]
@@ -276,66 +385,5 @@ layui.config({
         }]
     }];
 
-    
-
-
-
-    
-
-    function changeRoleHtml(obj){
-        $("#ROLE_NAME").val(obj.ROLE_NAME || "");
-        $("#ROLE_BZ").val(obj.ROLE_BZ || "");
-    }
-
-    function addRole(condi){
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/add",
-            dataType: "json",
-            method: 'post',
-            data:condi,
-            success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("添加成功");
-
-                    setTimeout(function(){
-                        //刷新父页面
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-               		    parent.layer.close(index);
-                    },1500);
-                }else{
-                    layer.msg(obj.msg || "添加失败");
-                }
-            }
-        });
-    }
-
-    function editRole(condi){
-        condi.ROLE_ID = role_ID;
-
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/edit",
-            dataType: "json",
-            method: 'post',
-            data:condi,
-            success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("修改成功");
-
-                    setTimeout(function(){
-                        //刷新父页面
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-               		    parent.layer.close(index);
-                    },1500);
-                }else{
-                    layer.msg(obj.msg || "修改失败");
-                }
-            }
-        });
-    }
-    
-
+    // initTree(data);
 });

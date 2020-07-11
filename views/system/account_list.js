@@ -126,6 +126,10 @@ layui.config({
                 ]
             ],
             parseData: function(res){
+                if(res.code == 302){
+                    top.location.href = setter.loginUrl;
+                    return;
+                }
                 if(res.code == 1){
                     //res 即为原始返回的数据
                     return {
@@ -199,107 +203,107 @@ layui.config({
 
     tableRender();
     
-    //表格刷新渲染
-    window.reloads = function() {
-        table.render({
-            elem: '#test-table-operate',
-            height: 'full-100',//必须留着
-            url: server + "/ADMINM/user/listUsers",
-            method: 'get',
-            xhrFields: {
-                withCredentials: true
-            },
-            page: {
-                layout: ['prev', 'page', 'next', 'count', 'skip']
-            },
-            cols: [
-                [ //表头
-                    {
-                        type: 'checkbox',
-                        fixed: 'left',
-                    },
-                    {
-                        field: 'id',
-                        title: '序号',
-                        unresize: 'false',
-                        width:60,
-                        templet: function(data) {
-                            return data.LAY_INDEX;
-                        }
-                    },
-                    {
-                        width: 100,
-                        title: '操作',
-                        toolbar: '#test-table-operate-barDemo',
-                    },
-                    {
-                        field: 'NAME',
-                        title: '姓名',
-                        align: 'left',
-                    }, {
-                        field: 'PHONE',
-                        title: '手机号',
-                        align: 'left',
-                    },
-                    {
-                        field: 'ROLE_NAME',
-                        title: '角色',
-                        align: 'left',
-                    },
-                    {
-                        field: 'beizi',
-                        title: '备注',
-                        align: 'left',
-                    },
-                    {
-                        field: 'LAST_LOGIN',
-                        title: '最近登录',
-                        align: 'left',
-                        templet: function(data) {
-                            return data.LAST_LOGIN + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                        },
-                    },
-                    {
-                        field: 'time',
-                        title: '创建时间',
-                        align: 'left',
-                    },
-                ]
-            ],
-            parseData: function(res){
-                if(res.code == 1){
-                    //res 即为原始返回的数据
-                    return {
-                        "code": 0,
-                        "msg": "",
-                        "count": res.count,
-                        "data": res.userList
-                    };
-                }else{
-                    return {
-                        "code": 0,
-                        "msg": "接口数据错误",
-                        "count": 0, 
-                        "data": [] 
-                    }
-                }
-            },
-            event: true,
-            page: true,
-            limit: 15,
-            skin: 'line',
-            even: true,
-            limits: [5, 10, 15],
-            done: function(res, curr, count) {
-                // table_data = res.data;
-                // layer.closeAll('loading');
-                // arrangeList.length = 0;
-                // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-                layer.close(index);    //返回数据关闭loading
-            },
+    // //表格刷新渲染
+    // window.reloads = function() {
+    //     table.render({
+    //         elem: '#test-table-operate',
+    //         height: 'full-100',//必须留着
+    //         url: server + "/ADMINM/user/listUsers",
+    //         method: 'get',
+    //         xhrFields: {
+    //             withCredentials: true
+    //         },
+    //         page: {
+    //             layout: ['prev', 'page', 'next', 'count', 'skip']
+    //         },
+    //         cols: [
+    //             [ //表头
+    //                 {
+    //                     type: 'checkbox',
+    //                     fixed: 'left',
+    //                 },
+    //                 {
+    //                     field: 'id',
+    //                     title: '序号',
+    //                     unresize: 'false',
+    //                     width:60,
+    //                     templet: function(data) {
+    //                         return data.LAY_INDEX;
+    //                     }
+    //                 },
+    //                 {
+    //                     width: 100,
+    //                     title: '操作',
+    //                     toolbar: '#test-table-operate-barDemo',
+    //                 },
+    //                 {
+    //                     field: 'NAME',
+    //                     title: '姓名',
+    //                     align: 'left',
+    //                 }, {
+    //                     field: 'PHONE',
+    //                     title: '手机号',
+    //                     align: 'left',
+    //                 },
+    //                 {
+    //                     field: 'ROLE_NAME',
+    //                     title: '角色',
+    //                     align: 'left',
+    //                 },
+    //                 {
+    //                     field: 'beizi',
+    //                     title: '备注',
+    //                     align: 'left',
+    //                 },
+    //                 {
+    //                     field: 'LAST_LOGIN',
+    //                     title: '最近登录',
+    //                     align: 'left',
+    //                     templet: function(data) {
+    //                         return data.LAST_LOGIN + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
+    //                     },
+    //                 },
+    //                 {
+    //                     field: 'time',
+    //                     title: '创建时间',
+    //                     align: 'left',
+    //                 },
+    //             ]
+    //         ],
+    //         parseData: function(res){
+    //             if(res.code == 1){
+    //                 //res 即为原始返回的数据
+    //                 return {
+    //                     "code": 0,
+    //                     "msg": "",
+    //                     "count": res.count,
+    //                     "data": res.userList
+    //                 };
+    //             }else{
+    //                 return {
+    //                     "code": 0,
+    //                     "msg": "接口数据错误",
+    //                     "count": 0, 
+    //                     "data": [] 
+    //                 }
+    //             }
+    //         },
+    //         event: true,
+    //         page: true,
+    //         limit: 15,
+    //         skin: 'line',
+    //         even: true,
+    //         limits: [5, 10, 15],
+    //         done: function(res, curr, count) {
+    //             // table_data = res.data;
+    //             // layer.closeAll('loading');
+    //             // arrangeList.length = 0;
+    //             // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+    //             layer.close(index);    //返回数据关闭loading
+    //         },
 
-        });
-    }
+    //     });
+    // }
 
 
     window.onkeyup = function(ev) {

@@ -64,7 +64,38 @@ layui.config({
         error: function (error) {
             console.log(error)
         },
-    })
+    });
+
+
+    var $ = layui.$,
+    active = {
+        loginout: function() {
+            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确定退出系统吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'退出登录',btnAlign:'c'}, function() {
+                $.Ajax({
+                    async: false,
+                    type: "post",
+                    url:server + "/ADMINM/logout",
+                    dataType: "json",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function(obj) {
+                        
+                    },
+                    //失败的回调函数
+                    error: function() {
+                        console.log("error")
+                    }
+                })
+            });
+            return;
+        }
+    };
+    //给页面里的layui-dS 绑定事件
+    $('.layui-ds').on('click', function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
 
 
     // function isEmptyObject(obj) {

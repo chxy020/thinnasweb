@@ -91,17 +91,21 @@ layui.config({
                             data.member.forEach(function(item){
                                 names.push(item.name);
                             });
-                            return names.join(',') + "<span class='layui-badge table-icon-style2'>" + names.length + "</span>";
+                            return (names.join(',') == "" ? "无" : names.join(',')) + "<span class='layui-badge table-icon-style2'>" + names.length + "</span>";
                         },
                     },
                     {
-                        field: 'BZ',
+                        field: 'bz',
                         title: '备注',
                         align: 'left',
                     }
                 ]
             ],
             parseData: function(res){
+                if(res.code == 302){
+                    top.location.href = setter.loginUrl;
+                    return;
+                }
                 return {
                     "code": 0,
                     "msg": "",

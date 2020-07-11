@@ -61,7 +61,7 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
 			if (r != null) return r[2]; return null;//返回参数值
 		}
 
-
+		,loginUrl:'/views/user/login.html'
 		//全局配置url
 		,baseUrl:'http://39.107.249.187:8080'
 		// ,baseUrl:'http://127.0.0.1:8083'

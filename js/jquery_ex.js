@@ -93,6 +93,14 @@ if(typeof(jQuery) != "undefined"){
 				}
 				var success = option.success || function(){};
 				option.success = function(res){
+					if(res.code == 302){
+						if(window != top){
+							top.location.href = '/views/user/login.html';
+						}else{
+							location.href = '/views/user/login.html';
+						}
+						return;
+					}
 					// Utils.loadClose();
 					success.call(this,res || {});
 				}
