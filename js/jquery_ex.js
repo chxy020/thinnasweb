@@ -95,9 +95,9 @@ if(typeof(jQuery) != "undefined"){
 				option.success = function(res){
 					if(res.code == 302){
 						if(window != top){
-							top.location.href = '/views/user/login.html';
+							top.location.href = '/ADMINM/static/views/user/login.html';
 						}else{
-							location.href = '/views/user/login.html';
+							location.href = '/ADMINM/static/views/user/login.html';
 						}
 						return;
 					}

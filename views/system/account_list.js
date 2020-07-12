@@ -22,6 +22,28 @@ layui.config({
         return jlength
     };
 
+
+    function getAllRole(){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/role",
+            dataType: "json",
+            method: 'get',
+            success: function(obj) {
+                console.log(obj);
+                roleSelectHtml(obj.roleList_z || []);
+            }
+        });
+    }
+
+    function roleSelectHtml(roleList){
+        for (i = 0; i < roleList.length; i++) {
+            var role = roleList[i] || {};
+            $('#roleselset').append(new Option(role.role_NAME, role.role_ID));
+        }
+        layui.form.render("select");
+    }
+
     function tableRender(){
         var keywords = $("keyword").val() || "";
 
@@ -149,10 +171,10 @@ layui.config({
             },
             event: true,
             page: true,
-            limit: 1,
+            limit: 10,
             skin: 'line',
             even: true,
-            limits: [1,5, 10, 15],
+            limits: [5, 10, 15],
             done: function(res, curr, count) {
                 // table_data = res.data;
 
@@ -201,6 +223,7 @@ layui.config({
         }
     });
 
+    getAllRole();
     tableRender();
     
     // //表格刷新渲染

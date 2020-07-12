@@ -80,7 +80,6 @@ layui.config({
                         withCredentials: true
                     },
                     success: function(obj) {
-                        
                     },
                     //失败的回调函数
                     error: function() {
