@@ -4,11 +4,12 @@ layui.config({
     index: 'lib/index' //主入口模块
 }).use(['index','laydate','form'],function () {
     var $ = layui.$,
+    element = layui.element,
     setter = layui.setter;
-    window.element = layui.element;
+    // window.element = layui.element;
     var server = setter.baseUrl;
 
-    $.ajax({
+    $.Ajax({
         async: false,
         type: "POST",
         url: server + "/ADMINM/main/index",
@@ -20,7 +21,17 @@ layui.config({
             withCredentials: true
         },
         //成功的回调函数
-        success: function (msg) {
+        success: function (obj) {
+            if(obj.user){
+                var user = obj.user || {};
+                $("#headimg").attr("src",user.headimg || "images/headImg.png");
+                $("#phone").html(user.phone || "");
+                $("#username").html(user.username || "");
+            }
+            if(obj.menuList){
+                let menu = obj.menuList || []
+                buildMenuData(menu);
+            }
             // var data = msg.data;
             // if (msg.code != 0) {
             //     // location.href = "user/login.html"
@@ -65,6 +76,48 @@ layui.config({
             console.log(error)
         },
     });
+
+    
+    function buildMenuData(data){
+        var html = [];
+        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-fuwu2","icon-fuwu2","icon-xitongguanli"]
+        if(data && data.length > 0){
+            data.forEach(function(obj){
+                var name = obj.menu_NAME || "";
+                var url = obj.menu_HTML || "";
+                var icon = imgclass[obj.menu_ID] || ""
+                html.push('<li data-name="get" class="layui-nav-item">');
+
+                if(obj.subMenu && obj.subMenu.length > 0){
+                    html.push('<a href="javascript:;" lay-tips="' + name + '">');
+                }else{
+                    html.push('<a href="javascript:;" lay-href="' + url +'" lay-tips="' + name + '">');
+                }
+                html.push('<i class="layui-icon iconfont ' + icon +'"></i>');
+                html.push('<cite>' + name + '</cite>');
+                html.push('</a>');
+               
+                // debugger
+                if(obj.subMenu && obj.subMenu.length > 0){
+                    html.push('<dl class="layui-nav-child">');
+                    obj.subMenu.forEach(function(cnode){
+                        var name = cnode.menu_NAME || "";
+                        var url = cnode.menu_HTML || "";
+                        html.push('<dd ><a lay-href="' + url +'">'+name+'</a></dd>');
+                    });
+                    html.push('</dl>');
+                }
+                html.push('</li>');
+            });
+
+            $("#LAY-system-side-menu").html(html.join(''));
+        }
+
+        element.render();
+    }
+
+
+    
 
 
     var $ = layui.$,

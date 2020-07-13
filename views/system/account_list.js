@@ -44,9 +44,23 @@ layui.config({
         layui.form.render("select");
     }
 
-    function tableRender(){
-        var keywords = $("keyword").val() || "";
+    function changeUserStatus(condi){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/user/editUs",
+            dataType: "json",
+            method: 'post',
+            data:condi,
+            success: function(obj) {
+                console.log(obj);
+                // roleSelectHtml(obj.roleList_z || []);
+            }
+        });
+    }
 
+    function tableRender(){
+        var keywords = $("#keyword").val() || "";
+        
         //表格加载渲染
         table.render({
             elem: '#test-table-operate',
@@ -193,12 +207,12 @@ layui.config({
     // });
 
     //监听指定开关
-    form.on('switch(switchTest)', function(data){
-        layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-            offset: '6px'
-        });
-        layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-    });
+    // form.on('switch(switchTest)', function(data){
+    //     layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+    //         offset: '6px'
+    //     });
+    //     layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+    // });
 
     $("#keyword").on({
         keyup : function(e){        
@@ -423,19 +437,26 @@ layui.config({
                 }
             });
         } else if (obj.event === 'switch') {
-            console.log("data.id=====",data.id)
-            console.log("data.jz=====",data.jz)
-            if(data.jz==1){
-                data.jz=2
-                console.log("data.jz=====11",data.jz)
-                layer.msg("账号已禁用")
+            // console.log("data.id=====",data.id)
+            // console.log("data.jz=====",data.jz)
+            var condi = {};
+            condi.USER_ID = data.USER_ID;
+            if(data.STATUS==1){
+                // data.jz=2
+                // console.log("data.jz=====11",data.jz)
+                // layer.msg("账号已禁用")
                 //把数据提交到接口里
+                condi.STATUS = 0;
+                
             }else{
-                data.jz=1
-                layer.msg("账号已启用")
-                console.log("data.jz=====22",data.jz)
+                // data.jz=1
+                // layer.msg("账号已启用")
+                // console.log("data.jz=====22",data.jz)
                 //把数据提交到接口里
+                condi.STATUS = 1;
             }
+            changeUserStatus(condi);
+
         } else if (obj.event === 'openlog'){
             console.log("data.id=====",data.id)
             console.log("00000000000000")
