@@ -42,6 +42,7 @@ layui.config({
         };
         return jlength
     };
+
     //表格里滑动开关
     // form.on('submit(formDemo)', function(data){
     //     layer.msg(JSON.stringify(data.field));
@@ -58,10 +59,10 @@ layui.config({
     
 
 
-    //表格加载渲染
+    //表格A加载渲染
     table.render({
-        elem: '#test-table-operate',
-        height: 'full-60',//必须留着
+        elem: '#test-table-operateA',
+        height: '278',//必须留着
         // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
         // url: server + "/ADMINM/user/listUsers",
         method: 'get',
@@ -70,108 +71,81 @@ layui.config({
         }
         ,data: [
             {
-                id:1,
-                jz:1,//1是开 2是禁止
-                deviceid:"12308080",
-                online:'离线',
-                nickname:"张三",
-                status:"未激活",
-                adminuser:"苏苏",
-                tel:'15201466512',
-                bindtime:"2020-7-2 12:12",
-                usercount:10,
-                ssd:"1.37T",
-                usecount:45000,
-            }
+                userName:"张三",
+                history:"绑定为管理员",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"解绑管理员",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"加入共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"加入共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"加入共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
         ]
-        ,page: {
-            layout: ['prev', 'page', 'next', 'count', 'skip']
-        },
-        cols: [
+        // ,page: {
+        //     layout: ['prev', 'page', 'next', 'count', 'skip']
+        // },
+        ,cols: [
             [ //表头
                 {
-                    type: 'checkbox',
-                    fixed: 'left',
-                },
-                {
-                    field: 'id',
-                    title: '序号',
-                    unresize: 'false',
-                    width:60,
-                },
-                // {
-                //     width: 100,
-                //     title: '操作',
-                //     toolbar: '#test-table-operate-barDemo',
-                // },
-                {
-                    // field: 'deviceid',
-                    title: '设备ID',
+                    field: 'userName',
+                    title: '用户名',
                     align: 'left',
-                    toolbar: '#test-table-operate-barDemo',
-
-                }, {
-                    field: 'online',
-                    title: '是否在线',
+                }, 
+                {
+                    field: 'history',
+                    title: '操作历史',
                     align: 'left',
                 },
                 {
-                    field: 'nickname',
-                    title: '昵称',
+                    field: 'time',
+                    title: '时间',
                     align: 'left',
-                    // toolbar: '#test-table-operate-barDemoMore',
-                    templet: function(data) {
-                        // console.log(data)
-                        return data.nickname;
-                            // var htmlStr = "";
-                            // for (i = 0; i < data.namelist.length; i++) { 
-                            //     console.log("000")
-                            //     htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
-                            // }
-                            // console.log("htmlStr====",htmlStr);
-                            // var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
-                            // console.log("contStr====",contStr);
-                            // return data.name + contStr
-                    },
-                },
-                {
-                    field: 'status',
-                    title: '状态',
-                    align: 'left',
-                },
-                {
-                    field: 'adminuser',
-                    title: '管理员',
-                    align: 'left',
-                    templet: function(data) {
-                        // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                        return data.adminuser + "<span style='font-size:12px;color:#888'> "+data.tel+"</span>"
-                    },
-                },
-                {
-                    field: 'bindtime',
-                    title: '绑定/激活时间',
-                    align: 'left',
-                    templet: function(data) {
-                        // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                        return data.bindtime + " / " + data.bindtime
-                    },
-                },
-                {
-                    field: 'usercount',
-                    title: '设备用户数',
-                    align: 'left',
-                },
-                {
-                    field: 'ssd',
-                    title: '可用空间',
-                    align: 'left',
-                },
-                {
-                    field: 'usecount',
-                    title: '近7天使用次数',
-                    align: 'left',
-                },
+                }
                 
             ]
         ],
@@ -184,14 +158,171 @@ layui.config({
         //       "data": res.userList //解析数据列表
         //     };
         // },
-        page: true,
-
+        // page: true,
         event: true,
-        
         limit: 15,
-        skin: 'line',
-        even: true,
-        limits: [5, 10, 15],
+        // limits: [5, 10, 15],
+        done: function(res, curr, count) {
+            table_data = res.data;
+
+            layer.closeAll('loading');
+            arrangeList.length = 0;
+            // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+            // layer.close(index);    //返回数据关闭loading
+        },
+    });
+    //表格B加载渲染
+    table.render({
+        elem: '#test-table-operateB',
+        height: '278',//必须留着
+        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+        // url: server + "/ADMINM/user/listUsers",
+        method: 'get',
+        xhrFields: {
+            withCredentials: true
+        }
+        ,data: [
+            {
+                userName:"张三",
+                history:"绑定为管理员",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"解绑管理员",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"加入共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+
+        ]
+        // ,page: {
+        //     layout: ['prev', 'page', 'next', 'count', 'skip']
+        // },
+        ,cols: [
+            [ //表头
+                {
+                    field: 'userName',
+                    title: '用户',
+                    align: 'left',
+                }, 
+                {
+                    field: 'history',
+                    title: '空间使用情况',
+                    align: 'left',
+                },
+                {
+                    field: 'time',
+                    title: '文件数',
+                    align: 'left',
+                }
+                
+            ]
+        ],
+        // parseData: function(res){
+        //     //res 即为原始返回的数据
+        //     return {
+        //       "code": 0, //解析接口状态
+        //       "msg": "", //解析提示文本
+        //       "count": 100, //解析数据长度
+        //       "data": res.userList //解析数据列表
+        //     };
+        // },
+        limit: 15,
+        done: function(res, curr, count) {
+            table_data = res.data;
+
+            layer.closeAll('loading');
+            arrangeList.length = 0;
+            // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+            // layer.close(index);    //返回数据关闭loading
+        },
+    });
+    //表格C加载渲染
+    table.render({
+        elem: '#test-table-operateC',
+        height: '278',//必须留着
+        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+        // url: server + "/ADMINM/user/listUsers",
+        method: 'get',
+        xhrFields: {
+            withCredentials: true
+        }
+        ,data: [
+            {
+                userName:"张三",
+                history:"绑定为管理员",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"解绑管理员",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"加入共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+            {
+                userName:"张三",
+                history:"退出共享使用",
+                time:"2020-7-13 12:12"
+            },
+
+        ]
+        // ,page: {
+        //     layout: ['prev', 'page', 'next', 'count', 'skip']
+        // },
+        ,cols: [
+            [ //表头
+                {
+                    field: 'userName',
+                    title: '用户',
+                    align: 'left',
+                }, 
+                {
+                    field: 'history',
+                    title: '空间使用情况',
+                    align: 'left',
+                },
+                {
+                    field: 'time',
+                    title: '文件数',
+                    align: 'left',
+                }
+                
+            ]
+        ],
+        // parseData: function(res){
+        //     //res 即为原始返回的数据
+        //     return {
+        //       "code": 0, //解析接口状态
+        //       "msg": "", //解析提示文本
+        //       "count": 100, //解析数据长度
+        //       "data": res.userList //解析数据列表
+        //     };
+        // },
+        limit: 15,
+        // skin: 'nob',
         done: function(res, curr, count) {
             table_data = res.data;
 
@@ -268,11 +399,9 @@ layui.config({
                     },
                 ]
             ],
-            event: true,
             page: true,
             limit: 15,
-            skin: 'line',
-            even: true,
+            skin: 'nob',
             limits: [5, 10, 15],
             done: function(res, curr, count) {
                 table_data = res.data;
@@ -369,17 +498,15 @@ layui.config({
                 })
                 layer.close(index);
             });
-        } else if (obj.event === 'details') {
-            console.log("data.deviceid===",data.deviceid);
+        } else if (obj.event === 'edit') {
             layer.open({
                 type: 2,
-                title: '设备详情',
-                offset: 'rb',
-                area: ['80%', '100%'],
-                // btn: ['保存', '取消'],
-                // btnAlign: 'c',
+                title: '编辑账号',
+                area: ['500px', '400px'],
+                btn: ['保存', '取消'],
+                btnAlign: 'c',
                 maxmin: true,
-                content: 'device_details.html?id='+data.deviceid,
+                content: 'account_edit_pop.html',
                 // content: 'account_edit_pop.html?id=" + data.id,
                 yes: function(index, layero) {
                 }
