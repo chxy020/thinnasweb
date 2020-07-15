@@ -36,754 +36,143 @@ layui.config({
     });
     
 
-
-    //表格加载渲染
-    table.render({
-        elem: '#test-table-operate',
-        height: 'full-100',//必须留着
-        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-        url: server + "/ADMINM/user/listUsers",
-        method: 'get',
-        xhrFields: {
-            withCredentials: true
-        }
-        // ,data: [
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-                    
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-            
-        //     {
-        //         id:1,
-        //         jz:1,//1是开 2是禁止
-        //         name:"运营管理员",
-        //         namelist:[{
-        //                 name:"张三",
-        //                 tel:"152000000"
-        //             },
-        //             {
-        //                 name:"李四",
-        //                 tel:"152000001"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //             {
-        //                 name:"王五",
-        //                 tel:"152000002"
-        //             },
-        //         ],
-        //         moble:'15201466512',
-        //         jues:"运营、管理员",
-        //         beizi:"无",
-        //         denglv:"1分钟前",
-        //         time:"2020-7-2"
-        //     },
-            
-            
-        // ]
-        ,page: {
-            layout: ['prev', 'page', 'next', 'count', 'skip']
-        },
-        cols: [
-            [ //表头
-                {
-                    type: 'checkbox',
-                    fixed: 'left',
-                },
-                {
-                    field: 'NUMBER',
-                    title: '序号',
-                    unresize: 'false',
-                    width:60,
-                },
-                {
-                    width: 100,
-                    title: '操作',
-                    toolbar: '#test-table-operate-barDemo',
-                },
-                {
-                    field: 'USERNAME',
-                    title: '姓名',
-                    align: 'left',
-                }, {
-                    field: 'PHONE',
-                    title: '手机号',
-                    align: 'left',
-                },
-                {
-                    field: 'ROLE_NAME',
-                    title: '角色',
-                    align: 'left',
-                    // toolbar: '#test-table-operate-barDemoMore',
-                    templet: function(data) {
-                        // console.log(data)
-                        return data.ROLE_NAME;
-                            // var htmlStr = "";
-                            // for (i = 0; i < data.namelist.length; i++) { 
-                            //     console.log("000")
-                            //     htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
-                            // }
-                            // console.log("htmlStr====",htmlStr);
-                            // var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
-                            // console.log("contStr====",contStr);
-                            // return data.name + contStr
-                    },
-                },
-                {
-                    field: 'beizi',
-                    title: '备注',
-                    align: 'left',
-                },
-                {
-                    field: 'LAST_LOGIN',
-                    title: '最近登录',
-                    align: 'left',
-                    templet: function(data) {
-                        // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                        return data.LAST_LOGIN + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                    },
-                },
-                {
-                    field: 'LAST_LOGIN',
-                    title: '创建时间',
-                    align: 'left',
-                },
-                
-            ]
-        ],
-        parseData: function(res){
-            //res 即为原始返回的数据
-            return {
-              "code": 0, //解析接口状态
-              "msg": "", //解析提示文本
-              "count": 100, //解析数据长度
-              "data": res.userList //解析数据列表
-            };
-        },
-        page: false,
-
-        event: true,
+//表格加载渲染
+table.render({
+    elem: '#test-table-operate',
+    height: 'full-100',//必须留着
+    url: server + "/ADMINM/role",
+    // where:{
+    //     "keywords":keywords||""
+    // },
+    method: 'get',
+    xhrFields: {
+        withCredentials: true
+    }
+    
+    // ,data: [
+    //     {
+    //         id:1,
+    //         jz:1,//1是开 2是禁止
+    //         name:"运营管运营管理员",
+    //         member: [
+    //                 {phone: "15859903204", name: "天地图"},
+    //                 {phone: "13566233663", name: "李四"},
+    //                 {phone: "2147483647", name: "张三"},
+    //                 {phone: "13808888888", name: "as"}
+    //             ],
+    //         moble:'15201466512',
+    //         jues:"运营、管理员",
+    //         beizi:"无",
+    //         denglv:"1分钟前",
+    //         time:"2020-7-2"
+    //     }
         
-        limit: 15,
-        skin: 'line',
-        even: true,
-        limits: [5, 10, 15],
-        done: function(res, curr, count) {
-            table_data = res.data;
+    // ]
+    ,page: {
+        layout: ['prev', 'page', 'next', 'count', 'skip']
+    },
+    cols: [
+        [ //表头
+            {
+                type: 'checkbox',
+                fixed: 'left',
+            },
+            {
+                field: 'id',
+                title: '序号',
+                unresize: 'false',
+                width:60,
+                templet: function(data) {
+                    return data.LAY_INDEX;
+                }
+            },
+            {
+                title: '操作',
+                toolbar: '#test-table-operate-barDemo',
+                align: 'left',
+            },
+            {
+                field: 'role_NAME',
+                title: '角色名称',
+                align: 'left',
+            },
+            {
+                field: 'member',
+                title: '成员',
+                align: 'left',
+                templet: function(data) {
+                    if(data.member.length){
+                        var names = [];
+                        data.member.forEach(function(item){
+                            names.push(item.name);
+                        });
+                        // console.log(names);
+                        var htmlStr = "";
+                        for (i = 0; i < data.member.length; i++) { 
+                            // console.log("000")
+                            htmlStr += "<tr><td>"+data.member[i].name+"</td><td>"+data.member[i].phone+"</td></tr>";
+                        }
+                        // console.log("htmlStr====",htmlStr);
+                        var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.member.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
+                        // console.log("contStr====",contStr);
+                        return names.slice(0,3).join(',') + contStr
+                    }else{
+                        return ''
+                    }
+                        
+                },
+            },
+            {
+                field: 'BZ',
+                title: '备注',
+                align: 'left',
+            }
+            ,
+            {
+                field: 'BZ',
+                title: '备注',
+                align: 'left',
+            }
+            ,
+            {
+                field: 'BZ',
+                title: '备注',
+                align: 'left',
+            },
+            {
+                field: 'BZ',
+                title: '备注',
+                align: 'left',
+            },
+            
 
-            layer.closeAll('loading');
-            arrangeList.length = 0;
-            // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-            // layer.close(index);    //返回数据关闭loading
-        },
-    });
+        ]
+    ],
+    parseData: function(res){
+        return {
+            "code": 0,
+            "msg": "",
+            "count": 0,
+            "data": res.roleList_z || [] 
+        }
+    },
+    
+    event: true,
+    page: false,
+    limit: Number.MAX_VALUE,
+    skin: 'line',
+    even: true,
+    // limits: [5, 10, 15],
+    done: function(res, curr, count) {
+        // table_data = res.data;
+
+        // layer.closeAll('loading');
+        // arrangeList.length = 0;
+        // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+        // layer.close(index);    //返回数据关闭loading
+    },
+});
+    
     //表格刷新渲染
     window.reloads = function() {
         table.render({
@@ -1199,18 +588,25 @@ layui.config({
     //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateA").css("top",-55);
     //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateArr").css({"top":49,"background-image":"url('../../../images/tips_darr.png')"});
     // }
-    $('.moreOperate').each(function(){
-        $(this).hover(function() {
+    $(document).on("mouseenter",".moreOperate",function(){
             var X = $(this).offset().left;
             var parentX = $(this).parent().offset().left;
 
             console.log(X)
             console.log(parentX)
+            $(".layui-table-body, .layui-table-box, .layui-table-cell").css("overflow", "visible");
             $(this).children(".moreOperateA").css("left",X-parentX-37).show();
-        }, function() {
-            $(this).children(".moreOperateA").hide();
-        });
     })
+    $(document).on("mouseleave",".moreOperate",function(){
+        $(this).children(".moreOperateA").hide();
+    })
+    // $('ul').on('mouseenter', 'li', function() {//绑定鼠标进入事件
+    //     $(this).addClass('hover');
+    // });
+    // $('ul').on('mouseleave', 'li', function() {//绑定鼠标划出事件
+    //     $(this).removeClass('hover');
+    // });
+    
 
 
 
