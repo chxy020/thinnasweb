@@ -15,6 +15,7 @@
 
 <script src="../../layuiadmin/layui/layui.js"></script>
 <script src="../../js/jquery-3.1.1.min.js"></script>
+<script src="../../js/jquery_ex.js"></script>
 </head>
 <body>
 <div class="layui-fluid">
@@ -22,14 +23,13 @@
 		<div class="layui-card">
 			<div class="layui-form layui-col-space5">	
 				<div class="layui-input-inline layui-show-xs-block">
-					<input type="text" name="username" placeholder="搜索姓名/手机号" autocomplete="off" class="layui-input">
+					<input type="text" id="keyword" name="keyword" placeholder="搜索姓名/手机号" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-input-inline layui-show-xs-block">
-					<select name="contrller">
-						<option value="">选择是否在线</option>
-						<option value="0">全部</option>
+					<select id="statusselect" lay-filter="component-statusselect" name="contrller">
+						<option value="">全部</option>
 						<option value="1">在线</option>
-						<option value="2">离线</option>
+						<option value="0">离线</option>
 					</select>
 				</div>
 				<div class="layui-input-inline layui-show-xs-block">

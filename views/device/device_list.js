@@ -48,6 +48,179 @@ layui.config({
     //     return false;
     // });
 
+
+    function tableRender(){
+        var keywords = $("#keyword").val() || "";
+        var status = $("#statusselect").val() || "";
+
+        //表格加载渲染
+        table.render({
+            elem: '#test-table-operate',
+            height: 'full-60',//必须留着
+            url: server + "/ADMINM/device/listDevices",
+            where:{
+                "keywords":keywords||"",
+                "STATUS":status
+            },
+            method: 'get',
+            xhrFields: {
+                withCredentials: true
+            }
+            // ,data: [
+            //     {
+            //         id:1,
+            //         jz:1,//1是开 2是禁止
+            //         deviceid:"12308080",
+            //         online:'离线',
+            //         nickname:"张三",
+            //         status:"未激活",
+            //         adminuser:"苏苏",
+            //         tel:'15201466512',
+            //         bindtime:"2020-7-2 12:12",
+            //         usercount:10,
+            //         ssd:"1.37T",
+            //         usecount:45000,
+            //     }
+            // ]
+            ,page: {
+                layout: ['prev', 'page', 'next', 'count', 'skip']
+            },
+            cols: [
+                [ //表头
+                    {
+                        type: 'checkbox',
+                        fixed: 'left',
+                    },
+                    {
+                        field: 'id',
+                        title: '序号',
+                        unresize: 'false',
+                        width:60,
+                        templet: function(data) {
+                            return data.LAY_INDEX;
+                        }
+                    },
+                    // {
+                    //     width: 100,
+                    //     title: '操作',
+                    //     toolbar: '#test-table-operate-barDemo',
+                    // },
+                    {
+                        field: 'deviceid',
+                        title: '设备ID',
+                        align: 'left',
+                    }, {
+                        field: 'status',
+                        title: '是否在线',
+                        align: 'left',
+                        templet: function(data) {
+                            return data.status == 1 ? "在线" : "离线";
+                        },
+                    },
+                    {
+                        field: 'nickname',
+                        title: '昵称',
+                        align: 'left',
+                        // toolbar: '#test-table-operate-barDemoMore',
+                        templet: function(data) {
+                            // console.log(data)
+                            return data.nickname;
+                                // var htmlStr = "";
+                                // for (i = 0; i < data.namelist.length; i++) { 
+                                //     console.log("000")
+                                //     htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
+                                // }
+                                // console.log("htmlStr====",htmlStr);
+                                // var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
+                                // console.log("contStr====",contStr);
+                                // return data.name + contStr
+                        },
+                    },
+                    {
+                        field: 'status_BIND',
+                        title: '状态',
+                        align: 'left',
+                        templet: function(data) {
+                            return data.status_BIND == 1 ? "绑定激活" : "未绑定";
+                        },
+                    },
+                    {
+                        field: 'uname',
+                        title: '管理员',
+                        align: 'left',
+                        // templet: function(data) {
+                        //     // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
+                        //     return data.uname + "<span style='font-size:12px;color:#888'> "+data.tel+"</span>"
+                        // },
+                    },
+                    {
+                        field: 'bindtime',
+                        title: '绑定/激活时间',
+                        align: 'left',
+                        templet: function(data) {
+                            // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
+                            return data.bindtime + " / " + data.bindtime
+                        },
+                    },
+                    {
+                        field: 'usercount',
+                        title: '设备用户数',
+                        align: 'left',
+                    },
+                    {
+                        field: 'avaliable',
+                        title: '可用空间',
+                        align: 'left',
+                    },
+                    {
+                        field: 'times',
+                        title: '近7天使用次数',
+                        align: 'left',
+                    },
+                    
+                ]
+            ],
+            parseData: function(res){
+                if(res.code == 302){
+                    top.location.href = setter.loginUrl;
+                    return;
+                }
+                if(res.code == 1){
+                    //res 即为原始返回的数据
+                    return {
+                        "code": 0,
+                        "msg": "",
+                        "count": res.count,
+                        "data": res.deviceList
+                    };
+                }else{
+                    return {
+                        "code": 0,
+                        "msg": "接口数据错误",
+                        "count": 0, 
+                        "data": [] 
+                    }
+                }
+            },
+            page: true,
+
+            event: true,
+            
+            limit: 15,
+            skin: 'line',
+            even: true,
+            limits: [5, 10, 15],
+            done: function(res, curr, count) {
+                // table_data = res.data;
+
+                // layer.closeAll('loading');
+                // arrangeList.length = 0;
+                // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+                // layer.close(index);    //返回数据关闭loading
+            },
+        });
+    }
+
     //监听指定开关
     form.on('switch(switchTest)', function(data){
         layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
@@ -56,151 +229,35 @@ layui.config({
         layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
     });
     
-
-
-    //表格加载渲染
-    table.render({
-        elem: '#test-table-operate',
-        height: 'full-60',//必须留着
-        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-        // url: server + "/ADMINM/user/listUsers",
-        method: 'get',
-        xhrFields: {
-            withCredentials: true
-        }
-        ,data: [
-            {
-                id:1,
-                jz:1,//1是开 2是禁止
-                deviceid:"12308080",
-                online:'离线',
-                nickname:"张三",
-                status:"未激活",
-                adminuser:"苏苏",
-                tel:'15201466512',
-                bindtime:"2020-7-2 12:12",
-                usercount:10,
-                ssd:"1.37T",
-                usecount:45000,
+    $("#keyword").on({
+        keyup : function(e){        
+            var flag = e.target.isNeedPrevent;
+            if(flag)  return;     
+            tableRender();
+            e.target.keyEvent = false ;
+        },
+        keydown : function(e){
+            e.target.keyEvent = true ; 
+        },
+        input : function(e){
+            if(!e.target.keyEvent){
+                tableRender();
             }
-        ]
-        ,page: {
-            layout: ['prev', 'page', 'next', 'count', 'skip']
         },
-        cols: [
-            [ //表头
-                {
-                    type: 'checkbox',
-                    fixed: 'left',
-                },
-                {
-                    field: 'id',
-                    title: '序号',
-                    unresize: 'false',
-                    width:60,
-                },
-                // {
-                //     width: 100,
-                //     title: '操作',
-                //     toolbar: '#test-table-operate-barDemo',
-                // },
-                {
-                    // field: 'deviceid',
-                    title: '设备ID',
-                    align: 'left',
-                    toolbar: '#test-table-operate-barDemo',
-
-                }, {
-                    field: 'online',
-                    title: '是否在线',
-                    align: 'left',
-                },
-                {
-                    field: 'nickname',
-                    title: '昵称',
-                    align: 'left',
-                    // toolbar: '#test-table-operate-barDemoMore',
-                    templet: function(data) {
-                        // console.log(data)
-                        return data.nickname;
-                            // var htmlStr = "";
-                            // for (i = 0; i < data.namelist.length; i++) { 
-                            //     console.log("000")
-                            //     htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
-                            // }
-                            // console.log("htmlStr====",htmlStr);
-                            // var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
-                            // console.log("contStr====",contStr);
-                            // return data.name + contStr
-                    },
-                },
-                {
-                    field: 'status',
-                    title: '状态',
-                    align: 'left',
-                },
-                {
-                    field: 'adminuser',
-                    title: '管理员',
-                    align: 'left',
-                    templet: function(data) {
-                        // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                        return data.adminuser + "<span style='font-size:12px;color:#888'> "+data.tel+"</span>"
-                    },
-                },
-                {
-                    field: 'bindtime',
-                    title: '绑定/激活时间',
-                    align: 'left',
-                    templet: function(data) {
-                        // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                        return data.bindtime + " / " + data.bindtime
-                    },
-                },
-                {
-                    field: 'usercount',
-                    title: '设备用户数',
-                    align: 'left',
-                },
-                {
-                    field: 'ssd',
-                    title: '可用空间',
-                    align: 'left',
-                },
-                {
-                    field: 'usecount',
-                    title: '近7天使用次数',
-                    align: 'left',
-                },
-                
-            ]
-        ],
-        // parseData: function(res){
-        //     //res 即为原始返回的数据
-        //     return {
-        //       "code": 0, //解析接口状态
-        //       "msg": "", //解析提示文本
-        //       "count": 100, //解析数据长度
-        //       "data": res.userList //解析数据列表
-        //     };
-        // },
-        page: true,
-
-        event: true,
-        
-        limit: 15,
-        skin: 'line',
-        even: true,
-        limits: [5, 10, 15],
-        done: function(res, curr, count) {
-            table_data = res.data;
-
-            layer.closeAll('loading');
-            arrangeList.length = 0;
-            // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-            // layer.close(index);    //返回数据关闭loading
+        compositionstart : function(e){
+            e.target.isNeedPrevent = true ;
         },
+        compositionend : function(e){
+            e.target.isNeedPrevent = false;
+        }
     });
+
+    form.on('select(component-statusselect)', function(data){
+        tableRender();
+    });
+
+    tableRender();
+
     //表格刷新渲染
     window.reloads = function() {
         table.render({
