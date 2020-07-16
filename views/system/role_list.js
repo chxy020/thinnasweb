@@ -108,10 +108,7 @@ layui.config({
                                 return ''
                             }
                                 
-                        },
-
-
-
+                        }
                     },
                     {
                         field: 'bz',

@@ -13,25 +13,46 @@ layui.config({
     var devices = {};
     var arrangeList = [];
 
-    var day2 = new Date();
-    day2.setTime(day2.getTime());
-    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+    var bindtimeStart = "";
+    var bindtimeEnd = "";
+    // var day2 = new Date();
+    // day2.setTime(day2.getTime());
+    // var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
     var bindtime = laydate.render({
         elem: '#bindtime',
-        range: true
+        range: true,
         // min: s2,
         // max: '2080-10-14',
         // format: 'yyyy年MM月dd日',
         // theme: 'molv'
+        change: function(value, date, endDate){//日期时间被切换后的回调
+            // console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+            // console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+        }
+        ,done: function(value, date, endDate){//控件选择完毕后的回调—点击日期、清空、现在、确定均会触发。
+            if(value){
+                var d = value.split(" - ");
+                bindtimeStart = d[0];
+                bindtimeEnd = d[1];
+            }else{
+                bindtimeStart = "";
+                bindtimeEnd = "";
+            }
+            tableRender();
+            // console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+            // console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+        }
     });
-    var actiontime = laydate.render({
-        elem: '#actiontime',
-        range: true
-        // min: s2,
-        // max: '2080-10-14',
-        // format: 'yyyy年MM月dd日',
-        // theme: 'molv'
-    });
+    // var actiontime = laydate.render({
+    //     elem: '#actiontime',
+    //     range: true
+    //     // min: s2,
+    //     // max: '2080-10-14',
+    //     // format: 'yyyy年MM月dd日',
+    //     // theme: 'molv'
+    // });
 
     function isEmptyObject(obj) {
         var jlength = 0;
@@ -60,7 +81,9 @@ layui.config({
             url: server + "/ADMINM/device/listDevices",
             where:{
                 "keywords":keywords||"",
-                "STATUS":status
+                "STATUS":status,
+                "bindtimeStart":bindtimeStart,
+                "bindtimeEnd":bindtimeEnd
             },
             method: 'get',
             xhrFields: {
@@ -109,6 +132,7 @@ layui.config({
                         field: 'deviceid',
                         title: '设备ID',
                         align: 'left',
+                        toolbar: '#test-table-operate-barDemo',
                     }, {
                         field: 'status',
                         title: '是否在线',
@@ -157,10 +181,10 @@ layui.config({
                         field: 'bindtime',
                         title: '绑定/激活时间',
                         align: 'left',
-                        templet: function(data) {
-                            // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                            return data.bindtime + " / " + data.bindtime
-                        },
+                        // templet: function(data) {
+                        //     // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
+                        //     return data.bindtime + " / " + data.bindtime
+                        // },
                     },
                     {
                         field: 'usercount',
@@ -171,6 +195,9 @@ layui.config({
                         field: 'avaliable',
                         title: '可用空间',
                         align: 'left',
+                        templet: function(data) {
+                            return data.avaliable + "<i class='layui-icon table-icon-style3' lay-event='openavaliable' >&#xe60e;</i>"
+                        },
                     },
                     {
                         field: 'times',
@@ -258,89 +285,7 @@ layui.config({
 
     tableRender();
 
-    //表格刷新渲染
-    window.reloads = function() {
-        table.render({
-            elem: '#test-table-operate',
-            height: 'full-100',//必须留着
-            url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-            ,method: 'get',
-            xhrFields: {
-                withCredentials: true
-            },
-            page: {
-                layout: ['prev', 'page', 'next', 'count', 'skip']
-            },
-            cols: [
-                [ //表头
-                    {
-                        type: 'checkbox',
-                        fixed: 'left',
-                    },
-                    {
-                        field: 'id',
-                        title: '序号',
-                        unresize: 'false',
-                        width:60,
-                    },
-                    {
-                        width: 100,
-                        title: '操作',
-                        toolbar: '#test-table-operate-barDemo',
-                    },
-                    {
-                        field: 'name',
-                        title: '姓名',
-                        align: 'left',
-                    }, {
-                        field: 'roomname',
-                        title: '手机号',
-                        align: 'left',
-                    },
-                    {
-                        field: 'roomname',
-                        title: '角色',
-                        align: 'left',
-                        templet: function(data) {
-                                return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
-                        },
-                    },
-                    {
-                        field: 'roomname',
-                        title: '备注',
-                        align: 'left',
-                    },
-                    {
-                        field: 'roomname',
-                        title: '最近登录',
-                        align: 'left',
-                        templet: function(data) {
-                            return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
-                        },
-                    },
-                    {
-                        field: 'modifytime',
-                        title: '创建时间',
-                        align: 'left',
-                    },
-                ]
-            ],
-            event: true,
-            page: true,
-            limit: 15,
-            skin: 'line',
-            even: true,
-            limits: [5, 10, 15],
-            done: function(res, curr, count) {
-                table_data = res.data;
-                layer.closeAll('loading');
-                arrangeList.length = 0;
-                // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-                // layer.close(index);    //返回数据关闭loading
-            },
-
-        });
-    }
+    
     window.onkeyup = function(ev) {
         var key = ev.keyCode || ev.which;
         if (key == 27) { //按下Escape
@@ -441,209 +386,204 @@ layui.config({
                 yes: function(index, layero) {
                 }
             });
-        } else if (obj.event === 'switch') {
-            console.log("data.id=====",data.id)
-            console.log("data.jz=====",data.jz)
-            if(data.jz==1){
-                data.jz=2
-                console.log("data.jz=====11",data.jz)
-                layer.msg("账号已禁用")
-                //把数据提交到接口里
-            }else{
-                data.jz=1
-                layer.msg("账号已启用")
-                console.log("data.jz=====22",data.jz)
-                //把数据提交到接口里
-            }
-        } else if (obj.event === 'openlog'){
-            console.log("data.id=====",data.id)
-            console.log("00000000000000")
+        } else if (obj.event === 'openavaliable'){
+            layer.open({
+                type: 2,
+                title: '空间详情',
+                area: ["600px","400px"],
+                // btn: ['保存', '取消'],
+                btnAlign: 'c',
+                maxmin: true,
+                content: 'avaliable_details.html?deviceid='+data.deviceid,
+                // content: 'account_edit_pop.html?id=" + data.id,
+                yes: function(index, layero) {
+                }
+            });
             //在主窗口打开 操作日志 页面 
             // top.layui.index.openTabsPage("system/operation_log.html", '操作日志');
         }
 
     })
     var $ = layui.$,
-        active = {
-            //点击搜索
-            search: function() {
-                table.render({
-                    elem: '#test-table-operate',
-                    height: 'full-100',
-                    url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-                        ,
+    active = {
+        //点击搜索
+        search: function() {
+            table.render({
+                elem: '#test-table-operate',
+                height: 'full-100',
+                url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+                    ,
+                xhrFields: {
+                    withCredentials: true
+                },
+                where: {
+                    "rule": $('#demoReload').val(),
+                    "status":0
+                },
+                method: 'get',
+                page: {
+                    layout: ['prev', 'page', 'next', 'count', 'skip']
+                },
+                cols: [
+                    [ //表头
+                        {
+                            type: 'checkbox',
+                            fixed: 'left',
+                        },
+                        {
+                            field: 'id',
+                            title: '序号',
+                            unresize: 'false',
+                            width:60,
+                        },
+                        {
+                            width: 100,
+                            title: '操作',
+                            toolbar: '#test-table-operate-barDemo',
+                        },
+                        {
+                            field: 'name',
+                            title: '姓名',
+                            align: 'left',
+                        }, {
+                            field: 'roomname',
+                            title: '手机号',
+                            align: 'left',
+                        },
+                        {
+                            field: 'roomname',
+                            title: '角色',
+                            align: 'left',
+                            templet: function(data) {
+                                    return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
+                            },
+                        },
+                        {
+                            field: 'roomname',
+                            title: '备注',
+                            align: 'left',
+                        },
+                        {
+                            field: 'roomname',
+                            title: '最近登录',
+                            align: 'left',
+                            templet: function(data) {
+                                return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
+                            },
+                        },
+                        {
+                            field: 'modifytime',
+                            title: '创建时间',
+                            align: 'left',
+                        },
+                        
+                    ]
+                ],
+                event: true,
+                page: true,
+                limit: 15,
+                skin: 'line',
+                even: true,
+                limits: [5, 10, 15],
+                done: function(res, curr, count) {
+                    table_data = res.data;
+
+                    layer.closeAll('loading');
+                    arrangeList.length = 0;
+                    // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+                    // layer.close(index);    //返回数据关闭loading
+                },
+            });
+        },
+        //点击添加
+        add: function() {
+            layer.open({
+                type: 2,
+                title: '新增账号',
+                area: ['500px', '400px'],
+                btn: ['保存', '取消'],
+                btnAlign: 'c',
+                maxmin: true,
+                content: 'account_add_pop.html',
+                yes: function(index, layero) {
+                    var submit = layero.find('iframe').contents().find("#ruleclick");
+                    submit.click();
+                }
+            });
+        },
+        //点击删除
+        del: function() { 
+            if ( arrangeList.length == 0 ) {
+                return layer.msg("请选择再批量删除")
+            }
+            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {//获取选中数目
+            $.ajax({
+                    async: false,
+                    type: "post",
+                    // url: url+"/roomtemplate/batchRemove",
+                    dataType: "json",
+                    //成功的回调函数
+                    data: {
+                        "roomid":arrangeList.join(",")
+                    },
                     xhrFields: {
                         withCredentials: true
                     },
-                    where: {
-                        "rule": $('#demoReload').val(),
-                        "status":0
+                    success: function(msg) {
+                        if (msg.code == 0) {
+                            layer.msg("删除成功");
+                            reloaddata(); // 父页面刷新
+                        } else {
+                            layer.msg(msg.msg);
+                        }
+            
                     },
-                    method: 'get',
-                    page: {
-                        layout: ['prev', 'page', 'next', 'count', 'skip']
-                    },
-                    cols: [
-                        [ //表头
-                            {
-                                type: 'checkbox',
-                                fixed: 'left',
-                            },
-                            {
-                                field: 'id',
-                                title: '序号',
-                                unresize: 'false',
-                                width:60,
-                            },
-                            {
-                                width: 100,
-                                title: '操作',
-                                toolbar: '#test-table-operate-barDemo',
-                            },
-                            {
-                                field: 'name',
-                                title: '姓名',
-                                align: 'left',
-                            }, {
-                                field: 'roomname',
-                                title: '手机号',
-                                align: 'left',
-                            },
-                            {
-                                field: 'roomname',
-                                title: '角色',
-                                align: 'left',
-                                templet: function(data) {
-                                        return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
-                                },
-                            },
-                            {
-                                field: 'roomname',
-                                title: '备注',
-                                align: 'left',
-                            },
-                            {
-                                field: 'roomname',
-                                title: '最近登录',
-                                align: 'left',
-                                templet: function(data) {
-                                    return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
-                                },
-                            },
-                            {
-                                field: 'modifytime',
-                                title: '创建时间',
-                                align: 'left',
-                            },
-                            
-                        ]
-                    ],
-                    event: true,
-                    page: true,
-                    limit: 15,
-                    skin: 'line',
-                    even: true,
-                    limits: [5, 10, 15],
-                    done: function(res, curr, count) {
-                        table_data = res.data;
-
-                        layer.closeAll('loading');
-                        arrangeList.length = 0;
-                        // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-                        // layer.close(index);    //返回数据关闭loading
-                    },
-                });
-            },
-            //点击添加
-            add: function() {
-                layer.open({
-                    type: 2,
-                    title: '新增账号',
-                    area: ['500px', '400px'],
-                    btn: ['保存', '取消'],
-                    btnAlign: 'c',
-                    maxmin: true,
-                    content: 'account_add_pop.html',
-                    yes: function(index, layero) {
-                        var submit = layero.find('iframe').contents().find("#ruleclick");
-                        submit.click();
+                    //失败的回调函数
+                    error: function() {
+                        console.log("error")
                     }
-                });
-            },
-            //点击删除
-            del: function() { 
-                if ( arrangeList.length == 0 ) {
-                    return layer.msg("请选择再批量删除")
-                }
-                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {//获取选中数目
-                $.ajax({
-                        async: false,
-                        type: "post",
-                        // url: url+"/roomtemplate/batchRemove",
-                        dataType: "json",
-                        //成功的回调函数
-                        data: {
-                            "roomid":arrangeList.join(",")
-                        },
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        success: function(msg) {
-                            if (msg.code == 0) {
-                                layer.msg("删除成功");
-                                reloaddata(); // 父页面刷新
-                            } else {
-                                layer.msg(msg.msg);
-                            }
-                
-                        },
-                        //失败的回调函数
-                        error: function() {
-                            console.log("error")
-                        }
-                    })
                 })
-            },
-            //重置密码
-            resetPassword: function() { 
-                if ( arrangeList.length == 0 ) {
-                    return layer.msg("请选择再批量重置密码")
-                }
-                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将自动发送随机密码到指定的手机上？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'重置密码',btnAlign:'c'}, function() {//获取选中数目
-                $.ajax({
-                        async: false,
-                        type: "post",
-                        // url: url+"/roomtemplate/batchRemove",
-                        dataType: "json",
-                        //成功的回调函数
-                        data: {
-                            "roomid":arrangeList.join(",")
-                        },
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        success: function(msg) {
-                            if (msg.code == 0) {
-                                layer.msg("密码发送成功");
-                                reloaddata(); // 父页面刷新
-                            } else {
-                                layer.msg(msg.msg);
-                            }
-                
-                        },
-                        //失败的回调函数
-                        error: function() {
-                            console.log("error")
+            })
+        },
+        //重置密码
+        resetPassword: function() { 
+            if ( arrangeList.length == 0 ) {
+                return layer.msg("请选择再批量重置密码")
+            }
+            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将自动发送随机密码到指定的手机上？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'重置密码',btnAlign:'c'}, function() {//获取选中数目
+            $.ajax({
+                    async: false,
+                    type: "post",
+                    // url: url+"/roomtemplate/batchRemove",
+                    dataType: "json",
+                    //成功的回调函数
+                    data: {
+                        "roomid":arrangeList.join(",")
+                    },
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function(msg) {
+                        if (msg.code == 0) {
+                            layer.msg("密码发送成功");
+                            reloaddata(); // 父页面刷新
+                        } else {
+                            layer.msg(msg.msg);
                         }
-                    })
+            
+                    },
+                    //失败的回调函数
+                    error: function() {
+                        console.log("error")
+                    }
                 })
-            },
-            //刷新
-            refresh: function() {
-                reloads();
-                // reloaddata(); // 父页面刷新
-            },
-        };
+            })
+        },
+        //刷新
+        refresh: function() {
+            tableRender();
+        },
+    };
     //给页面里的layui-dS 绑定事件
     $('.layui-ds').on('click', function() {
         var type = $(this).data('type');
