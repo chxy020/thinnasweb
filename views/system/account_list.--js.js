@@ -907,14 +907,15 @@ table.render({
         }
     })
     /*右侧菜单HOVER显示提示文字 end*/
+    /* 表格中 鼠标移上 显示更多详细CSS html js*/
     $(document).on("mouseenter",".moreOperate",function(){
             var offsetTop = $(this).offset().top;
             var documentHeihgt=$(document).height();//浏览器当前窗口文档的高度
             var moreOperateAHeihgt=$(this).children(".moreOperateA").height()+30;
-            console.log("offsetTop ,documentHeihgt ,moreOperateAHeihgt===",offsetTop ,documentHeihgt ,moreOperateAHeihgt)
-            console.log("documentHeihgt-offsetTop===",documentHeihgt-offsetTop)
+            // console.log("offsetTop ,documentHeihgt ,moreOperateAHeihgt===",offsetTop ,documentHeihgt ,moreOperateAHeihgt)
+            // console.log("documentHeihgt-offsetTop===",documentHeihgt-offsetTop)
             if((documentHeihgt-offsetTop)<moreOperateAHeihgt){
-                console.log("1111");
+                // console.log("1111");
                 $(this).children(".moreOperateA").css("top",-(moreOperateAHeihgt-54));
                 $(this).children(".moreOperateA").children(".moreOperateArr").css({"top":"auto","bottom":"10px"})
             }
@@ -925,7 +926,7 @@ table.render({
         $(".layui-table-cell").css("overflow", "hidden");
         $(this).children(".moreOperateA").hide();
     })
-    /* 点击查看更多操作 三部分组成 CSS html js end 3.10 */
+    /* 表格中 鼠标移上 显示更多详细CSS html js end*/
 
 
 
