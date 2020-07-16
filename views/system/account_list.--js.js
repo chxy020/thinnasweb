@@ -40,7 +40,7 @@ layui.config({
 table.render({
     elem: '#test-table-operate',
     height: 'full-100',//必须留着
-    url: server + "/ADMINM/role",
+    // url: server + "/ADMINM/role",
     // where:{
     //     "keywords":keywords||""
     // },
@@ -49,25 +49,351 @@ table.render({
         withCredentials: true
     }
     
-    // ,data: [
-    //     {
-    //         id:1,
-    //         jz:1,//1是开 2是禁止
-    //         name:"运营管运营管理员",
-    //         member: [
-    //                 {phone: "15859903204", name: "天地图"},
-    //                 {phone: "13566233663", name: "李四"},
-    //                 {phone: "2147483647", name: "张三"},
-    //                 {phone: "13808888888", name: "as"}
-    //             ],
-    //         moble:'15201466512',
-    //         jues:"运营、管理员",
-    //         beizi:"无",
-    //         denglv:"1分钟前",
-    //         time:"2020-7-2"
-    //     }
+    ,data: [
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+                {phone: "13808888888", name: "as"}
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+                {phone: "13808888888", name: "as"}
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+                {phone: "13808888888", name: "as"}
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+                {phone: "13808888888", name: "as"}
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+                {phone: "13808888888", name: "as"}
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+                {phone: "13566233663", name: "李四"},
+                {phone: "2147483647", name: "张三"},
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        },
+        {
+            add_QX: "2244102192095174",
+            bz: "水电费",
+            cha_QX: "560135202614009798",
+            del_QX: "2251798773489606",
+            edit_QX: "1125898866646982",
+            member: [
+                {phone: "15859903204", name: "天地图"},
+                {phone: "13566233663", name: "李四"},
+            ],
+            parent_ID: "1",
+            rights: "51314",
+            role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+            role_NAME: "一级管理员",
+        }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
+        // ,
+        // {
+        //     add_QX: "2244102192095174",
+        //     bz: "水电费",
+        //     cha_QX: "560135202614009798",
+        //     del_QX: "2251798773489606",
+        //     edit_QX: "1125898866646982",
+        //     member: [
+        //         {phone: "15859903204", name: "天地图"},
+        //         {phone: "13566233663", name: "李四"},
+        //         {phone: "2147483647", name: "张三"},
+        //         {phone: "13808888888", name: "as"}
+        //     ],
+        //     parent_ID: "1",
+        //     rights: "51314",
+        //     role_ID: "3264c8e83d0248bb9e3ea6195b4c0216",
+        //     role_NAME: "一级管理员",
+        // }
         
-    // ]
+    ]
     ,page: {
         layout: ['prev', 'page', 'next', 'count', 'skip']
     },
@@ -99,6 +425,7 @@ table.render({
             {
                 field: 'member',
                 title: '成员',
+                width: 120,
                 align: 'left',
                 templet: function(data) {
                     if(data.member.length){
@@ -115,7 +442,7 @@ table.render({
                         // console.log("htmlStr====",htmlStr);
                         var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.member.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
                         // console.log("contStr====",contStr);
-                        return names.slice(0,3).join(',') + contStr
+                        return names.slice(0,2).join(',') + contStr
                     }else{
                         return ''
                     }
@@ -123,24 +450,24 @@ table.render({
                 },
             },
             {
-                field: 'BZ',
+                field: 'bz',
                 title: '备注',
                 align: 'left',
             }
             ,
             {
-                field: 'BZ',
+                field: 'bz',
                 title: '备注',
                 align: 'left',
             }
             ,
             {
-                field: 'BZ',
+                field: 'bz',
                 title: '备注',
                 align: 'left',
             },
             {
-                field: 'BZ',
+                field: 'bz',
                 title: '备注',
                 align: 'left',
             },
@@ -158,7 +485,7 @@ table.render({
     },
     
     event: true,
-    page: false,
+    page: true,
     limit: Number.MAX_VALUE,
     skin: 'line',
     even: true,
@@ -580,37 +907,24 @@ table.render({
         }
     })
     /*右侧菜单HOVER显示提示文字 end*/
-
-    /* 点击查看更多操作 三部分组成 CSS html js 3.10 */
-    // if($(".layui-table-header table tr").length==1){
-    //     $(".layui-table-header").css("min-height",195)
-    // }else{
-    //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateA").css("top",-55);
-    //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateArr").css({"top":49,"background-image":"url('../../../images/tips_darr.png')"});
-    // }
     $(document).on("mouseenter",".moreOperate",function(){
-            var X = $(this).offset().left;
-            var parentX = $(this).parent().offset().left;
-
-            console.log(X)
-            console.log(parentX)
-            $(".layui-table-body, .layui-table-box, .layui-table-cell").css("overflow", "visible");
-            $(this).children(".moreOperateA").css("left",X-parentX-37).show();
+            var offsetTop = $(this).offset().top;
+            var documentHeihgt=$(document).height();//浏览器当前窗口文档的高度
+            var moreOperateAHeihgt=$(this).children(".moreOperateA").height()+30;
+            console.log("offsetTop ,documentHeihgt ,moreOperateAHeihgt===",offsetTop ,documentHeihgt ,moreOperateAHeihgt)
+            console.log("documentHeihgt-offsetTop===",documentHeihgt-offsetTop)
+            if((documentHeihgt-offsetTop)<moreOperateAHeihgt){
+                console.log("1111");
+                $(this).children(".moreOperateA").css("top",-(moreOperateAHeihgt-54));
+                $(this).children(".moreOperateA").children(".moreOperateArr").css({"top":"auto","bottom":"10px"})
+            }
+            $(".layui-table-cell").css("overflow", "visible");
+            $(this).children(".moreOperateA").show();
     })
     $(document).on("mouseleave",".moreOperate",function(){
+        $(".layui-table-cell").css("overflow", "hidden");
         $(this).children(".moreOperateA").hide();
     })
-    // $('ul').on('mouseenter', 'li', function() {//绑定鼠标进入事件
-    //     $(this).addClass('hover');
-    // });
-    // $('ul').on('mouseleave', 'li', function() {//绑定鼠标划出事件
-    //     $(this).removeClass('hover');
-    // });
-    
-
-
-
-
     /* 点击查看更多操作 三部分组成 CSS html js end 3.10 */
 
 
