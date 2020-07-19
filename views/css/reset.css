@@ -190,7 +190,10 @@ padding: 10px 0;
 }
 
 
-
+.iconfont.icon-zu204,.iconfont.icon-zu201,.iconfont.icon-zu211{
+    color: #3691FF;font-size: 18px;vertical-align:-2px;margin-left: 3px;
+    cursor: pointer;
+}
 
 
 

@@ -152,6 +152,9 @@ layui.config({
                     field: 'havecount',
                     title: '管理设备数',
                     align: 'left',
+                    templet: function(data) {
+                        return data.havecount + "<i class='layui-icon iconfont icon-zu201' lay-event='equipment'></i>"
+                    },
                 },
                 {
                     field: 'ssd',
@@ -159,12 +162,18 @@ layui.config({
                     title: '可用空间<i class="layui-icon alone-tips m5" lay-tips="包含自有设备空间、共享空间、安全云空间等">&#xe60b;</i>',
                     align: 'left',
                     width:100,
+                    templet: function(data) {
+                        return data.ssd + "<i class='layui-icon iconfont icon-zu204' lay-event='space'></i>"
+                    },
                 },
                 {
                     field: 'activecount',
                     title: '近7天活跃次数<i class="layui-icon alone-tips m5" lay-tips="最近7天内，打开APP次数，含电视APP">&#xe60b;</i>',
                     align: 'left',
                     width:120,
+                    templet: function(data) {
+                        return data.activecount + "<i class='layui-icon iconfont icon-zu211' lay-event='times'></i>"
+                    },
                 }
                 
             ]
@@ -395,11 +404,15 @@ layui.config({
                 console.log("data.jz=====22",data.jz)
                 //把数据提交到接口里
             }
-        } else if (obj.event === 'openlog'){
+        }else if (obj.event === 'equipment'){//跳转到设备管理
+            console.log("data.id=====",data.id)
+            console.log("equipment")
+            // top.layui.index.openTabsPage("../device/device_list.html", '设备管理');
+        } else if (obj.event === 'times'){//跳转c端操作日志
             console.log("data.id=====",data.id)
             console.log("00000000000000")
             //在主窗口打开 操作日志 页面 
-            // top.layui.index.openTabsPage("system/operation_log.html", '操作日志');
+            // top.layui.index.openTabsPage("system/operation_log.html", 'c端操作日志');
         }
 
     })
