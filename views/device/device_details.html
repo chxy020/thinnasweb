@@ -26,18 +26,18 @@
 <div class="layui-fluid">
 	<div class="layui-row">
 		<div class="clearfix mb10">
-			<div class="width100">
-					<p class="bt"><span>283939383</span>(张三的设备)</p>
-					<p class="states">在线</p>
-					<p>IP：<span>192.168.1.123</span></p>
-					<p>存储方式：<span>RAID5</span></p>
-					<p>磁盘：<span>3</span></p>
-					<p>可靠性能：<span>高</span></p>
-					<p>容量：<span>5T</span></p>
-				</div>
+			<div id="info1" class="width100">
+				<p class="bt"><span>000</span>(xx的设备)</p>
+				<p class="states">在线</p>
+				<p>IP：<span>192.168.1.1</span></p>
+				<p>存储方式：<span>RAID5</span></p>
+				<p>磁盘：<span>1</span></p>
+				<p>可靠性能：<span>高</span></p>
+				<p>容量：<span>0T</span></p>
 			</div>
 		</div>
-		<div class="clearfix mb10">
+	</div>
+		<div id="info2" class="clearfix mb10">
 			<div class="detalisinfo">
 				<div class="state situation_A">
 					状态
@@ -45,7 +45,7 @@
 				</div>
 				<div class="state situation_B">
 					管理员
-					<p>张三<span>(152014665112)</span></p>
+					<p>张三<span>(13800138000)</span></p>
 				</div>
 			</div>
 			<div class="detalisinfo">
@@ -62,10 +62,10 @@
 		<div class="clearfix mb10">
 			<div class="detalisinfo">
 				<div class="smallbt">用户历史</div>
-				<div class="history">
-					<p>当前用户：<span>5</span></p>
-					<p>历史用户：<span>8</span></p>
-					<p>已使用：<span>3个月52天</span></p>
+				<div id="tableinfo1" class="history">
+					<p>当前用户：<span>0</span></p>
+					<p>历史用户：<span>0</span></p>
+					<p>已使用：<span>0</span></p>
 				</div>
 				<div style="margin-right: 10px;">
 					<table id="test-table-operateA" class="222" lay-size="sm" lay-filter="test-table-operate"></table>
@@ -73,11 +73,11 @@
 			</div>
 			<div class="detalisinfo">
 				<div class="smallbt">空间使用情况</div>
-				<div class="history">
-					<p><span>5T</span></p>
-					<p>可用：<span>2.33G</span></p>
-					<p>已用：<span>2.33G</span></p>
-					<p>文件数：<span>5000</span></p>
+				<div id="tableinfo2" class="history">
+					<p><span>0T</span></p>
+					<p>可用：<span>0G</span></p>
+					<p>已用：<span>0G</span></p>
+					<p>文件数：<span>0</span></p>
 				</div>
 				<table id="test-table-operateB" lay-filter="test-table-operate"></table>
 			</div>

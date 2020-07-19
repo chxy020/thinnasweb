@@ -46,7 +46,7 @@ layui.config({
                     title: '空间使用情况',
                     align: 'left',
                     templet: function(data) {
-                        return data.total + " | " + data.used + " | " + data.avaliable;
+                        return data.total + " | " + data.used + " | " + data.available;
                     }
                 },
                 {
@@ -79,11 +79,9 @@ layui.config({
                 }
             }
         },
-        page: false,
-
+        page: true,
         event: true,
-        
-        limit: 15,
+        limit: 5,
         skin: 'line',
         even: true,
         limits: [5, 10, 15],

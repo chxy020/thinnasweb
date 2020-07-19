@@ -10,29 +10,176 @@ layui.config({
         $ = layui.jquery;
 
     var server = setter.baseUrl;
-    var devices = {};
-    var arrangeList = [];
+    var uri = window.location.search;
+    
+    var deviceid = setter.getUrlParam("deviceid",uri) || "";
+    
+    if(!deviceid){
+        layer.msg("没有获取到设备id");
+        return;
+    }
 
-    var day2 = new Date();
-    day2.setTime(day2.getTime());
-    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-    var bindtime = laydate.render({
-        elem: '#bindtime',
-        range: true
-        // min: s2,
-        // max: '2080-10-14',
-        // format: 'yyyy年MM月dd日',
-        // theme: 'molv'
-    });
-    var actiontime = laydate.render({
-        elem: '#actiontime',
-        range: true
-        // min: s2,
-        // max: '2080-10-14',
-        // format: 'yyyy年MM月dd日',
-        // theme: 'molv'
-    });
+    if(deviceid){
+        //编辑
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/device/DeviceDetails",
+            dataType: "json",
+            method: 'get',
+            data:{"DEVICEID":deviceid},
+            success: function(obj) {
+                if(obj.code == 1){
+                    changeDetailInfoHtml(obj.deviceInfo || {});
+                    renderUserTable(obj.userLsList || []);
+                    renderUserSpaceTable(obj.userSpaceList || []);
 
+
+                    var table1 = [];
+                    table1.push('<p>当前用户：<span>' + obj.countUser + '</span></p>');
+					table1.push('<p>历史用户：<span>' + obj.countUserLs + '</span></p>');
+					table1.push('<p>已使用：<span>' + obj.useDays + '天</span></p>');
+                    $("#tableinfo1").html(table1.join(''));
+
+                    var info = obj.deviceInfo || {};
+                    var table2 = [];
+                    table2.push('<p><span>' + info.total + 'MB</span></p>');
+					table2.push('<p>可用：<span>' + info.avaliable + 'MB</span></p>');
+					table2.push('<p>已用：<span>' + info.used + 'MB</span></p>');
+					table2.push('<p>文件数：<span>' + info.times + 'MB</span></p>');
+                    $("#tableinfo2").html(table2.join(''));
+                }else{
+                    layer.msg(obj.msg || "获取角色详情错误");
+                }
+            }
+        });
+    }
+
+
+    function changeDetailInfoHtml(obj){
+        var html = [];
+        html.push('<p class="bt"><span>' + obj.deviceid + '</span>(' + obj.nickname + '的设备)</p>');
+		html.push('<p class="states">' + obj.status + '</p>');
+		html.push('<p>IP：<span>192.168.1.1</span></p>');
+		html.push('<p>存储方式：<span>RAID5</span></p>');
+		html.push('<p>磁盘：<span>1</span></p>');
+		html.push('<p>可靠性能：<span>高</span></p>');
+		html.push('<p>容量：<span>' + obj.total + 'MB</span></p>');
+        $("#info1").html(html.join(''));
+
+        var html = [];
+        html.push('<div class="detalisinfo">');
+        html.push('<div class="state situation_A">');
+        html.push('状态<p>' + (obj.status_BIND == 1 ? "已绑定" : "未绑定") + '</p>');
+        html.push('</div>');
+        html.push('<div class="state situation_B">');
+        html.push('管理员<p>'+ obj.uname +'<span>('+ obj.phone + ')</span></p>');
+        html.push('</div>');
+        html.push('</div>');
+        html.push('<div class="detalisinfo">');
+        html.push('<div class="state situation_C">');
+        html.push('绑定时间<p>' + obj.bindtime + '</p>');
+        html.push('</div>');
+        html.push('<div class="state situation_D">');
+        html.push('激活时间<p>' + obj.bindtime + '</p>');
+        html.push('</div>');
+        html.push('</div>');
+        $("#info2").html(html.join(''));
+    }
+
+
+    function renderUserTable(list){
+        //表格A加载渲染
+        table.render({
+            elem: '#test-table-operateA',
+            height: '278',//必须留着
+            // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+            // url: server + "/ADMINM/user/listUsers",
+            method: 'get',
+            xhrFields: {
+                withCredentials: true
+            }
+            ,data: list
+            ,cols: [
+                [ //表头
+                    {
+                        field: 'nickname',
+                        title: '用户名',
+                        align: 'left',
+                    }, 
+                    {
+                        field: 'operation',
+                        title: '操作历史',
+                        align: 'left',
+                    },
+                    {
+                        field: 'createtime',
+                        title: '时间',
+                        align: 'left',
+                    }
+                    
+                ]
+            ],
+            page: false,
+            event: true,
+            limit: 15,
+            done: function(res, curr, count) {
+                // table_data = res.data;
+
+                // layer.closeAll('loading');
+                // arrangeList.length = 0;
+                // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+                // layer.close(index);    //返回数据关闭loading
+            },
+        });
+    }
+
+    function renderUserSpaceTable(list){
+        table.render({
+            elem: '#test-table-operateB',
+            height: '278',//必须留着
+            // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
+            // url: server + "/ADMINM/user/listUsers",
+            method: 'get',
+            xhrFields: {
+                withCredentials: true
+            }
+            ,data: list
+            ,cols: [
+                [ //表头
+                    {
+                        field: 'nickname',
+                        title: '用户',
+                        align: 'left',
+                    }, 
+                    {
+                        field: 'history',
+                        title: '空间使用情况',
+                        align: 'left',
+                        templet: function(data) {
+                            return data.total + "MB | 可用" + data.used + "MB | 已用" + data.available +"MB";
+                        },
+                    },
+                    {
+                        field: 'filecount',
+                        title: '文件数',
+                        align: 'left',
+                    }
+                    
+                ]
+            ],
+            limit: 15,
+            done: function(res, curr, count) {
+                // table_data = res.data;
+    
+                // layer.closeAll('loading');
+                // arrangeList.length = 0;
+                // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+                // layer.close(index);    //返回数据关闭loading
+            },
+        });
+    }
+
+    var arrangeList  = [];
     function isEmptyObject(obj) {
         var jlength = 0;
         for (var key in obj) {
@@ -50,207 +197,17 @@ layui.config({
     // });
 
     //监听指定开关
-    form.on('switch(switchTest)', function(data){
-        layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-        offset: '6px'
-        });
-        layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-    });
+    // form.on('switch(switchTest)', function(data){
+    //     layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+    //     offset: '6px'
+    //     });
+    //     layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+    // });
     
 
 
-    //表格A加载渲染
-    table.render({
-        elem: '#test-table-operateA',
-        height: '278',//必须留着
-        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-        // url: server + "/ADMINM/user/listUsers",
-        method: 'get',
-        xhrFields: {
-            withCredentials: true
-        }
-        ,data: [
-            {
-                userName:"张三",
-                history:"绑定为管理员",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"解绑管理员",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"加入共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"加入共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"加入共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-        ]
-        // ,page: {
-        //     layout: ['prev', 'page', 'next', 'count', 'skip']
-        // },
-        ,cols: [
-            [ //表头
-                {
-                    field: 'userName',
-                    title: '用户名',
-                    align: 'left',
-                }, 
-                {
-                    field: 'history',
-                    title: '操作历史',
-                    align: 'left',
-                },
-                {
-                    field: 'time',
-                    title: '时间',
-                    align: 'left',
-                }
-                
-            ]
-        ],
-        // parseData: function(res){
-        //     //res 即为原始返回的数据
-        //     return {
-        //       "code": 0, //解析接口状态
-        //       "msg": "", //解析提示文本
-        //       "count": 100, //解析数据长度
-        //       "data": res.userList //解析数据列表
-        //     };
-        // },
-        // page: true,
-        event: true,
-        limit: 15,
-        // limits: [5, 10, 15],
-        done: function(res, curr, count) {
-            table_data = res.data;
-
-            layer.closeAll('loading');
-            arrangeList.length = 0;
-            // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-            // layer.close(index);    //返回数据关闭loading
-        },
-    });
     //表格B加载渲染
-    table.render({
-        elem: '#test-table-operateB',
-        height: '278',//必须留着
-        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-        // url: server + "/ADMINM/user/listUsers",
-        method: 'get',
-        xhrFields: {
-            withCredentials: true
-        }
-        ,data: [
-            {
-                userName:"张三",
-                history:"绑定为管理员",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"解绑管理员",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"加入共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-
-        ]
-        // ,page: {
-        //     layout: ['prev', 'page', 'next', 'count', 'skip']
-        // },
-        ,cols: [
-            [ //表头
-                {
-                    field: 'userName',
-                    title: '用户',
-                    align: 'left',
-                }, 
-                {
-                    field: 'history',
-                    title: '空间使用情况',
-                    align: 'left',
-                },
-                {
-                    field: 'time',
-                    title: '文件数',
-                    align: 'left',
-                }
-                
-            ]
-        ],
-        // parseData: function(res){
-        //     //res 即为原始返回的数据
-        //     return {
-        //       "code": 0, //解析接口状态
-        //       "msg": "", //解析提示文本
-        //       "count": 100, //解析数据长度
-        //       "data": res.userList //解析数据列表
-        //     };
-        // },
-        limit: 15,
-        done: function(res, curr, count) {
-            table_data = res.data;
-
-            layer.closeAll('loading');
-            arrangeList.length = 0;
-            // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-            // layer.close(index);    //返回数据关闭loading
-        },
-    });
+    
     //表格C加载渲染
     table.render({
         elem: '#test-table-operateC',
@@ -332,87 +289,7 @@ layui.config({
             // layer.close(index);    //返回数据关闭loading
         },
     });
-    //表格刷新渲染
-    window.reloads = function() {
-        table.render({
-            elem: '#test-table-operate',
-            height: 'full-100',//必须留着
-            url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-            ,method: 'get',
-            xhrFields: {
-                withCredentials: true
-            },
-            page: {
-                layout: ['prev', 'page', 'next', 'count', 'skip']
-            },
-            cols: [
-                [ //表头
-                    {
-                        type: 'checkbox',
-                        fixed: 'left',
-                    },
-                    {
-                        field: 'id',
-                        title: '序号',
-                        unresize: 'false',
-                        width:60,
-                    },
-                    {
-                        width: 100,
-                        title: '操作',
-                        toolbar: '#test-table-operate-barDemo',
-                    },
-                    {
-                        field: 'name',
-                        title: '姓名',
-                        align: 'left',
-                    }, {
-                        field: 'roomname',
-                        title: '手机号',
-                        align: 'left',
-                    },
-                    {
-                        field: 'roomname',
-                        title: '角色',
-                        align: 'left',
-                        templet: function(data) {
-                                return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
-                        },
-                    },
-                    {
-                        field: 'roomname',
-                        title: '备注',
-                        align: 'left',
-                    },
-                    {
-                        field: 'roomname',
-                        title: '最近登录',
-                        align: 'left',
-                        templet: function(data) {
-                            return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
-                        },
-                    },
-                    {
-                        field: 'modifytime',
-                        title: '创建时间',
-                        align: 'left',
-                    },
-                ]
-            ],
-            page: true,
-            limit: 15,
-            skin: 'nob',
-            limits: [5, 10, 15],
-            done: function(res, curr, count) {
-                table_data = res.data;
-                layer.closeAll('loading');
-                arrangeList.length = 0;
-                // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-                // layer.close(index);    //返回数据关闭loading
-            },
-
-        });
-    }
+    
     window.onkeyup = function(ev) {
         var key = ev.keyCode || ev.which;
         if (key == 27) { //按下Escape
