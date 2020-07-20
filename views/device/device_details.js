@@ -54,7 +54,6 @@ layui.config({
         });
     }
 
-
     function changeDetailInfoHtml(obj){
         var html = [];
         html.push('<p class="bt"><span>' + obj.deviceid + '</span>(' + obj.nickname + '的设备)</p>');
@@ -179,7 +178,145 @@ layui.config({
         });
     }
 
-    var arrangeList  = [];
+    function renderUserLsTable(){
+        var keywords = $("#keyword").val() || "";
+        //表格C加载渲染
+        table.render({
+            elem: '#test-table-operateC',
+            height: '378',//必须留着
+            url: server + "/ADMINM/device/DeviceOperationLs",
+            method: 'get',
+            where:{
+                "keywords":keywords||"",
+                "DEVICEID":deviceid,
+                "bindtimeStart":bindtimeStart,
+                "bindtimeEnd":bindtimeEnd
+            },
+            xhrFields: {
+                withCredentials: true
+            }
+            
+            ,page: {
+                layout: ['prev', 'page', 'next', 'count', 'skip']
+            },
+            cols: [
+                [ //表头
+                    {
+                        field: 'nickname',
+                        title: '用户',
+                        align: 'left',
+                    }, 
+                    {
+                        field: 'operation',
+                        title: '操作历史',
+                        align: 'left',
+                    },
+                    {
+                        field: 'createtime',
+                        title: '操作时间',
+                        align: 'left',
+                    }
+                    
+                ]
+            ],
+            parseData: function(res){
+                if(res.code == 302){
+                    top.location.href = setter.loginUrl;
+                    return;
+                }
+                if(res.code == 1){
+                    //res 即为原始返回的数据
+                    return {
+                        "code": 0,
+                        "msg": "",
+                        "count": res.count,
+                        "data": res.deviceCzlsList
+                    };
+                }else{
+                    return {
+                        "code": 0,
+                        "msg": "接口数据错误",
+                        "count": 0, 
+                        "data": [] 
+                    }
+                }
+            },
+            page: true,
+            event: true,
+            limit: 15,
+            skin: 'line',
+            even: true,
+            limits: [5, 10, 15],
+            done: function(res, curr, count) {
+                // table_data = res.data;
+
+                // layer.closeAll('loading');
+                // arrangeList.length = 0;
+                // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+                // layer.close(index);    //返回数据关闭loading
+            },
+        });
+    
+    }
+
+    var bindtimeStart = "";
+    var bindtimeEnd = "";
+    // var day2 = new Date();
+    // day2.setTime(day2.getTime());
+    // var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
+    var bindtime = laydate.render({
+        elem: '#bindtime',
+        range: true,
+        // min: s2,
+        // max: '2080-10-14',
+        // format: 'yyyy年MM月dd日',
+        // theme: 'molv'
+        change: function(value, date, endDate){//日期时间被切换后的回调
+            // console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+            // console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+        }
+        ,done: function(value, date, endDate){//控件选择完毕后的回调—点击日期、清空、现在、确定均会触发。
+            if(value){
+                var d = value.split(" - ");
+                bindtimeStart = d[0];
+                bindtimeEnd = d[1];
+            }else{
+                bindtimeStart = "";
+                bindtimeEnd = "";
+            }
+            renderUserLsTable();
+            // console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+            // console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+        }
+    });
+
+    $("#keyword").on({
+        keyup : function(e){        
+            var flag = e.target.isNeedPrevent;
+            if(flag)  return;     
+            renderUserLsTable();
+            e.target.keyEvent = false ;
+        },
+        keydown : function(e){
+            e.target.keyEvent = true ; 
+        },
+        input : function(e){
+            if(!e.target.keyEvent){
+                renderUserLsTable();
+            }
+        },
+        compositionstart : function(e){
+            e.target.isNeedPrevent = true ;
+        },
+        compositionend : function(e){
+            e.target.isNeedPrevent = false;
+        }
+    });
+
+    renderUserLsTable();
+
     function isEmptyObject(obj) {
         var jlength = 0;
         for (var key in obj) {
@@ -208,208 +345,131 @@ layui.config({
 
     //表格B加载渲染
     
-    //表格C加载渲染
-    table.render({
-        elem: '#test-table-operateC',
-        height: '278',//必须留着
-        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-        // url: server + "/ADMINM/user/listUsers",
-        method: 'get',
-        xhrFields: {
-            withCredentials: true
-        }
-        ,data: [
-            {
-                userName:"张三",
-                history:"绑定为管理员",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"解绑管理员",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"加入共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-            {
-                userName:"张三",
-                history:"退出共享使用",
-                time:"2020-7-13 12:12"
-            },
-
-        ]
-        // ,page: {
-        //     layout: ['prev', 'page', 'next', 'count', 'skip']
-        // },
-        ,cols: [
-            [ //表头
-                {
-                    field: 'userName',
-                    title: '用户',
-                    align: 'left',
-                }, 
-                {
-                    field: 'history',
-                    title: '空间使用情况',
-                    align: 'left',
-                },
-                {
-                    field: 'time',
-                    title: '文件数',
-                    align: 'left',
-                }
-                
-            ]
-        ],
-        // parseData: function(res){
-        //     //res 即为原始返回的数据
-        //     return {
-        //       "code": 0, //解析接口状态
-        //       "msg": "", //解析提示文本
-        //       "count": 100, //解析数据长度
-        //       "data": res.userList //解析数据列表
-        //     };
-        // },
-        limit: 15,
-        // skin: 'nob',
-        done: function(res, curr, count) {
-            table_data = res.data;
-
-            layer.closeAll('loading');
-            arrangeList.length = 0;
-            // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-            // layer.close(index);    //返回数据关闭loading
-        },
-    });
     
     window.onkeyup = function(ev) {
         var key = ev.keyCode || ev.which;
         if (key == 27) { //按下Escape
             layer.closeAll('iframe'); //关闭所有的iframe层
         }
-        if (key == 13) { //按下Escape
-            $('#search').click();
+        // if (key == 13) { //按下Escape
+        //     $('#search').click();
 
-        }
+        // }
     }
-    //监听表格复选框选择
-    table.on('checkbox(test-table-operate)', function(obj) {
-        console.log(obj)
-    });
-    table.on('checkbox(test-table-operate)', function(obj) {
-        // console.log(obj.checked); //当前是否选中状态
-        // // console.log(obj.data); //选中行的相关数据
-        // console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
-        // // console.log(table.checkStatus('test-table-operate').data); // 获取表格中选中行的数据
-        if (obj.checked && obj.type == 'one') {
-            var devi = {};
-            devi = obj.data.id;
-            arrangeList.push(devi)
-        }
-        if (!obj.checked && obj.type == 'one') {
-            var index = arrangeList.indexOf(obj.data.id);
-            if (index > -1) {
-                arrangeList.splice(index, 1);
-            }
-        }
-        if (!obj.checked && obj.type == 'all') {
-            arrangeList.length = 0;
 
-        }
-        if (obj.checked && obj.type == 'all') {
-            $.each(table.checkStatus('test-table-operate').data, function(idx, con) {
-                var devi = {};
-                devi = con.id;
 
-                arrangeList.push(devi)
-            });
-            arrangeList = Array.from(new Set(arrangeList))
-        }
-        // console.log(arrangeList)
+    // //监听表格复选框选择
+    // table.on('checkbox(test-table-operate)', function(obj) {
+    //     console.log(obj)
+    // });
+    // table.on('checkbox(test-table-operate)', function(obj) {
+    //     // console.log(obj.checked); //当前是否选中状态
+    //     // // console.log(obj.data); //选中行的相关数据
+    //     // console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+    //     // // console.log(table.checkStatus('test-table-operate').data); // 获取表格中选中行的数据
+    //     if (obj.checked && obj.type == 'one') {
+    //         var devi = {};
+    //         devi = obj.data.id;
+    //         arrangeList.push(devi)
+    //     }
+    //     if (!obj.checked && obj.type == 'one') {
+    //         var index = arrangeList.indexOf(obj.data.id);
+    //         if (index > -1) {
+    //             arrangeList.splice(index, 1);
+    //         }
+    //     }
+    //     if (!obj.checked && obj.type == 'all') {
+    //         arrangeList.length = 0;
 
-    });
-    //监听工具条
-    table.on('tool(test-table-operate)', function(obj) {
-        var data = obj.data;
-        if (obj.event === 'del') {
-            /**
-             * @param {Object} index
-             * 编排规则的借口提供之后需要接入删除
-             */
-            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
-                $.ajax({
-                    async: false,
-                    type: "get",
-                    url: url + "/ruletemplate/deleteruletemplate",
-                    dataType: "json",
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    //成功的回调函数
-                    data: {
-                        "id": data.id
-                    },
-                    success: function (msg) {
+    //     }
+    //     if (obj.checked && obj.type == 'all') {
+    //         $.each(table.checkStatus('test-table-operate').data, function(idx, con) {
+    //             var devi = {};
+    //             devi = con.id;
 
-                        if (msg.code == '0') {
-                            layer.msg("删除成功");
-                            reloads();
-                        } else {
-                            layer.msg("删除失败");
+    //             arrangeList.push(devi)
+    //         });
+    //         arrangeList = Array.from(new Set(arrangeList))
+    //     }
+    //     // console.log(arrangeList)
 
-                        }
+    // });
+    // //监听工具条
+    // table.on('tool(test-table-operate)', function(obj) {
+    //     var data = obj.data;
+    //     if (obj.event === 'del') {
+    //         /**
+    //          * @param {Object} index
+    //          * 编排规则的借口提供之后需要接入删除
+    //          */
+    //         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
+    //             $.ajax({
+    //                 async: false,
+    //                 type: "get",
+    //                 url: url + "/ruletemplate/deleteruletemplate",
+    //                 dataType: "json",
+    //                 xhrFields: {
+    //                     withCredentials: true
+    //                 },
+    //                 //成功的回调函数
+    //                 data: {
+    //                     "id": data.id
+    //                 },
+    //                 success: function (msg) {
 
-                    },
-                    //失败的回调函数
-                    error: function () {
-                        console.log("error")
-                    }
-                })
-                layer.close(index);
-            });
-        } else if (obj.event === 'edit') {
-            layer.open({
-                type: 2,
-                title: '编辑账号',
-                area: ['500px', '400px'],
-                btn: ['保存', '取消'],
-                btnAlign: 'c',
-                maxmin: true,
-                content: 'account_edit_pop.html',
-                // content: 'account_edit_pop.html?id=" + data.id,
-                yes: function(index, layero) {
-                }
-            });
-        } else if (obj.event === 'switch') {
-            console.log("data.id=====",data.id)
-            console.log("data.jz=====",data.jz)
-            if(data.jz==1){
-                data.jz=2
-                console.log("data.jz=====11",data.jz)
-                layer.msg("账号已禁用")
-                //把数据提交到接口里
-            }else{
-                data.jz=1
-                layer.msg("账号已启用")
-                console.log("data.jz=====22",data.jz)
-                //把数据提交到接口里
-            }
-        } else if (obj.event === 'openlog'){
-            console.log("data.id=====",data.id)
-            console.log("00000000000000")
-            //在主窗口打开 操作日志 页面 
-            // top.layui.index.openTabsPage("system/operation_log.html", '操作日志');
-        }
+    //                     if (msg.code == '0') {
+    //                         layer.msg("删除成功");
+    //                         reloads();
+    //                     } else {
+    //                         layer.msg("删除失败");
 
-    })
+    //                     }
+
+    //                 },
+    //                 //失败的回调函数
+    //                 error: function () {
+    //                     console.log("error")
+    //                 }
+    //             })
+    //             layer.close(index);
+    //         });
+    //     } else if (obj.event === 'edit') {
+    //         layer.open({
+    //             type: 2,
+    //             title: '编辑账号',
+    //             area: ['500px', '400px'],
+    //             btn: ['保存', '取消'],
+    //             btnAlign: 'c',
+    //             maxmin: true,
+    //             content: 'account_edit_pop.html',
+    //             // content: 'account_edit_pop.html?id=" + data.id,
+    //             yes: function(index, layero) {
+    //             }
+    //         });
+    //     } else if (obj.event === 'switch') {
+    //         console.log("data.id=====",data.id)
+    //         console.log("data.jz=====",data.jz)
+    //         if(data.jz==1){
+    //             data.jz=2
+    //             console.log("data.jz=====11",data.jz)
+    //             layer.msg("账号已禁用")
+    //             //把数据提交到接口里
+    //         }else{
+    //             data.jz=1
+    //             layer.msg("账号已启用")
+    //             console.log("data.jz=====22",data.jz)
+    //             //把数据提交到接口里
+    //         }
+    //     } else if (obj.event === 'openlog'){
+    //         console.log("data.id=====",data.id)
+    //         console.log("00000000000000")
+    //         //在主窗口打开 操作日志 页面 
+    //         // top.layui.index.openTabsPage("system/operation_log.html", '操作日志');
+    //     }
+
+    // })
+
+
     var $ = layui.$,
         active = {
             //点击搜索
@@ -587,7 +647,7 @@ layui.config({
             },
             //刷新
             refresh: function() {
-                reloads();
+                renderUserLsTable();
                 // reloaddata(); // 父页面刷新
             },
         };
