@@ -193,16 +193,52 @@ layui.config({
                     },
                     {
                         field: 'avaliable',
-                        title: '可用空间',
+                        title: '可用空间<i class="layui-icon alone-tips m5" lay-tips="包含自有设备空间、共享空间、安全云空间等">&#xe60b;</i>',
                         align: 'left',
+                        width:100,
                         templet: function(data) {
-                            return data.avaliable + "<i class='layui-icon table-icon-style3' lay-event='openavaliable' >&#xe60e;</i>"
+                            console.log("avaliable----",data.deviceid)
+                            //编辑
+                            $.Ajax({
+                                async: false,
+                                url: server + "/ADMINM/device/DeviceDetails",
+                                dataType: "json",
+                                method: 'get',
+                                data:{"DEVICEID":data.deviceid},
+                                success: function(obj) {
+                                    if(obj.code == 1){
+                                        console.log("-------------------",obj.userSpaceList)
+
+                                    }else{
+                                    }
+                                }
+                            });
+                            // if(data.member.length){
+                            //     var names = [];
+                            //     data.member.forEach(function(item){
+                            //         names.push(item.name);
+                            //     });
+                            //     // console.log(names);
+                            //     var htmlStr = "";
+                            //     for (i = 0; i < data.member.length; i++) { 
+                            //         // console.log("000")
+                            //         htmlStr += "<tr><td>"+data.member[i].name+"</td><td>"+data.member[i].phone+"</td></tr>";
+                            //     }
+                            //     // console.log("htmlStr====",htmlStr);
+                            //     var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.member.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
+                            //     // console.log("contStr====",contStr);
+                            //     return names.slice(0,2).join(',') + contStr
+                            // }else{
+                            //     return ''
+                            // }
+                                
                         },
                     },
                     {
                         field: 'times',
-                        title: '近7天使用次数',
+                        title: '近7天活跃次数<i class="layui-icon alone-tips m5" lay-tips="最近7天内，打开APP次数，含电视APP">&#xe60b;</i>',
                         align: 'left',
+                        width:120,
                     },
                     
                 ]
