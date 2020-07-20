@@ -57,7 +57,7 @@ layui.config({
     function changeDetailInfoHtml(obj){
         var html = [];
         html.push('<p class="bt"><span>' + obj.deviceid + '</span>(' + obj.nickname + '的设备)</p>');
-		html.push('<p class="states">' + obj.status + '</p>');
+		html.push('<p class="states">' + (+obj.status == 1 ? "在线" : "离线") + '</p>');
 		html.push('<p>IP：<span>192.168.1.1</span></p>');
 		html.push('<p>存储方式：<span>RAID5</span></p>');
 		html.push('<p>磁盘：<span>1</span></p>');
