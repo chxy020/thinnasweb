@@ -12,10 +12,14 @@
 .tableb td {background-color:#fff!important;}
 .tableb th {background-color:#eee;text-align:left;font-weight:700;}
 /* 表格中 鼠标移上 显示更多详细CSS html js */
+/*内容在右*/
 .moreOperate {display:inline-block;padding-top:2px;box-sizing:content-box!important;position: relative;}
 .moreOperateA {display:none;position:absolute;left: 130%;top: -15px;z-index:9999;padding-top:10px;}
 .moreOperateAa {background-color:#fff;border:1px solid #ccc;padding:5px;max-height:161px;overflow:auto;}
 .moreOperateArr {position:absolute;left: -7px;top: 23px;width: 9px;height: 17px;background:url(../images/tips_arr_left.png) no-repeat center top;}
+/*内容在左*/
+.moreOperate.leftS .moreOperateArr{left: 99.5%;background: url(../images/tips_arr_right.png) no-repeat center top;}
+.moreOperate.leftS .moreOperateA {right: 120%;left: auto;}
 /* 表格中 鼠标移上 显示更多详细CSS html js  end*/
 .layui-layer-tips .layui-layer-content {background-color: #666!important;}
 .layui-layer-tips i.layui-layer-TipsB, .layui-layer-tips i.layui-layer-TipsT {border-right-color: #666!important;}

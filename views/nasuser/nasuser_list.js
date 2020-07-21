@@ -159,7 +159,7 @@ layui.config({
                 {
                     field: 'ssd',
                     // title: '可用空间',
-                    title: '可用空间<i class="layui-icon alone-tips m5" lay-tips="包含自有设备空间、共享空间、安全云空间等">&#xe60b;</i>',
+                    title: '可用空间<i class="layui-icon iconfont icon-zu200 m5" lay-tips="包含自有设备空间、共享空间、安全云空间等"></i>',
                     align: 'left',
                     width:100,
                     templet: function(data) {
@@ -168,7 +168,7 @@ layui.config({
                 },
                 {
                     field: 'activecount',
-                    title: '近7天活跃次数<i class="layui-icon alone-tips m5" lay-tips="最近7天内，打开APP次数，含电视APP">&#xe60b;</i>',
+                    title: '近7天活跃次数<i class="layui-icon iconfont icon-zu200 m5" lay-tips="最近7天内，打开APP次数，含电视APP"></i>',
                     align: 'left',
                     width:120,
                     templet: function(data) {

@@ -45,7 +45,7 @@ layui.config({
                     table2.push('<p><span>' + info.total + 'MB</span></p>');
 					table2.push('<p>可用：<span>' + info.avaliable + 'MB</span></p>');
 					table2.push('<p>已用：<span>' + info.used + 'MB</span></p>');
-					table2.push('<p>文件数：<span>' + info.times + 'MB</span></p>');
+					table2.push('<p>文件数：<span>' + info.times + '</span></p>');
                     $("#tableinfo2").html(table2.join(''));
                 }else{
                     layer.msg(obj.msg || "获取角色详情错误");

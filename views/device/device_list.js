@@ -141,6 +141,10 @@ layui.config({
                             return data.status == 1 ? "在线" : "离线";
                         },
                     },
+
+
+
+
                     {
                         field: 'nickname',
                         title: '昵称',
@@ -191,14 +195,16 @@ layui.config({
                         title: '设备用户数',
                         align: 'left',
                     },
+
                     {
                         field: 'avaliable',
-                        title: '可用空间<i class="layui-icon alone-tips m5" lay-tips="包含自有设备空间、共享空间、安全云空间等">&#xe60b;</i>',
+                        title: '可用空间<i class="layui-icon iconfont icon-zu200 m5" lay-tips="包含自有设备空间、共享空间、安全云空间等"></i>',
                         align: 'left',
                         width:100,
                         templet: function(data) {
-                            console.log("avaliable----",data.deviceid)
+                            console.log("data=========+++",data)
                             //编辑
+                            var userSpaceListArr = [];
                             $.Ajax({
                                 async: false,
                                 url: server + "/ADMINM/device/DeviceDetails",
@@ -207,36 +213,36 @@ layui.config({
                                 data:{"DEVICEID":data.deviceid},
                                 success: function(obj) {
                                     if(obj.code == 1){
-                                        console.log("-------------------",obj.userSpaceList)
-
+                                        console.log("obj-------------------",obj.userSpaceList)
+                                        userSpaceListArr=obj.userSpaceList
                                     }else{
+                                        layer.msg(obj.msg);
                                     }
                                 }
                             });
-                            // if(data.member.length){
-                            //     var names = [];
-                            //     data.member.forEach(function(item){
-                            //         names.push(item.name);
-                            //     });
-                            //     // console.log(names);
-                            //     var htmlStr = "";
-                            //     for (i = 0; i < data.member.length; i++) { 
-                            //         // console.log("000")
-                            //         htmlStr += "<tr><td>"+data.member[i].name+"</td><td>"+data.member[i].phone+"</td></tr>";
-                            //     }
-                            //     // console.log("htmlStr====",htmlStr);
-                            //     var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.member.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
-                            //     // console.log("contStr====",contStr);
-                            //     return names.slice(0,2).join(',') + contStr
-                            // }else{
-                            //     return ''
-                            // }
+
+                            if(userSpaceListArr.length){
+                                console.log("userSpaceListArr.length-------------------",userSpaceListArr.length)
+                                var htmlStr = "";
+                                var usedStr = 0;
+                                for (i = 0; i < userSpaceListArr.length; i++) { 
+                                    // console.log("000")
+                                    htmlStr += "<tr><td>"+userSpaceListArr[i].nickname+"</td><td>"+ userSpaceListArr[i].total + "MB | 可用" + userSpaceListArr[i].used + "MB | 已用" + userSpaceListArr[i].available +"MB</td><td>"+userSpaceListArr[i].filecount+"</td></tr>";
+                                    usedStr += parseInt(userSpaceListArr[i].used)
+                                }
+                                // console.log("htmlStr====",htmlStr);
+                                var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>用户</th><th>空间使用情况</th><th>文件数</th></tr>"+htmlStr+"</table></div></div></div>"
+                                // console.log("contStr====",contStr);
+                                return +usedStr+'MB'+contStr
+                            }else{
+                                return data.avaliable+'MB'
+                            }
                                 
                         },
                     },
                     {
                         field: 'times',
-                        title: '近7天活跃次数<i class="layui-icon alone-tips m5" lay-tips="最近7天内，打开APP次数，含电视APP">&#xe60b;</i>',
+                        title: '近7天活跃次数<i class="layui-icon iconfont icon-zu200 m5" lay-tips="最近7天内，打开APP次数，含电视APP"></i>',
                         align: 'left',
                         width:120,
                     },
@@ -644,30 +650,26 @@ layui.config({
     })
     /*右侧菜单HOVER显示提示文字 end*/
 
-    /* 点击查看更多操作 三部分组成 CSS html js 3.10 */
-    // if($(".layui-table-header table tr").length==1){
-    //     $(".layui-table-header").css("min-height",195)
-    // }else{
-    //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateA").css("top",-55);
-    //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateArr").css({"top":49,"background-image":"url('../../../images/tips_darr.png')"});
-    // }
-    $('.moreOperate').each(function(){
-        $(this).hover(function() {
-            var X = $(this).offset().left;
-            var parentX = $(this).parent().offset().left;
-
-            console.log(X)
-            console.log(parentX)
-            $(this).children(".moreOperateA").css("left",X-parentX-37).show();
-        }, function() {
-            $(this).children(".moreOperateA").hide();
-        });
+    /* 表格中 鼠标移上 显示更多详细CSS html js*/
+    $(document).on("mouseenter",".moreOperate",function(){
+        var offsetTop = $(this).offset().top;
+        var documentHeihgt=$(document).height();//浏览器当前窗口文档的高度
+        var moreOperateAHeihgt=$(this).children(".moreOperateA").height()+30;
+        // console.log("offsetTop ,documentHeihgt ,moreOperateAHeihgt===",offsetTop ,documentHeihgt ,moreOperateAHeihgt)
+        // console.log("documentHeihgt-offsetTop===",documentHeihgt-offsetTop)
+        if((documentHeihgt-offsetTop)<moreOperateAHeihgt){
+            // console.log("1111");
+            $(this).children(".moreOperateA").css("top",-(moreOperateAHeihgt-54));
+            $(this).children(".moreOperateA").children(".moreOperateArr").css({"top":"auto","bottom":"10px"})
+        }
+        $(".laytable-cell-1-0-9").css("overflow", "visible");
+        $(this).children(".moreOperateA").show();
     })
-
-
-
-
-    /* 点击查看更多操作 三部分组成 CSS html js end 3.10 */
+    $(document).on("mouseleave",".moreOperate",function(){
+        $(".laytable-cell-1-0-9").css("overflow", "hidden");
+        $(this).children(".moreOperateA").hide();
+    })
+    /* 表格中 鼠标移上 显示更多详细CSS html js end*/
 
 
 
