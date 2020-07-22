@@ -17,71 +17,54 @@
         .layui-input-block {
             margin-left: 120px;
         }
+        input[disabled],input:disabled{
+            border:1px solid #DDD;
+            background-color:#F5F5F5;
+            color:#ACA899;
+        }
     </style>
 </head>
 <body>
 <form method="post" class="layui-form" >
-    <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0; ">
-        <!-- <div class="layui-form-item">
-            <label class="layui-form-label"><span>*</span>反馈类型：</label>
-            <div class="layui-input-block">
-                <select  lay-verify="required" name="ROLE_ID">
-                    <option value="">反馈类型</option>
-                    <option value="0">硬件故障</option>
-                    <option value="0">软件故障</option>
-                    <option value="0">硬件故障</option>
-                    <option value="0">硬件故障</option>
-                </select>
-            </div>
-        </div>
+    <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="width:80%;padding:20px ">
         <div class="layui-form-item">
-            <label class="layui-form-label"><span>*</span>问题描述：</label>
-            <div class="layui-input-block">
-                <textarea placeholder="请尽量详细的描述您遇到的故障" class="layui-textarea"></textarea>
+            <label class="layui-form-label mt25">您的头像：</label>
+            <div class="layui-input-block clearfix">
+                <div style="float:left">
+                    <img id="headimg" src="../images/headImg.png" width="80"/>
+                </div>
+                <div class="floatmt">
+                    <button type="button" class="layui-btn layui-btn-primary">上传新头像</button>
+                </div>
             </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label"><span>*</span>上传截图：</label>
-            <div class="layui-input-block">
-                <input type="text" placeholder="支持直接截图复制粘贴" autocomplete="off" class="layui-input" id="BZ" name="BZ">
-                <div>最多上传9张截图，每张大小不得超过2M，支持JPG、PNG、GIT</div>
-            </div>
-        </div> -->
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">您的头像：</label>
-            <div class="layui-input-block">
-                <input type="text" placeholder="请输入手机号" autocomplete="off" class="layui-input" id="BZ" name="BZ">
-                <div>上传新头像</div>
-            </div>
-	</div>
-	
-
+	    </div>
         <div class="layui-form-item">
             <label class="layui-form-label">账户名：</label>
-            <div class="layui-input-block">
-                <input type="text" value="15201452252" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+            <div class="layui-input-block positionR">
+                <input type="text" value="15201452252" autocomplete="off" class="layui-input" id="BZ" name="BZ" disabled>
+                <div class="positionA"><button type="button" class="layui-btn layui-btn-primary">更换手机号</button></div>
                 <div>账户名用于登录系统，更换手机号之后，可用新手机号登录</div>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">角色：</label>
             <div class="layui-input-block">
-                <input type="text" value="管理员" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+                <input type="text" value="管理员" autocomplete="off" class="layui-input" id="BZ" name="BZ" disabled>
                 <div>角色不支持个人更改，如需更改请联系管理员</div>
             </div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">姓名：</label>
-		<div class="layui-input-block">
-			<input type="text" value="张三" autocomplete="off" class="layui-input" id="BZ" name="BZ">
-		</div>
-	</div>
-        
-        
+	    </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名：</label>
+            <div class="layui-input-block">
+                <input type="text" value="张三" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-lg" lay-submit="" lay-filter="demo2">　　保存　　</button>
+            </div>
+        </div>
     </div>
-    <button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">登 录</button>
 </form>
 <script src="aftersales_add_pop.js" type="text/javascript" charset="utf-8"></script>
 </body>

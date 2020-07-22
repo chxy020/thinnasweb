@@ -4,9 +4,27 @@
 * html .clearfix { height: 1%; }
 .a_blue {color:#3691FF!important;
 cursor: pointer;}
+.positionR{
+    position: relative;
+}
+.positionA{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
 .mb10{
     margin-bottom: 10px;
 }
+.mt25{
+    margin-top: 25px;
+}
+.mt10{
+    margin-top:10px;
+}
+.floatmt{
+    float:left;margin-top:30px;margin-left:20px
+}
+
 .layui-fluid {
         padding: 10px 10px 0;
 }
