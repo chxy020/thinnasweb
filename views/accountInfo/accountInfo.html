@@ -22,19 +22,37 @@
             background-color:#F5F5F5;
             color:#ACA899;
         }
+        .layui-upload-list{
+            border: 1px solid #c0c0c0;
+            border-radius: 40px;
+        }
+        .layui-upload-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;
+        }
     </style>
 </head>
 <body>
 <form method="post" class="layui-form" >
     <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="width:80%;padding:20px ">
+        <!-- <div class="layui-upload">
+            
+            <div class="layui-upload-list">
+              <img class="layui-upload-img" id="demo1">
+              <p id="demoText"></p>
+            </div>
+            
+          </div>   -->
         <div class="layui-form-item">
             <label class="layui-form-label mt25">您的头像：</label>
-            <div class="layui-input-block clearfix">
-                <div style="float:left">
-                    <img id="headimg" src="../images/headImg.png" width="80"/>
+            <div class="layui-input-block layui-upload clearfix">
+                <div class="layui-upload-list" style="float:left">
+                    <img class="layui-upload-img" id="demo1" src="../images/headImg.png" width="80">
+                    <p id="demoText"></p>
                 </div>
                 <div class="floatmt">
-                    <button type="button" class="layui-btn layui-btn-primary">上传新头像</button>
+                    <button type="button" class="layui-btn" id="test1">上传新头像</button>
                 </div>
             </div>
 	    </div>
@@ -42,7 +60,7 @@
             <label class="layui-form-label">账户名：</label>
             <div class="layui-input-block positionR">
                 <input type="text" value="15201452252" autocomplete="off" class="layui-input" id="BZ" name="BZ" disabled>
-                <div class="positionA"><button type="button" class="layui-btn layui-btn-primary">更换手机号</button></div>
+                <div class="positionA"><button type="button" class="layui-btn layui-ds layui-btn-primary" data-type="replaceMobile">更换手机号</button></div>
                 <div>账户名用于登录系统，更换手机号之后，可用新手机号登录</div>
             </div>
         </div>
@@ -66,6 +84,6 @@
         </div>
     </div>
 </form>
-<script src="aftersales_add_pop.js" type="text/javascript" charset="utf-8"></script>
+<script src="accountInfo.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
