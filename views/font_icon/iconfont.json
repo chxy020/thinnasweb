@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15843831",
+      "name": "组 225",
+      "font_class": "zu225",
+      "unicode": "e671",
+      "unicode_decimal": 58993
+    },
+    {
+      "icon_id": "15843833",
+      "name": "组 227",
+      "font_class": "zu227",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    },
+    {
+      "icon_id": "15843834",
+      "name": "组 229",
+      "font_class": "zu229",
+      "unicode": "e674",
+      "unicode_decimal": 58996
+    },
+    {
       "icon_id": "15843820",
       "name": "组 200",
       "font_class": "zu200",

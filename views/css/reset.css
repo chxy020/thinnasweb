@@ -212,6 +212,106 @@ padding: 10px 0;
     color: #3691FF;font-size: 18px;vertical-align:-2px;margin-left: 3px;
     cursor: pointer;
 }
+/*----course.html----*/
+
+.contleft{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom: 60px;
+    width: 200px;
+    background-color: #fff;
+    border-right:1px solid #ccc;
+    overflow-y: auto;
+}
+.contleftbtn{
+    position:fixed;
+    left:0;
+    bottom: 0;
+    height: 60px;
+    width: 200px;
+    background-color: #f1f1f1;
+    border-right:1px solid #ccc;
+    text-align: center;
+}
+.contleftbtn button{
+    margin:0 auto;
+    float:none;
+    margin-top:10px;
+}
+
+.contleftlist{
+    padding:10px;
+}
+.contleftlist li{
+    padding: 10px 0;
+    border-bottom:1px dotted #ccc;
+    position: relative;
+    line-height: 16px;
+   }
+   .rightbtn{
+       position: absolute;
+       right:0;
+        top:50%;
+        height: 16px;
+        margin-top:-8px;
+   }
+.contleftlist li a{
+ color: #333;    
+}
+
+
+
+.contleftlist li a:hover,.contleftlist li.on a{
+    color: #3691FF;    
+   }
+
+   .contleftlist li.hide a{
+    color: #d5d4d2;
+    text-decoration: line-through;  
+   }
+
+
+.contright{
+    position:fixed;
+    left:201px;
+    right:0;
+    top:0;
+    bottom:60px;
+    overflow-y: auto;
+}
+.contrightbtn{
+    position:fixed;
+    left:200px;
+    bottom: 0;
+    right: 0;
+    height: 60px;
+    text-align: center;
+    background-color: #f1f1f1;
+}
+
+.contrightbtn button{
+    margin:0 auto;
+    float:none;
+    margin-top:10px;
+    display: inline-block;
+}
+.contright-cont{
+    padding:20px;
+    background-color: #fff;
+}
+.contright-cont h2{
+    color: #3691FF;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+.contright-cont p{
+    color: #555;
+    font-size: 12px;
+    line-height: 200%;
+    padding-bottom: 30px;
+}
+
 
 
 
