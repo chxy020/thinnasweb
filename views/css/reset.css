@@ -279,6 +279,7 @@ padding: 10px 0;
     top:0;
     bottom:60px;
     overflow-y: auto;
+    background-color: #fff;
 }
 .contrightbtn{
     position:fixed;
