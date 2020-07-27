@@ -15,6 +15,7 @@
 
 <script src="../../layuiadmin/layui/layui.js"></script>
 <script src="../../js/jquery-3.1.1.min.js"></script>
+<script src="../../js/jquery_ex.js"></script>
 </head>
 <body>
 <div class="layui-fluid">
@@ -22,50 +23,35 @@
 		<div class="layui-card">
 			<div class="layui-form layui-col-space5">	
 				<div class="layui-input-inline layui-show-xs-block">
-					<input type="text" name="username" placeholder="搜索姓名/手机号" autocomplete="off" class="layui-input">
+					<input type="text" id="keyword" name="keyword" placeholder="搜索昵称/手机号" autocomplete="off" class="layui-input">
 				</div>
-				<div class="layui-input-inline layui-show-xs-block">
-					<select name="contrller">
-						<option value="">选择账号状态</option>
-						<option value="0">全部</option>
+				<div class="layui-input-inline layui-show-xs-block" style="width:90px">
+					<select id="statusselect" lay-filter="component-status" name="contrller">
+						<option value="">全部</option>
 						<option value="1">启用</option>
-						<option value="2">禁用</option>
+						<option value="0">停用</option>
 					</select>
 				</div>
 				<div class="layui-input-inline layui-show-xs-block" style="width:90px">
-					<select name="contrller">
-						<option value="">选择性别</option>
-						<option value="0">全部</option>
+					<select id="sexselect" lay-filter="component-sex" name="contrller">
+						<option value="">全部</option>
 						<option value="1">男</option>
 						<option value="2">女</option>
-						<option value="3">未知</option>
 					</select>
 				</div>
-				<div class="layui-input-inline layui-show-xs-block">
-					<select name="contrller">
-						<option value="">是否管理设备</option>
-						<option value="0">全部</option>
+				<div class="layui-input-inline layui-show-xs-block" >
+					<select id="deviceselect" lay-filter="component-device" name="contrller">
+						<option value="">全部</option>
 						<option value="1">有管理设备</option>
-						<option value="2">无设备</option>
-					</select>
-				</div>
-				<div class="layui-input-inline layui-show-xs-block">
-					<select name="contrller">
-						<option value="">选择状态</option>
-						<option value="0">待确认</option>
-						<option value="1">已确认</option>
-						<option value="2">已收货</option>
-						<option value="3">已取消</option>
-						<option value="4">已完成</option>
-						<option value="5">已作废</option>
+						<option value="0">没有管理设备</option>
 					</select>
 				</div>
 				<div class="layui-input-inline layui-show-xs-block">
 					<input type="text" name="date" id="rangetime" placeholder="选择注册时间区间" autocomplete="off" class="layui-input">
 				</div>
-				<div class="layui-input-inline layui-show-xs-block">
+				<!-- <div class="layui-input-inline layui-show-xs-block">
 					<button class="layui-btn layui-ds" data-type="search" id="search"><i class="layui-icon">&#xe615;</i></button>
-				</div>
+				</div> -->
 				<div class="layui-input-inline layui-show-xs-block">
 					<button class="layui-btn layui-ds layui-btn-primary" data-type="refresh" id="refresh" data="刷新">
 						<i class="layui-icon">&#xe666;</i>
@@ -78,7 +64,7 @@
 				<!-- <a class="layui-icon table-icon-style" lay-event="edit" id="edit">&#xe642;</a> -->
 				<!-- <a class="layui-icon table-icon-style" lay-event="del" id="del">&#xe640;</a> -->
 				<div class="switchStyle" lay-event="switch" id="switch">
-					{{#  if(d.jz == 1){ }}
+					{{#  if(d.status == 1){ }}
 					<input type="checkbox" checked="" lay-skin="switch"><!--开-->
 					{{#  } else{ }}
 					<input type="checkbox" lay-skin="switch">
