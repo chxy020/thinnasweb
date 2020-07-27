@@ -419,6 +419,7 @@ layui.config({
             layer.open({
 				type: 2,
 				title: '设备管理',
+                // content: '../device/device_list.html?uid='+'5bea735b8c324eafbfd11b679eb758d0',
                 content: '../device/device_list.html?uid='+uid,
                 maxmin: true,
                 area: ['100%', '100%'],
