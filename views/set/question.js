@@ -10,20 +10,6 @@ layui.config({
         $ = layui.jquery;
 
     var server = setter.baseUrl;
-    var devices = {};
-    var arrangeList = [];
-
-    var day2 = new Date();
-    day2.setTime(day2.getTime());
-    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-    var ins22 = laydate.render({
-        elem: '#rangetime',
-        range: true
-        // min: s2,
-        // max: '2080-10-14',
-        // format: 'yyyy年MM月dd日',
-        // theme: 'molv'
-    });
 
     function isEmptyObject(obj) {
         var jlength = 0;
@@ -34,6 +20,68 @@ layui.config({
         };
         return jlength
     };
+
+    function getlistQusetionC(){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/listQusetionC",
+            dataType: "json",
+            method: 'get',
+            success: function(obj) {
+                console.log(obj);
+                if(obj.code == 1){
+                    setListQusetionCHtml(obj.questionC || []);
+                }
+            }
+        });
+    }
+
+    function deleteQuestionC(id){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/deleteQuestionC",
+            dataType: "json",
+            method: 'get',
+            data:{"QCID":id},
+            success: function(obj) {
+                console.log(obj);
+                if(obj.code == 1){
+                    getlistQusetionC();
+                    layer.msg("删除成功");
+                }
+            }
+        });
+    }
+
+
+    function setListQusetionCHtml(list){
+        var html = [];
+        for(var i = 0,len = list.length; i < len; i++){
+            var item = list[i] || {};
+            var qcid = item.qcid;
+            // on hide
+            html.push('<li class="on">');
+            
+            html.push('<a id="q_' + qcid + '" href="javascript:;">' + item.name + '</a>');
+            html.push('<div class="rightbtn">');
+            html.push('<span id="d_' + qcid + '" class="icon iconfont icon-zu227" data-type="delquestion"></span>');
+            html.push('<span id="h_' + qcid + '" class="icon iconfont icon-hide" id="switchshow"></span>');
+            html.push('<span id="e_' + qcid + '" class="icon iconfont icon-zu225" data-type="editquestionclass"></span>');
+            html.push('<span id="m_' + qcid + '" class="icon iconfont icon-zu229" data-type=""></span>');
+            html.push('</div>');
+            html.push('</li>');
+        }
+        
+        $("#contleftlist").html(html.join(''));
+
+        // $(".rightbtn span").bind("click",function(){
+        //     var id = $(this).attr("id");
+        //     console.log(id)
+        // });
+    }
+
+    getlistQusetionC();
+
     //表格里滑动开关
     // form.on('submit(formDemo)', function(data){
     //     layer.msg(JSON.stringify(data.field));
@@ -43,7 +91,7 @@ layui.config({
     //监听指定开关
     form.on('switch(switchTest)', function(data){
         layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-        offset: '6px'
+            offset: '6px'
         });
         layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
     });
@@ -56,7 +104,7 @@ layui.config({
             layer.open({
                 type: 2,
                 title: '添加常见问题',
-                area: ['500px', '340px'],
+                area: ['800px', '550px'],
                 btn: ['确定', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
@@ -67,6 +115,8 @@ layui.config({
                 }
             });
         },
+
+
         //点击编辑
         editquestion: function() {
             layer.open({
@@ -101,36 +151,16 @@ layui.config({
         },
 
 
-         //点击删除
-         delquestion: function() { 
-            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {//获取选中数目
-            $.ajax({
-                    async: false,
-                    type: "post",
-                    // url: url+"/roomtemplate/batchRemove",
-                    dataType: "json",
-                    //成功的回调函数
-                    data: {
-                        "roomid":arrangeList.join(",")
-                    },
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    success: function(msg) {
-                        if (msg.code == 0) {
-                            layer.msg("删除成功");
-                            reloaddata(); // 父页面刷新
-                        } else {
-                            layer.msg(msg.msg);
-                        }
-            
-                    },
-                    //失败的回调函数
-                    error: function() {
-                        console.log("error")
-                    }
-                })
-            })
+        //点击删除
+        delquestion: function() { 
+            var ids = $(this).attr("id").split("_");
+            var id = ids[1];
+            if(!id){
+                return;
+            }
+            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
+                deleteQuestionC(id);
+            });
         },
     };
     //给页面里的layui-dS 绑定事件
