@@ -242,7 +242,6 @@ layui.config({
                             }else{
                                 return data.avaliable+'MB'
                             }
-                                
                         },
                     },
                     {

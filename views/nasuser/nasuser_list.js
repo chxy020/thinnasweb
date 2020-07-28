@@ -188,7 +188,43 @@ layui.config({
                         align: 'left',
                         width:100,
                         templet: function(data) {
-                            return data.available + "<i class='layui-icon iconfont icon-zu204' lay-event='space'></i>"
+                            console.log("data=========+++",data)
+                            // return data.available + "<i class='layui-icon iconfont icon-zu204' lay-event='space'></i>"
+                            //编辑
+                            var userSpaceListArr = [];
+                            $.Ajax({
+                                async: false,
+                                url: server + "/ADMINM/device/DeviceDetails",
+                                dataType: "json",
+                                method: 'get',
+                                data:{"DEVICEID":data.deviceid},
+                                success: function(obj) {
+                                    if(obj.code == 1){
+                                        console.log("obj-------------------",obj.userSpaceList)
+                                        userSpaceListArr=obj.userSpaceList
+                                    }else{
+                                        layer.msg(obj.msg);
+                                    }
+                                }
+                            });
+
+                            if(userSpaceListArr.length){
+                                console.log("userSpaceListArr.length-------------------",userSpaceListArr.length)
+                                var htmlStr = "";
+                                var usedStr = 0;
+                                for (i = 0; i < userSpaceListArr.length; i++) { 
+                                    // console.log("000")
+                                    htmlStr += "<tr><td>"+userSpaceListArr[i].nickname+"</td><td>"+ userSpaceListArr[i].total + "MB | 可用" + userSpaceListArr[i].used + "MB | 已用" + userSpaceListArr[i].available +"MB</td><td>"+userSpaceListArr[i].filecount+"</td></tr>";
+                                    usedStr += parseInt(userSpaceListArr[i].used)
+                                }
+                                // console.log("htmlStr====",htmlStr);
+                                var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>用户</th><th>空间使用情况</th><th>文件数</th></tr>"+htmlStr+"</table></div></div></div>"
+                                // console.log("contStr====",contStr);
+                                return +usedStr+'MB'+contStr
+                            }else{
+                                return data.available+'MB'
+                            }
+                            
                         },
                     },
                     {

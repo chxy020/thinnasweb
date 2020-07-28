@@ -103,7 +103,13 @@ layui.config({
                     obj.subMenu.forEach(function(cnode){
                         var name = cnode.menu_NAME || "";
                         var url = cnode.menu_HTML || "";
-                        html.push('<dd ><a lay-href="' + url +'">'+name+'</a></dd>');
+                        if(name == "退出登录"){
+                            html.push('<dd id="loginoutbtn"><a href="javascript:;">'+name+'</a></dd>');
+                        }else if(name == "修改密码"){
+                            html.push('<dd id="forgetbtn"><a href="javascript:;">'+name+'</a></dd>');
+                        }else{
+                            html.push('<dd ><a lay-href="' + url +'">'+name+'</a></dd>');
+                        }
                     });
                     html.push('</dl>');
                 }
@@ -114,32 +120,49 @@ layui.config({
         }
 
         element.render();
+
+        $("#loginoutbtn").bind("click",function(){
+            loginOut();
+        });
+        $("#forgetbtn").bind("click",function(){
+            layer.open({
+                type: 2,
+                title: '忘记密码',
+                area: ['400px', '300px'],
+                maxmin: true,
+                content: 'user/modify.html',
+                yes: function(index, layero) {
+                }
+            });
+        });
     }
 
 
-    
+    function loginOut(){
+        layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确定退出系统吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'退出登录',btnAlign:'c'}, function() {
+            $.Ajax({
+                async: false,
+                type: "post",
+                url:server + "/ADMINM/logout",
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(obj) {
+                },
+                //失败的回调函数
+                error: function() {
+                    console.log("error")
+                }
+            })
+        });
+    }
 
 
     var $ = layui.$,
     active = {
         loginout: function() {
-            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确定退出系统吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'退出登录',btnAlign:'c'}, function() {
-                $.Ajax({
-                    async: false,
-                    type: "post",
-                    url:server + "/ADMINM/logout",
-                    dataType: "json",
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    success: function(obj) {
-                    },
-                    //失败的回调函数
-                    error: function() {
-                        console.log("error")
-                    }
-                })
-            });
+            loginOut();
             return;
         }
     };
