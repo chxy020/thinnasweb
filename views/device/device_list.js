@@ -667,11 +667,11 @@ layui.config({
             $(this).children(".moreOperateA").css("top",-(moreOperateAHeihgt-54));
             $(this).children(".moreOperateA").children(".moreOperateArr").css({"top":"auto","bottom":"10px"})
         }
-        $(".laytable-cell-1-0-9").css("overflow", "visible");
+        $(".laytable-cell-1-0-8").css("overflow", "visible");
         $(this).children(".moreOperateA").show();
     })
     $(document).on("mouseleave",".moreOperate",function(){
-        $(".laytable-cell-1-0-9").css("overflow", "hidden");
+        $(".laytable-cell-1-0-8").css("overflow", "hidden");
         $(this).children(".moreOperateA").hide();
     })
     /* 表格中 鼠标移上 显示更多详细CSS html js end*/
