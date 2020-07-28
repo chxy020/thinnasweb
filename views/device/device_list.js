@@ -10,6 +10,9 @@ layui.config({
         $ = layui.jquery;
 
     var server = setter.baseUrl;
+    
+    var uid = setter.getUrlParam("uid") || "";
+
     var devices = {};
     var arrangeList = [];
 
@@ -54,6 +57,7 @@ layui.config({
     //     // theme: 'molv'
     // });
 
+    
     function isEmptyObject(obj) {
         var jlength = 0;
         for (var key in obj) {
@@ -83,7 +87,8 @@ layui.config({
                 "keywords":keywords||"",
                 "STATUS":status,
                 "bindtimeStart":bindtimeStart,
-                "bindtimeEnd":bindtimeEnd
+                "bindtimeEnd":bindtimeEnd,
+                "uid":uid
             },
             method: 'get',
             xhrFields: {
@@ -110,10 +115,10 @@ layui.config({
             },
             cols: [
                 [ //表头
-                    {
-                        type: 'checkbox',
-                        fixed: 'left',
-                    },
+                    // {
+                    //     type: 'checkbox',
+                    //     fixed: 'left',
+                    // },
                     {
                         field: 'id',
                         title: '序号',
