@@ -28,7 +28,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span>*</span>问题名称：</label>
             <div class="layui-input-block">
-                <input type="text" placeholder="请输入问题名称" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+                <input type="text" lay-verify="required" placeholder="请输入问题名称" autocomplete="off" class="layui-input" name="QNAME">
             </div>
         </div>
         <div class="layui-form-item">
@@ -37,7 +37,7 @@
             <!-- 选择分类 -->
             <div class="layui-input-block" id="addClass">
                 <div class="layui-col-xs7">
-                    <select id="typeselect" lay-filter="component-typeselect" name="contrller">
+                    <select id="typeselect" lay-verify="required" lay-filter="component-typeselect" name="typeselect">
 						<!--
                         <option value="">选择分类</option>
 						<option value="1">新手必读</option>
@@ -61,8 +61,7 @@
             <!-- 添加分类 -->
             <div class="layui-input-block" id="cgClass" style="display: none;">
                 <div class="layui-col-xs7">
-                    <input type="text" name="vercode" id="typename" lay-verify="required"
-                        placeholder="添加分类" class="layui-input">
+                    <input type="text" name="typename" placeholder="添加分类" class="layui-input">
                 </div>
                 <div class="layui-col-xs5">
                     <div style="margin-left: 10px;">
@@ -75,11 +74,11 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span>*</span>问题答案：</label>
             <div class="layui-input-block">
-                <textarea placeholder="多行输入" class="layui-textarea"></textarea>
+                <textarea name="ANSWER" lay-verify="required" placeholder="多行输入" class="layui-textarea" style="height: 260px;"></textarea>
             </div>
         </div>
     </div>
-    <button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">登 录</button>
+    <button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">提交</button>
 </form>
 <script src="question_add_pop.js" type="text/javascript" charset="utf-8"></script>
 </body>

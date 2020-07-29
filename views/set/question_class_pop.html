@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>新建角色</title>
+    <title>编辑常见问题分类</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
@@ -28,11 +28,12 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span>*</span>分类名称：</label>
             <div class="layui-input-block">
-                <input type="text" placeholder="请输入分类名称" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+                <input type="text" placeholder="请输入分类名称" autocomplete="off" class="layui-input" id="typename" name="typename">
             </div>
         </div>
     </div>  
 </form>
+<button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">提交</button>
 <script src="question_class_pop.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

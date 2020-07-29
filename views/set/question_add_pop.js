@@ -38,6 +38,9 @@ layui.config({
                 if(obj.code == 1){
                     layer.msg("添加成功");
                     $("#typename").val("");
+                    getlistQusetionC();
+                    $('#addClass').show();
+                    $('#cgClass').hide();
                 }
             }
         });
@@ -46,7 +49,7 @@ layui.config({
 
     
     function setTypeQusetionCSelect(list){
-        for (i = 0; i < list.length; i++) {
+        for (var i = 0; i < list.length; i++) {
             var item = list[i] || {};
             $('#typeselect').append(new Option(item.name, item.qcid));
         }
@@ -78,6 +81,47 @@ layui.config({
         $('#cgClass').hide();
     });
 
+
+    //监听提交
+    form.on('submit(submit)', function(data){
+        // alert(888)
+        // layer.msg(JSON.stringify(data.field),function(){
+        //     location.href='index.html'
+        // });
+        console.log(data.field);
+
+        var condi = {};
+        condi.QNAME = data.field.QNAME;
+        condi.ANSWER = data.field.ANSWER;
+        condi.QCID = data.field.typeselect;
+        condi.NAME = $("#typeselect").find("option:selected").text();
+        saveQuestionNAME(condi);
+        return false;
+    });
+
+    function saveQuestionNAME(condi){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/saveQuestion",
+            dataType: "json",
+            method: 'post',
+            data:condi,
+            success: function(obj) {
+                if(obj.code == 1){
+                    layer.msg("添加成功");
+
+                    // setTimeout(function(){
+                    //     //刷新父页面
+                    //     window.parent.location.reload();
+                    //     var index = parent.layer.getFrameIndex(window.name);
+               		//     parent.layer.close(index);
+                    // },1500);
+                }else{
+                    layer.msg(obj.msg || "添加失败");
+                }
+            }
+        });
+    }
 
 
 });

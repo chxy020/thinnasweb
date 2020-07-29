@@ -4,6 +4,7 @@ layui.config({
     index: 'lib/index' //主入口模块
 }).use(['index', 'table', 'jquery','form','laydate'], function() {
     var table = layui.table,
+        element = layui.element,
         setter = layui.setter,
         laydate = layui.laydate,
         form = layui.form;
@@ -54,18 +55,43 @@ layui.config({
     }
 
 
+    function getlistQusetion(id){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/listQusetion",
+            dataType: "json",
+            method: 'get',
+            data:{"QCID":id},
+            success: function(obj) {
+                console.log(obj);
+                if(obj.code == 1){
+                    setListQusetionHtml(obj.questionC || []);
+                }
+            }
+        });
+    }
+
     function setListQusetionCHtml(list){
         var html = [];
+        var id = "";
+
         for(var i = 0,len = list.length; i < len; i++){
             var item = list[i] || {};
             var qcid = item.qcid;
+            if(i == 0){
+                id = qcid;
+            }
             // on hide
-            html.push('<li class="on">');
+            if(i == 0){
+                html.push('<li class="on">');
+            }else{
+                html.push('<li >');
+            }
             
-            html.push('<a id="q_' + qcid + '" href="javascript:;">' + item.name + '</a>');
+            html.push('<a class="questiontype" id="q_' + qcid + '" href="javascript:;">' + item.name + '</a>');
             html.push('<div class="rightbtn">');
             html.push('<span id="d_' + qcid + '" class="icon iconfont icon-zu227" data-type="delquestion"></span>');
-            html.push('<span id="h_' + qcid + '" class="icon iconfont icon-hide" id="switchshow"></span>');
+            html.push('<span id="h_' + qcid + '" class="icon iconfont icon-status icon-show" ></span>');
             html.push('<span id="e_' + qcid + '" class="icon iconfont icon-zu225" data-type="editquestionclass"></span>');
             html.push('<span id="m_' + qcid + '" class="icon iconfont icon-zu229" data-type=""></span>');
             html.push('</div>');
@@ -73,14 +99,93 @@ layui.config({
         }
         
         $("#contleftlist").html(html.join(''));
+        
+        $(".rightbtn span").bind("click",function(){
+            var ids = $(this).attr("id").split("_");
+            var id = ids[1];
+            if(!id){
+                return;
+            }
+            if($(this).hasClass("icon-zu227")){
+                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
+                    deleteQuestionC(id);
+                });
+            }else if($(this).hasClass("icon-zu225")){
+                var name = $("#q_" + id).text();
+                layer.open({
+                    type: 2,
+                    title: '编辑问题分类',
+                    area: ['500px', '200px'],
+                    btn: ['确定', '取消'],
+                    btnAlign: 'c',
+                    maxmin: true,
+                    content: 'question_class_pop.html?name='+name+'&id='+id,
+                    yes: function(index, layero) {
+                        var submit = layero.find('iframe').contents().find("#submit");
+                        submit.click();
+                    }
+                });
+            }else if($(this).hasClass("icon-status")){
+                if($(this).hasClass("icon-show")){
+                    $(this).removeClass("icon-show");
+                    $(this).addClass("icon-hide");
+                }else{
+                    $(this).removeClass("icon-hide");
+                    $(this).addClass("icon-show");
+                }
+            }
+        });
 
-        // $(".rightbtn span").bind("click",function(){
-        //     var id = $(this).attr("id");
-        //     console.log(id)
-        // });
+        $(".questiontype").bind('click',function(){
+            var ids = $(this).attr("id").split("_");
+            var id = ids[1];
+            if(!id){
+                return;
+            }
+            
+            $("#contleftlist > li").removeClass("on");
+            $(this).parent().addClass("on");
+
+            getlistQusetion(id);
+        })
+
+        getlistQusetion(id);
     }
 
+    function setListQusetionHtml(list){
+        var html = [];
+        var id = "";
+
+        for(var i = 0,len = list.length; i < len; i++){
+            var item = list[i] || {};
+            var qcid = item.qcid;
+            if(i == 0){
+                id = qcid;
+            }
+            html.push('<div class="positionR">');
+            html.push('<div class="contright-cont-btn">');
+            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="add" id="add0" data="编辑">');
+            html.push('<i class="layui-icon">&#xe642;</i>');
+            html.push('</button>');
+            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="del" id="del0" data="删除">');
+            html.push('<i class="layui-icon">&#xe640;</i>');
+            html.push('</button>');
+            html.push('</div>');
+            html.push('<h2>'+((i+1)+"."+item.qname)+'</h2>');
+            html.push('<p>');
+            html.push(item.answer);
+            html.push('</p>');
+            html.push('</div>');
+        }
+        
+        $("#anwserlist").html(html.join(''));
+        
+    }
+
+
+
     getlistQusetionC();
+    
 
     //表格里滑动开关
     // form.on('submit(formDemo)', function(data){
@@ -110,7 +215,7 @@ layui.config({
                 maxmin: true,
                 content: 'question_add_pop.html',
                 yes: function(index, layero) {
-                    var submit = layero.find('iframe').contents().find("#ruleclick");
+                    var submit = layero.find('iframe').contents().find("#submit");
                     submit.click();
                 }
             });
@@ -135,33 +240,8 @@ layui.config({
         },
         //点击编辑分类
         editquestionclass: function() {
-            layer.open({
-                type: 2,
-                title: '编辑问题分类',
-                area: ['500px', '200px'],
-                btn: ['确定', '取消'],
-                btnAlign: 'c',
-                maxmin: true,
-                content: 'question_class_pop.html',
-                yes: function(index, layero) {
-                    var submit = layero.find('iframe').contents().find("#ruleclick");
-                    submit.click();
-                }
-            });
-        },
-
-
-        //点击删除
-        delquestion: function() { 
-            var ids = $(this).attr("id").split("_");
-            var id = ids[1];
-            if(!id){
-                return;
-            }
-            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
-                deleteQuestionC(id);
-            });
-        },
+            
+        }
     };
     //给页面里的layui-dS 绑定事件
     $('.layui-btn,.iconfont').on('click', function() {
