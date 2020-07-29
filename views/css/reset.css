@@ -277,7 +277,7 @@ padding: 10px 0;
     left:201px;
     right:0;
     top:0;
-    bottom:60px;
+    bottom:0;
     overflow-y: auto;
     background-color: #fff;
 }
@@ -305,14 +305,20 @@ padding: 10px 0;
     color: #3691FF;
     font-size: 14px;
     padding-bottom: 10px;
+    padding-right: 130px;
 }
 .contright-cont p{
     color: #555;
     font-size: 12px;
     line-height: 200%;
     padding-bottom: 30px;
+    text-align: justify;
 }
-
+.contright-cont-btn{
+    position: absolute;
+    right:0;
+    top:-10px;
+}
 
 
 

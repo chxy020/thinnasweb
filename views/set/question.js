@@ -189,7 +189,24 @@ layui.config({
         }
     });
     
-
+    /*右侧菜单HOVER显示提示文字*/
+    var subtips;
+    $('.pop_text button').each(function(){
+        
+        var _id = $(this).attr('id');
+        var _data = $(this).attr('data');
+        $("#" + _id).hover(function() {
+            openMsg();
+        }, function() {
+            if(subtips){
+                layer.close(subtips);
+            }
+        });
+        function openMsg() {
+            subtips = layer.tips(_data, '#'+_id,{tips:[3,'#666'],time: 30000});
+        }
+    })
+    /*右侧菜单HOVER显示提示文字 end*/
 
 
 
