@@ -71,6 +71,22 @@ layui.config({
         });
     }
 
+    function updateStatusQuestionC(id,status){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/updateStatusQuestionC",
+            dataType: "json",
+            method: 'get',
+            data:{"QCID":id,"STATUS":status},
+            success: function(obj) {
+                // console.log(obj);
+                // if(obj.code == 1){
+                //     setListQusetionHtml(obj.questionC || []);
+                // }
+            }
+        });
+    }
+
     function setListQusetionCHtml(list){
         var html = [];
         var id = "";
@@ -78,20 +94,35 @@ layui.config({
         for(var i = 0,len = list.length; i < len; i++){
             var item = list[i] || {};
             var qcid = item.qcid;
+            var status = +item.status;
             if(i == 0){
                 id = qcid;
             }
+            status
             // on hide
             if(i == 0){
-                html.push('<li class="on">');
+                if(status){
+                    html.push('<li class="on">');
+                }else{
+                    html.push('<li class="hide">');
+                }
             }else{
-                html.push('<li >');
+                if(status){
+                    html.push('<li >');
+                }else{
+                    html.push('<li class="hide">');
+                }
             }
             
             html.push('<a class="questiontype" id="q_' + qcid + '" href="javascript:;">' + item.name + '</a>');
             html.push('<div class="rightbtn">');
             html.push('<span id="d_' + qcid + '" class="icon iconfont icon-zu227" data-type="delquestion"></span>');
-            html.push('<span id="h_' + qcid + '" class="icon iconfont icon-status icon-show" ></span>');
+            
+            if(status){
+                html.push('<span id="h_' + qcid + '" class="icon iconfont icon-status icon-show" ></span>');
+            }else{
+                html.push('<span id="h_' + qcid + '" class="icon iconfont icon-status icon-hide" ></span>');
+            }
             html.push('<span id="e_' + qcid + '" class="icon iconfont icon-zu225" data-type="editquestionclass"></span>');
             html.push('<span id="m_' + qcid + '" class="icon iconfont icon-zu229" data-type=""></span>');
             html.push('</div>');
@@ -129,9 +160,16 @@ layui.config({
                 if($(this).hasClass("icon-show")){
                     $(this).removeClass("icon-show");
                     $(this).addClass("icon-hide");
+                    $(this).parent().parent().addClass("hide");
+
+                    updateStatusQuestionC(id,0);
                 }else{
                     $(this).removeClass("icon-hide");
                     $(this).addClass("icon-show");
+                    $(this).addClass("icon-show");
+                    $(this).parent().parent().removeClass("hide");
+
+                    updateStatusQuestionC(id,1);
                 }
             }
         });
@@ -158,16 +196,14 @@ layui.config({
 
         for(var i = 0,len = list.length; i < len; i++){
             var item = list[i] || {};
-            var qcid = item.qcid;
-            if(i == 0){
-                id = qcid;
-            }
+            var qid = item.qid;
+            
             html.push('<div class="positionR">');
             html.push('<div class="contright-cont-btn">');
-            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="add" id="add0" data="编辑">');
+            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="add" id="qu_' + qid + '" data="编辑">');
             html.push('<i class="layui-icon">&#xe642;</i>');
             html.push('</button>');
-            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="del" id="del0" data="删除">');
+            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="del" id="qd_' + qid + '" data="删除">');
             html.push('<i class="layui-icon">&#xe640;</i>');
             html.push('</button>');
             html.push('</div>');
@@ -180,6 +216,21 @@ layui.config({
         
         $("#anwserlist").html(html.join(''));
         
+        $(".contright-cont-btn button").bind("click",function(){
+            var ids = $(this).attr("id").split("_");
+            var type = ids[0];
+            var id = ids[1];
+            if(!id){
+                return;
+            }
+            if(type == "qu"){
+
+            }else if(type == "qd"){
+
+            }
+            console.log(id);
+            // getlistQusetion(id);
+        });
     }
 
 

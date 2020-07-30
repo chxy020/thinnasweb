@@ -110,12 +110,12 @@ layui.config({
                 if(obj.code == 1){
                     layer.msg("添加成功");
 
-                    // setTimeout(function(){
-                    //     //刷新父页面
-                    //     window.parent.location.reload();
-                    //     var index = parent.layer.getFrameIndex(window.name);
-               		//     parent.layer.close(index);
-                    // },1500);
+                    setTimeout(function(){
+                        //刷新父页面
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name);
+               		    parent.layer.close(index);
+                    },500);
                 }else{
                     layer.msg(obj.msg || "添加失败");
                 }
