@@ -7,55 +7,157 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
-
+  <link rel="stylesheet" href="./../css/reset.css">
 
 <style>
-   @media screen and (min-width:992px) {
+@media screen and (min-width:992px) {
 .layui-col-md2 {width: 14.28571428%;}
 }
 </style>
  
 </head>
-<body>
-  
+<body class="consolebg">
+<div style="padding: 20px 10px;">
+    <div class="layui-row mb36" style="display: none;">
+        <div class="layui-col-md12">
+            <div class="grid-demo grid-demo-bg1">
+                <div class="console_top">
+                    <div class="console_top_time">11:13:52  2018-09-21 周五</div><!---时间--->
+                    <div class="console_top_full"></div><!---全屏--->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row positionR box_yinying mb46" style="display: none;">
+        <div class="top_line"></div>
+        <div class="left_top"></div>
+        <div class="left_bottom"></div>
+        <div class="right_top"></div>
+        <div class="right_bottom"></div>
+        <div class="layui-col-md2">
+            <div class="t">总用户数</div>
+            <div class="s"><span>2.23</span>万个</div>
+            <div>折线图</div>
+        </div>
+        <div class="layui-col-md2">
+            <div class="t">日活用户数</div>
+            <div class="s"><span>1523</span>万个</div>
+            <div>折线图</div>
+        </div>
+        <div class="layui-col-md2">
+            <div class="t">设备用户比例</div>
+            <div class="s"><span>72</span>%</div>
+            <div>折线图</div>
+        </div>
+        <div class="layui-col-md2">
+            <div class="c clearfix">备数总设 <span>72.2<i>万台</i></span></div>
+            <div class="d">外部设备比例<span>10%<s>7.2万台</s></span></div> 
+            <div>折线图</div>
+        </div>
+        <div class="layui-col-md2">
+            <div class="t">公网IP数</div>
+            <div class="s"><span>72</span>万个</div>
+            <div>折线图</div>
+        </div>
+        <div class="layui-col-md2">
+            <div class="t">存储容量</div>
+            <div class="s"><span>32.32</span>PB</div>
+            <div>折线图</div>
+        </div>
+        <div class="layui-col-md2">
+            <div class="t">共享空间数</div>
+            <div class="s">500TB  <span>3.2</span>万个</div>
+            <div>折线图</div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-col-md7">
+            <div class="positionR box_yinying mr20">
+                <div class="top_btitle"><span class="on">用户区域分布</span> | <span>设备区域分布</span></div><!--标题--->
+                <div class="left_top"></div>
+                <div class="left_bottom"></div>
+                <div class="right_top"></div>
+                <div class="right_bottom"></div>
+                <div  class="positionR" style="margin:0 20px;height: 580px;background-color: salmon;">
+                    <div class="map_right_list">
+                        <div class="map_right_t">
+                            在线用户数：<span class="a">4000</span>/<span>10000</span>
+                        </div>
+                        <div class="text_list">
+                            <div class="text_lista">
+                                  <ul>
+                                      <li>1.广东：52</li>
+                                      <li>2.广东：52</li>
+                                      <li>3.广东：52</li>
+                                      <li>4.广东：52</li>
+                                      <li>5.广东：52</li>
+                                      <li>6.广东：52</li>
+                                      <li>7.广东：52</li>
+                                      <li>8.广东：52</li>
+                                      <li>9.广东：52</li>
+                                      <li>10.广东：52</li>
+                                  </ul>
+                            </div>
+                            <div class="text_lista">
+                                  <ul>
+                                        <li>11.广东：52</li>
+                                        <li>12.广东：52</li>
+                                        <li>13.广东：52</li>
+                                        <li>14.广东：52</li>
+                                        <li>15.广东：52</li>
+                                        <li>16.广东：52</li>
+                                        <li>17.广东：52</li>
+                                        <li>18.广东：52</li>
+                                        <li>19.广东：52</li>
+                                        <li>20.广东：52</li>
+                                  </ul>
 
-  <div class="layui-row">
-    <div class="layui-col-md12">
-      <div class="grid-demo grid-demo-bg1" style="background-color: #999;">1/12</div>
-    </div>
-  </div>
-  <div class="layui-row">
-    <div class="layui-col-md2">
-      <div class="grid-demo grid-demo-bg1" style="background-color: #FF5722;">1/12</div>
-    </div>
-    <div class="layui-col-md2">
-      <div class="grid-demo" style="background-color: #ffff00;">1/12</div>
-    </div>
-    <div class="layui-col-md2">
-      <div class="grid-demo grid-demo-bg1" style="background-color: #FF5722;">1/12</div>
-    </div>
-    <div class="layui-col-md2">
-      <div class="grid-demo" style="background-color: #ffff00;">1/12</div>
-    </div>
-    <div class="layui-col-md2">
-      <div class="grid-demo grid-demo-bg1" style="background-color: #FF5722;">1/12</div>
-    </div>
-    <div class="layui-col-md2">
-      <div class="grid-demo" style="background-color: #ffff00;">1/12</div>
-    </div>
-    <div class="layui-col-md2">
-      <div class="grid-demo grid-demo-bg1" style="background-color: #FF5722;">1/12</div>
-    </div>
-  </div>
-  <div class="layui-row">
-    <div class="layui-col-md7">
-      <div class="grid-demo grid-demo-bg1" style="background-color: #000;">1/12</div>
-    </div>
-    <div class="layui-col-md5">
-      <div class="grid-demo" style="background-color: #ccc;">1/12</div>
-    </div>
-  </div>
+                            </div>
+                        </div>
+                    </div>
+                    地图
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md5">
+            <div class="positionR box_yinying mb30">
+                <div class="top_stitle">用户日均活跃时段</div><!--标题--->
+                <div class="left_top"></div>
+                <div class="left_bottom"></div>
+                <div class="right_top"></div>
+                <div class="right_bottom"></div>
+                <div class="positionR" style="margin:0 20px;height: 220px;background-color: salmon;">
+                    <ul class="right_tips">
+                        <li class="a"><span>•</span>上传</li>
+                        <li><span>•</span>下载</li>
+                        <li class="a"><span>•</span>浏览</li>
+                        <li><span>•</span>全部</li>
+                    </ul>
+                    地图
+                </div>
+            </div>
+            <div class="positionR box_yinying">
+                <div class="top_stitle">存储文件分类统计</div><!--标题--->
+                <div class="left_top"></div>
+                <div class="left_bottom"></div>
+                <div class="right_top"></div>
+                <div class="right_bottom"></div>
+                <div class="positionR" style="margin:0 20px;height: 290px;background-color: salmon;">
+                    <ul class="right_tips2">
+                        <li class="a"><span>•</span>文档  256</li>
+                        <li><span>•</span>音频  3566</li>
+                        <li class="a"><span>•</span>图片  342</li>
+                        <li><span>•</span>应用  1.15万</li>
+                        <li><span>•</span>视频  5652</li>
+                        <li><span>•</span>其他  1.11万</li>
+                    </ul>
+                    地图
+                </div>
+            </div>
 
+        </div>
+    </div>
+</div>
 
 
   <script src="./layui/layui.js?t=1"></script>  
