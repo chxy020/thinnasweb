@@ -548,3 +548,44 @@ padding: 10px 0;
     vertical-align: middle;
     margin-right: 3px;
 }
+.right_tips2{
+    position: absolute;
+    right:0;
+    top:0;
+    width:50%;
+}
+.right_tips2 li{
+    width: 50%;
+    float: left;
+    font-size:16px;
+    font-weight:bold;
+    line-height:50px;
+    list-style:none;
+    white-space:nowrap;
+}
+.right_tips2 li img{
+    vertical-align: -2px;
+    margin-right: 5px;
+}
+.right_tips2 li span{
+    margin-left: 5px;
+}
+.right_tips2 li.a{
+    color: #F9B63C;
+}
+.right_tips2 li.b{
+    color: #F1D669;
+}
+.right_tips2 li.c{
+    color: #8D83FE;
+}
+.right_tips2 li.d{
+    color: #87E187;
+}
+.right_tips2 li.e{
+    color: #007FFD;
+}
+.right_tips2 li.f{
+    color: #D2CFD0;
+}
+
