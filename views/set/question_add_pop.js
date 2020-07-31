@@ -11,6 +11,11 @@ layui.config({
 
     var server = setter.baseUrl;
 
+    var uri = window.location.search;
+    
+    var qid = setter.getUrlParam("qid",uri) || "";
+    var qcid = setter.getUrlParam("qcid",uri) || "";
+
     function getlistQusetionC(){
         $.Ajax({
             async: false,
@@ -46,18 +51,37 @@ layui.config({
         });
     }
     
+    function toEditQusetion(qid){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/toEditQusetion",
+            dataType: "json",
+            method: 'get',
+            data:{"QID":qid},
+            success: function(obj) {
+                console.log(obj);
+                if(obj.code == 1){
+                    var question = obj.question || {};
+                    $("#QNAME").val(question.qname);
+                    $("#ANSWER").val(question.answer);
+                }
+            }
+        });
+    }
 
-    
     function setTypeQusetionCSelect(list){
         for (var i = 0; i < list.length; i++) {
             var item = list[i] || {};
             $('#typeselect').append(new Option(item.name, item.qcid));
         }
+        $('#typeselect').val(qcid);
         layui.form.render("select");
     }
 
 
     getlistQusetionC();
+    toEditQusetion(qid);
+
 
     $('#typename').on('keydown', function (event) {
 		if (event.keyCode == 13) {
@@ -95,9 +119,16 @@ layui.config({
         condi.ANSWER = data.field.ANSWER;
         condi.QCID = data.field.typeselect;
         condi.NAME = $("#typeselect").find("option:selected").text();
-        saveQuestionNAME(condi);
+
+        if(qid){
+            condi.QID = qid;
+            updateQuestion(condi);
+        }else{
+            saveQuestionNAME(condi);
+        }
         return false;
     });
+
 
     function saveQuestionNAME(condi){
         $.Ajax({
@@ -123,5 +154,29 @@ layui.config({
         });
     }
 
+
+    function updateQuestion(condi){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/updateQuestion",
+            dataType: "json",
+            method: 'post',
+            data:condi,
+            success: function(obj) {
+                if(obj.code == 1){
+                    layer.msg("添加成功");
+
+                    setTimeout(function(){
+                        //刷新父页面
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name);
+               		    parent.layer.close(index);
+                    },500);
+                }else{
+                    layer.msg(obj.msg || "添加失败");
+                }
+            }
+        });
+    }
 
 });

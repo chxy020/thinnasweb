@@ -54,23 +54,6 @@ layui.config({
         });
     }
 
-
-    function getlistQusetion(id){
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/question/listQusetion",
-            dataType: "json",
-            method: 'get',
-            data:{"QCID":id},
-            success: function(obj) {
-                console.log(obj);
-                if(obj.code == 1){
-                    setListQusetionHtml(obj.questionC || []);
-                }
-            }
-        });
-    }
-
     function updateStatusQuestionC(id,status){
         $.Ajax({
             async: false,
@@ -87,6 +70,42 @@ layui.config({
         });
     }
 
+    
+    function getlistQusetion(id){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/listQusetion",
+            dataType: "json",
+            method: 'get',
+            data:{"QCID":id},
+            success: function(obj) {
+                console.log(obj);
+                if(obj.code == 1){
+                    setListQusetionHtml(obj.questionC || []);
+                }
+            }
+        });
+    }
+
+    function deleteQuestion(id){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/question/deleteQuestion",
+            dataType: "json",
+            method: 'get',
+            data:{"QID":id},
+            success: function(obj) {
+                console.log(obj);
+                if(obj.code == 1){
+                    var qid = obj.QID;
+                    $("#qd_" + qid).parent().parent().hide();
+                    // getlistQusetionC();
+                    layer.msg("删除成功");
+                }
+            }
+        });
+    }
+
     function setListQusetionCHtml(list){
         var html = [];
         var id = "";
@@ -98,7 +117,6 @@ layui.config({
             if(i == 0){
                 id = qcid;
             }
-            status
             // on hide
             if(i == 0){
                 if(status){
@@ -192,15 +210,15 @@ layui.config({
 
     function setListQusetionHtml(list){
         var html = [];
-        var id = "";
 
         for(var i = 0,len = list.length; i < len; i++){
             var item = list[i] || {};
             var qid = item.qid;
+            var qcid = item.qcid;
             
             html.push('<div class="positionR">');
             html.push('<div class="contright-cont-btn">');
-            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="add" id="qu_' + qid + '" data="编辑">');
+            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="add" id="qu_' + qid + '_' + qcid +'" data="编辑">');
             html.push('<i class="layui-icon">&#xe642;</i>');
             html.push('</button>');
             html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="del" id="qd_' + qid + '" data="删除">');
@@ -220,19 +238,37 @@ layui.config({
             var ids = $(this).attr("id").split("_");
             var type = ids[0];
             var id = ids[1];
+            var qcid = ids[2];
             if(!id){
                 return;
             }
             if(type == "qu"){
-
+                updateQusetion(id,qcid);
             }else if(type == "qd"){
-
+                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
+                    deleteQuestion(id);
+                });
             }
             console.log(id);
             // getlistQusetion(id);
         });
     }
 
+    function updateQusetion(qid,qcid){
+        layer.open({
+            type: 2,
+            title: '编辑常见问题',
+            area: ['800px', '550px'],
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            maxmin: true,
+            content: 'question_add_pop.html?qid='+qid+'&qcid='+qcid,
+            yes: function(index, layero) {
+                var submit = layero.find('iframe').contents().find("#submit");
+                submit.click();
+            }
+        });
+    }
 
 
     getlistQusetionC();
@@ -270,30 +306,9 @@ layui.config({
                     submit.click();
                 }
             });
-        },
-
-
-        //点击编辑
-        editquestion: function() {
-            layer.open({
-                type: 2,
-                title: '编辑常见问题',
-                area: ['500px', '340px'],
-                btn: ['确定', '取消'],
-                btnAlign: 'c',
-                maxmin: true,
-                content: 'question_edit_pop.html',
-                yes: function(index, layero) {
-                    var submit = layero.find('iframe').contents().find("#ruleclick");
-                    submit.click();
-                }
-            });
-        },
-        //点击编辑分类
-        editquestionclass: function() {
-            
         }
     };
+
     //给页面里的layui-dS 绑定事件
     $('.layui-btn,.iconfont').on('click', function() {
         var type = $(this).data('type');
@@ -310,15 +325,16 @@ layui.config({
         $('#addClass').show();
         $('#cgClass').hide();
     });
-    $(document).on('click','#switchshow',function(){
-        if($(this).hasClass('icon-hide')){
-            $(this).addClass('icon-show').removeClass("icon-hide")
-            $(this).parent().parent().addClass('hide')
-        }else{
-            $(this).addClass('icon-hide').removeClass("icon-show")
-            $(this).parent().parent().removeClass('hide')
-        }
-    });
+
+    // $(document).on('click','#switchshow',function(){
+    //     if($(this).hasClass('icon-hide')){
+    //         $(this).addClass('icon-show').removeClass("icon-hide")
+    //         $(this).parent().parent().addClass('hide')
+    //     }else{
+    //         $(this).addClass('icon-hide').removeClass("icon-show")
+    //         $(this).parent().parent().removeClass('hide')
+    //     }
+    // });
     
     /*右侧菜单HOVER显示提示文字*/
     var subtips;

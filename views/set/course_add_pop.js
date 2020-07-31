@@ -21,14 +21,16 @@ layui.config({
 
     //视频
     upload.render({
-        elem: '#test5'
-        ,url: 'https://httpbin.org/post' //改成您自己的上传接口
-        ,accept: 'video' //视频
-        ,done: function(res){
-          layer.msg('上传成功');
-          console.log(res)
+        elem: '#test5',
+        url: server + "/ADMINM/course/saveCourse", //改成您自己的上传接口
+        accept: 'video', //视频
+        field:"clientFile",
+        data:{"NAME":"123123"},
+        done: function(res){
+            layer.msg('上传成功');
+            console.log(res)
         }
-      });
+    });
 
     if(role_ID){
         //编辑
@@ -44,7 +46,6 @@ layui.config({
                 }else{
                     layer.msg(obj.msg || "获取角色详情错误");
                 }
-               
             }
         });
     }
@@ -56,17 +57,6 @@ layui.config({
         //     location.href='index.html'
         // });
         console.log(data.field)
-        var condi = {};
-        condi = data.field;
-        //写死组id
-        condi.PARENT_ID = 1;
-
-        if(role_ID){
-            //编辑
-            editRole(condi);
-        }else{
-            addRole(condi);
-        }
         
         return false;
     });

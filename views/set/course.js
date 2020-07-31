@@ -4,501 +4,196 @@ layui.config({
     index: 'lib/index' //主入口模块
 }).use(['index', 'table', 'jquery','form','laydate','upload'], function() {
     var table = layui.table,
-        upload = layui.upload,
-        setter = layui.setter,
-        laydate = layui.laydate,
-        form = layui.form;
-        $ = layui.jquery;
+    element = layui.element,
+    setter = layui.setter,
+    laydate = layui.laydate,
+    form = layui.form;
+    $ = layui.jquery;
 
     var server = setter.baseUrl;
-    var devices = {};
-    var arrangeList = [];
 
-    var day2 = new Date();
-    day2.setTime(day2.getTime());
-    var s2 = day2.getFullYear() + "-" + (day2.getMonth() + 1) + "-" + day2.getDate();
-    var ins22 = laydate.render({
-        elem: '#rangetime',
-        range: true
-        // min: s2,
-        // max: '2080-10-14',
-        // format: 'yyyy年MM月dd日',
-        // theme: 'molv'
-    });
-
-    function isEmptyObject(obj) {
-        var jlength = 0;
-        for (var key in obj) {
-            if (key != "null") {
-                jlength++;
-            }
-        };
-        return jlength
-    };
-    //表格里滑动开关
-    // form.on('submit(formDemo)', function(data){
-    //     layer.msg(JSON.stringify(data.field));
-    //     return false;
-    // });
-
-    //监听指定开关
-    form.on('switch(switchTest)', function(data){
-        layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-        offset: '6px'
-        });
-        layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-    });
-    
-
-
-    //表格加载渲染
-    table.render({
-        elem: '#test-table-operate',
-        height: 'full-60',//必须留着
-        // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-        // url: server + "/ADMINM/user/listUsers",
-        method: 'get',
-        xhrFields: {
-            withCredentials: true
-        }
-        ,data: [
-            {
-                id:1,
-                jz:1,//1是开 2是禁止
-                phone:"13800138000",
-                nikename:'张三',
-                sex:"男",
-                status:"启用",
-                logintime:"1分钟前",
-                regtime:"2020-7-2 12:12",
-                usecount:10,
-                havecount:5,
-                ssd:"5T",
-                activecount:30
-            },
-        ]
-        ,page: {
-            layout: ['prev', 'page', 'next', 'count', 'skip']
-        },
-        cols: [
-            [ //表头
-                {
-                    type: 'checkbox',
-                    fixed: 'left',
-                },
-                {
-                    field: 'id',
-                    title: '序号',
-                    unresize: 'false',
-                    width:60,
-                },
-                {
-                    width: 100,
-                    title: '操作',
-                    toolbar: '#test-table-operate-barDemo',
-                },
-                {
-                    field: 'phone',
-                    title: '手机号',
-                    align: 'left',
-                }, {
-                    field: 'nikename',
-                    title: '昵称',
-                    align: 'left',
-                },
-                {
-                    field: 'sex',
-                    title: '性别',
-                    align: 'left',
-                    // toolbar: '#test-table-operate-barDemoMore',
-                    templet: function(data) {
-                        // console.log(data)
-                        return data.sex;
-                            // var htmlStr = "";
-                            // for (i = 0; i < data.namelist.length; i++) { 
-                            //     console.log("000")
-                            //     htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
-                            // }
-                            // console.log("htmlStr====",htmlStr);
-                            // var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
-                            // console.log("contStr====",contStr);
-                            // return data.name + contStr
-                    },
-                },
-                {
-                    field: 'status',
-                    title: '状态',
-                    align: 'left',
-                },
-                {
-                    field: 'logintime',
-                    title: '最近登录',
-                    align: 'left',
-                    // templet: function(data) {
-                    //     // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                    //     return data.logintime + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
-                    // },
-                },
-                {
-                    field: 'regtime',
-                    title: '注册时间',
-                    align: 'left',
-                },
-                {
-                    field: 'usecount',
-                    title: '使用设备数',
-                    align: 'left',
-                },
-                {
-                    field: 'havecount',
-                    title: '管理设备数',
-                    align: 'left',
-                    templet: function(data) {
-                        return data.havecount + "<i class='layui-icon iconfont icon-zu201' lay-event='equipment'></i>"
-                    },
-                },
-                {
-                    field: 'ssd',
-                    // title: '可用空间',
-                    title: '可用空间<i class="layui-icon iconfont icon-zu200 m5" lay-tips="包含自有设备空间、共享空间、安全云空间等"></i>',
-                    align: 'left',
-                    width:100,
-                    templet: function(data) {
-                        return data.ssd + "<i class='layui-icon iconfont icon-zu204' lay-event='space'></i>"
-                    },
-                },
-                {
-                    field: 'activecount',
-                    title: '近7天活跃次数<i class="layui-icon iconfont icon-zu200 m5" lay-tips="最近7天内，打开APP次数，含电视APP"></i>',
-                    align: 'left',
-                    width:120,
-                    templet: function(data) {
-                        return data.activecount + "<i class='layui-icon iconfont icon-zu211' lay-event='times'></i>"
-                    },
+    function listCourse(){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/course/listCourse",
+            dataType: "json",
+            method: 'get',
+            success: function(obj) {
+                console.log(obj);
+                if(obj.code == 1){
+                    listCourseHtml(obj.courseList || []);
                 }
-                
-            ]
-        ],
-        // parseData: function(res){
-        //     //res 即为原始返回的数据
-        //     return {
-        //       "code": 0, //解析接口状态
-        //       "msg": "", //解析提示文本
-        //       "count": 100, //解析数据长度
-        //       "data": res.userList //解析数据列表
-        //     };
-        // },
-        page: true,
-
-        event: true,
-        
-        limit: 15,
-        skin: 'line',
-        even: true,
-        limits: [5, 10, 15],
-        done: function(res, curr, count) {
-
-
-
-            table_data = res.data;
-            layer.closeAll('loading');
-            arrangeList.length = 0;
-            // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-            // layer.close(index);    //返回数据关闭loading
-
-
-
-        },
-    });
-    //表格刷新渲染
-    window.reloads = function() {
-        table.render({
-            elem: '#test-table-operate',
-            height: 'full-100',//必须留着
-            url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-            ,method: 'get',
-            xhrFields: {
-                withCredentials: true
-            },
-            page: {
-                layout: ['prev', 'page', 'next', 'count', 'skip']
-            },
-            cols: [
-                [ //表头
-                    {
-                        type: 'checkbox',
-                        fixed: 'left',
-                    },
-                    {
-                        field: 'id',
-                        title: '序号',
-                        unresize: 'false',
-                        width:60,
-                    },
-                    {
-                        width: 100,
-                        title: '操作',
-                        toolbar: '#test-table-operate-barDemo',
-                    },
-                    {
-                        field: 'name',
-                        title: '姓名',
-                        align: 'left',
-                    }, {
-                        field: 'roomname',
-                        title: '手机号',
-                        align: 'left',
-                    },
-                    {
-                        field: 'roomname',
-                        title: '角色',
-                        align: 'left',
-                        templet: function(data) {
-                                return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
-                        },
-                    },
-                    {
-                        field: 'roomname',
-                        title: '备注',
-                        align: 'left',
-                    },
-                    {
-                        field: 'roomname',
-                        title: '最近登录',
-                        align: 'left',
-                        templet: function(data) {
-                            return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
-                        },
-                    },
-                    {
-                        field: 'modifytime',
-                        title: '创建时间',
-                        align: 'left',
-                    },
-                ]
-            ],
-            event: true,
-            page: true,
-            limit: 15,
-            skin: 'line',
-            even: true,
-            limits: [5, 10, 15],
-            done: function(res, curr, count) {
-                table_data = res.data;
-                layer.closeAll('loading');
-                arrangeList.length = 0;
-                // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-                // layer.close(index);    //返回数据关闭loading
-            },
-
+            }
         });
     }
-    window.onkeyup = function(ev) {
-        var key = ev.keyCode || ev.which;
-        if (key == 27) { //按下Escape
-            layer.closeAll('iframe'); //关闭所有的iframe层
-        }
-        if (key == 13) { //按下Escape
-            $('#search').click();
 
-        }
-    }
-    //监听表格复选框选择
-    table.on('checkbox(test-table-operate)', function(obj) {
-        console.log(obj)
-    });
-    table.on('checkbox(test-table-operate)', function(obj) {
-        // console.log(obj.checked); //当前是否选中状态
-        // // console.log(obj.data); //选中行的相关数据
-        // console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
-        // // console.log(table.checkStatus('test-table-operate').data); // 获取表格中选中行的数据
-        if (obj.checked && obj.type == 'one') {
-            var devi = {};
-            devi = obj.data.id;
-            arrangeList.push(devi)
-        }
-        if (!obj.checked && obj.type == 'one') {
-            var index = arrangeList.indexOf(obj.data.id);
-            if (index > -1) {
-                arrangeList.splice(index, 1);
+
+    function listCourseHtml(list){
+        var html = [];
+        var vid = "";
+
+        for(var i = 0,len = list.length; i < len; i++){
+            var item = list[i] || {};
+            var id = item.id;
+            var name = item.name;
+            var path = item.path;
+            if(i == 0){
+                vid = id;
+            }
+            // on hide
+            if(i == 0){
+                html.push('<li class="on"><a href="javascript:;">' + name + '</a></li>');
+            }else{
+                html.push('<li><a href="javascript:;">' + name + '</a></li>');
             }
         }
-        if (!obj.checked && obj.type == 'all') {
-            arrangeList.length = 0;
+        
+        $("#contleftlist").html(html.join(''));
+        
+        // $(".rightbtn span").bind("click",function(){
+        //     var ids = $(this).attr("id").split("_");
+        //     var id = ids[1];
+        //     if(!id){
+        //         return;
+        //     }
+        //     if($(this).hasClass("icon-zu227")){
+        //         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
+        //             deleteQuestionC(id);
+        //         });
+        //     }else if($(this).hasClass("icon-zu225")){
+        //         var name = $("#q_" + id).text();
+        //         layer.open({
+        //             type: 2,
+        //             title: '编辑问题分类',
+        //             area: ['500px', '200px'],
+        //             btn: ['确定', '取消'],
+        //             btnAlign: 'c',
+        //             maxmin: true,
+        //             content: 'question_class_pop.html?name='+name+'&id='+id,
+        //             yes: function(index, layero) {
+        //                 var submit = layero.find('iframe').contents().find("#submit");
+        //                 submit.click();
+        //             }
+        //         });
+        //     }else if($(this).hasClass("icon-status")){
+        //         if($(this).hasClass("icon-show")){
+        //             $(this).removeClass("icon-show");
+        //             $(this).addClass("icon-hide");
+        //             $(this).parent().parent().addClass("hide");
 
-        }
-        if (obj.checked && obj.type == 'all') {
-            $.each(table.checkStatus('test-table-operate').data, function(idx, con) {
-                var devi = {};
-                devi = con.id;
+        //             updateStatusQuestionC(id,0);
+        //         }else{
+        //             $(this).removeClass("icon-hide");
+        //             $(this).addClass("icon-show");
+        //             $(this).addClass("icon-show");
+        //             $(this).parent().parent().removeClass("hide");
 
-                arrangeList.push(devi)
+        //             updateStatusQuestionC(id,1);
+        //         }
+        //     }
+        // });
+
+        // $(".questiontype").bind('click',function(){
+        //     var ids = $(this).attr("id").split("_");
+        //     var id = ids[1];
+        //     if(!id){
+        //         return;
+        //     }
+            
+        //     $("#contleftlist > li").removeClass("on");
+        //     $(this).parent().addClass("on");
+
+        //     getlistQusetion(id);
+        // })
+
+        // getlistQusetion(id);
+    }
+
+    listCourse();
+
+    var $ = layui.$,
+    active = {
+        //点击添加
+        addcourse: function() {
+            layer.open({
+                type: 2,
+                title: '添加教程',
+                area: ['500px', '300px'],
+                btn: ['确定', '取消'],
+                btnAlign: 'c',
+                maxmin: true,
+                content: 'course_add_pop.html',
+                yes: function(index, layero) {
+                    var submit = layero.find('iframe').contents().find("#submit");
+                    submit.click();
+                }
             });
-            arrangeList = Array.from(new Set(arrangeList))
-        }
-        // console.log(arrangeList)
-
-    });
-    //监听工具条
-    table.on('tool(test-table-operate)', function(obj) {
-        var data = obj.data;
-        if (obj.event === 'del') {
-            /**
-             * @param {Object} index
-             * 编排规则的借口提供之后需要接入删除
-             */
-            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
-                $.ajax({
+        },
+        //点击编辑
+        editcourse: function() {
+            layer.open({
+                type: 2,
+                title: '编辑教程',
+                area: ['500px', '300px'],
+                btn: ['确定', '取消'],
+                btnAlign: 'c',
+                maxmin: true,
+                content: 'course_add_pop.html',
+                yes: function(index, layero) {
+                    var submit = layero.find('iframe').contents().find("#ruleclick");
+                    submit.click();
+                }
+            });
+        },
+        //点击删除
+        delcourse: function() { 
+            layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {//获取选中数目
+            $.ajax({
                     async: false,
-                    type: "get",
-                    url: url + "/ruletemplate/deleteruletemplate",
+                    type: "post",
+                    // url: url+"/roomtemplate/batchRemove",
                     dataType: "json",
+                    //成功的回调函数
+                    data: {
+                        "roomid":arrangeList.join(",")
+                    },
                     xhrFields: {
                         withCredentials: true
                     },
-                    //成功的回调函数
-                    data: {
-                        "id": data.id
-                    },
-                    success: function (msg) {
-
-                        if (msg.code == '0') {
+                    success: function(msg) {
+                        if (msg.code == 0) {
                             layer.msg("删除成功");
-                            reloads();
+                            reloaddata(); // 父页面刷新
                         } else {
-                            layer.msg("删除失败");
-
+                            layer.msg(msg.msg);
                         }
-
+            
                     },
                     //失败的回调函数
-                    error: function () {
+                    error: function() {
                         console.log("error")
                     }
                 })
-                layer.close(index);
-            });
-        } else if (obj.event === 'edit') {
-            layer.open({
-                type: 2,
-                title: '编辑账号',
-                area: ['500px', '400px'],
-                btn: ['保存', '取消'],
-                btnAlign: 'c',
-                maxmin: true,
-                content: 'account_edit_pop.html',
-                // content: 'account_edit_pop.html?id=" + data.id,
-                yes: function(index, layero) {
-                }
-            });
-        } else if (obj.event === 'switch') {
-            console.log("data.id=====",data.id)
-            console.log("data.jz=====",data.jz)
-            if(data.jz==1){
-                data.jz=2
-                console.log("data.jz=====11",data.jz)
-                layer.msg("账号已禁用")
-                //把数据提交到接口里
-            }else{
-                data.jz=1
-                layer.msg("账号已启用")
-                console.log("data.jz=====22",data.jz)
-                //把数据提交到接口里
-            }
-        }else if (obj.event === 'equipment'){//跳转到设备管理
-            console.log("data.id=====",data.id)
-            console.log("equipment")
-            // top.layui.index.openTabsPage("../device/device_list.html", '设备管理');
-        } else if (obj.event === 'times'){//跳转c端操作日志
-            console.log("data.id=====",data.id)
-            console.log("00000000000000")
-            //在主窗口打开 操作日志 页面 
-            // top.layui.index.openTabsPage("system/operation_log.html", 'c端操作日志');
+            })
         }
+    };
 
-    })
-    var $ = layui.$,
-        active = {
-            //点击添加
-            addcourse: function() {
-                layer.open({
-                    type: 2,
-                    title: '添加教程',
-                    area: ['500px', '300px'],
-                    btn: ['确定', '取消'],
-                    btnAlign: 'c',
-                    maxmin: true,
-                    content: 'course_add_pop.html',
-                    yes: function(index, layero) {
-                        var submit = layero.find('iframe').contents().find("#ruleclick");
-                        submit.click();
-                    }
-                });
-            },
-            //点击编辑
-            editcourse: function() {
-                layer.open({
-                    type: 2,
-                    title: '编辑教程',
-                    area: ['500px', '300px'],
-                    btn: ['确定', '取消'],
-                    btnAlign: 'c',
-                    maxmin: true,
-                    content: 'course_add_pop.html',
-                    yes: function(index, layero) {
-                        var submit = layero.find('iframe').contents().find("#ruleclick");
-                        submit.click();
-                    }
-                });
-            },
-             //点击删除
-             delcourse: function() { 
-                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {//获取选中数目
-                $.ajax({
-                        async: false,
-                        type: "post",
-                        // url: url+"/roomtemplate/batchRemove",
-                        dataType: "json",
-                        //成功的回调函数
-                        data: {
-                            "roomid":arrangeList.join(",")
-                        },
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        success: function(msg) {
-                            if (msg.code == 0) {
-                                layer.msg("删除成功");
-                                reloaddata(); // 父页面刷新
-                            } else {
-                                layer.msg(msg.msg);
-                            }
-                
-                        },
-                        //失败的回调函数
-                        error: function() {
-                            console.log("error")
-                        }
-                    })
-                })
-            },
-        };
     //给页面里的layui-dS 绑定事件
     $('.layui-btn').on('click', function() {
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });
 
-//重新上传视频
-upload.render({
-    elem: '#uploadcourse'
-    ,url: 'https://httpbin.org/post' //改成您自己的上传接口
-    ,accept: 'video' //视频
-    ,done: function(res){
-      layer.msg('上传成功');
-      console.log(res)
-    }
-});
+    //重新上传视频
+    upload.render({
+        elem: '#uploadcourse'
+        ,url: 'https://httpbin.org/post' //改成您自己的上传接口
+        ,accept: 'video' //视频
+        ,done: function(res){
+        layer.msg('上传成功');
+        console.log(res)
+        }
+    });
 
 
 });
