@@ -16,39 +16,47 @@ layui.config({
     var server = setter.baseUrl;
     var uri = window.location.search;
     
-    var role_ID = setter.getUrlParam("role_ID",uri) || "";
+    // var filePath = "";
+    // var fileId = "";
 
+    var fileId = setter.getUrlParam("fileId",uri) || "";
+    var fileName = setter.getUrlParam("fileName",uri) || "";
+    var filePath = setter.getUrlParam("filePath",uri) || "";
+    var isEdit = setter.getUrlParam("isEdit",uri) || "";
+    
+    if(isEdit){
+        $("#filepath").html(filePath.replace("/ADMINM/uploadFiles/file",""));
+        $("#NAME").val(fileName);
+    }
 
     //视频
     upload.render({
         elem: '#test5',
-        url: server + "/ADMINM/course/saveCourse", //改成您自己的上传接口
+        url: server + "/ADMINM/course/uploadFile", //改成您自己的上传接口
         accept: 'video', //视频
         field:"clientFile",
-        data:{"NAME":"123123"},
+        before:function(){
+            layer.load(2);
+        },
         done: function(res){
-            layer.msg('上传成功');
-            console.log(res)
+            layer.closeAll();
+            // console.log(res)
+            if(res.code == 1){
+                layer.msg('上传成功');
+                $("#filepath").html(res.PATH.replace("/ADMINM/uploadFiles/file",""));
+                filePath = res.PATH;
+                if(!isEdit){
+                    fileId = res.ID;
+                }
+            }else{
+                layer.msg('上传失败');
+            }
+
+            // ID: "81caf154951d4eaab3d5cbe4c2b99792"
+            // PATH: "/ADMINM/uploadFiles/file/81caf154951d4eaab3d5cbe4c2b99792.mp4"
+            // code: 1
         }
     });
-
-    if(role_ID){
-        //编辑
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/toEdit",
-            dataType: "json",
-            method: 'get',
-            data:{"ROLE_ID":role_ID},
-            success: function(obj) {
-                if(obj.code == 1){
-                    changeRoleHtml(obj.data || {});
-                }else{
-                    layer.msg(obj.msg || "获取角色详情错误");
-                }
-            }
-        });
-    }
 
     //监听提交
     form.on('submit(submit)', function(data){
@@ -56,20 +64,31 @@ layui.config({
         // layer.msg(JSON.stringify(data.field),function(){
         //     location.href='index.html'
         // });
-        console.log(data.field)
         
+        console.log(data.field)
+        if(!filePath){
+            layer.msg("没有上传文件");
+            return false;
+        }
+        var condi = {};
+        condi.NAME = data.field.NAME;
+        condi.PATH = filePath;
+        condi.ID = fileId;
+
+        if(isEdit){
+            updateCourse(condi);
+        }else{
+            saveCourse(condi);
+        }
         return false;
     });
 
-    function changeRoleHtml(obj){
-        $("#ROLE_NAME").val(obj.ROLE_NAME || "");
-        $("#BZ").val(obj.BZ || "");
-    }
+    
 
-    function addRole(condi){
+    function saveCourse(condi){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/role/add",
+            url: server + "/ADMINM/course/saveCourse",
             dataType: "json",
             method: 'post',
             data:condi,
@@ -82,7 +101,7 @@ layui.config({
                         window.parent.location.reload();
                         var index = parent.layer.getFrameIndex(window.name);
                		    parent.layer.close(index);
-                    },1500);
+                    },500);
                 }else{
                     layer.msg(obj.msg || "添加失败");
                 }
@@ -90,12 +109,11 @@ layui.config({
         });
     }
 
-    function editRole(condi){
-        condi.ROLE_ID = role_ID;
+    function updateCourse(condi){
 
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/role/edit",
+            url: server + "/ADMINM/course/updateCourse",
             dataType: "json",
             method: 'post',
             data:condi,
@@ -108,7 +126,7 @@ layui.config({
                         window.parent.location.reload();
                         var index = parent.layer.getFrameIndex(window.name);
                		    parent.layer.close(index);
-                    },1500);
+                    },500);
                 }else{
                     layer.msg(obj.msg || "修改失败");
                 }
