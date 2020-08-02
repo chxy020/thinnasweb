@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>新建角色</title>
+    <title>编辑反馈</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
@@ -17,6 +17,12 @@
         .layui-input-block {
             margin-left: 120px;
         }
+        .uploadImg img{
+            width: 100px;
+            height: 100px;
+            margin-left: 5px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -26,51 +32,52 @@
             <div class="layui-form-item">
                 <label class="layui-form-label"><span>*</span>反馈类型：</label>
                 <div class="layui-input-block">
-                    <!-- <select name="city" xm-select="select1" xm-select-skin="normal">
-                    </select> -->
-                    <!-- id="roleselset" -->
-                    <select  lay-verify="required" name="ROLE_ID">
-                        <option value="">反馈类型</option>
-                        <option value="0">硬件故障</option>
-                        <option value="0">软件故障</option>
-                        <option value="0">硬件故障</option>
-                        <option value="0">硬件故障</option>
+                    <select id="FEEDBACKTYPE" lay-verify="required" disabled name="FEEDBACKTYPE">
+                        <option value="1">硬件故障</option>
+                        <option value="2">软件故障</option>
+                        <option value="3">硬件使用障碍</option>
+                        <option value="4">软件使用障碍</option>
+                        <option value="5">优化建议</option>
+                        <option value="6">投诉反馈</option>
+                        <option value="7">其它</option>
                     </select>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label"><span>*</span>问题描述：</label>
                 <div class="layui-input-block">
-                    <textarea placeholder="请尽量详细的描述您遇到的故障" class="layui-textarea"></textarea>
+                    <textarea id="DESCRIBE" disabled name="DESCRIBE" lay-verify="required" placeholder="请尽量详细的描述您遇到的故障" class="layui-textarea"></textarea>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label"><span>*</span>上传截图：</label>
-                <div class="layui-input-block">
-                    <input type="text" placeholder="支持直接截图复制粘贴" autocomplete="off" class="layui-input" id="BZ" name="BZ">
-                    <div>最多上传9张截图，每张大小不得超过2M，支持JPG、PNG、GIT</div>
+                <!-- <div class="layui-input-block">
+                    <button type="button" class="layui-btn" id="test5"><i class="layui-icon"></i>上传视频</button>   
+                </div> -->
+                <div id="IMGPATH" style="margin-left: 118px;" class="uploadImg">
                 </div>
+                <!-- <div style="margin-left: 120px;">最多上传9张截图，每张大小不得超过2M，支持JPG、PNG、GIT</div> -->
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">手机号：</label>
                 <div class="layui-input-block">
-                    <input type="text" placeholder="请输入手机号" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+                    <input type="text" disabled placeholder="请输入手机号" autocomplete="off" class="layui-input" id="PHONE" name="PHONE">
                     <div>请留下您的手机号方便我们远程操作</div>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">微信：</label>
                 <div class="layui-input-block">
-                    <input type="text" placeholder="请输入微信号" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+                    <input type="text" disabled placeholder="请输入微信号" autocomplete="off" class="layui-input" id="WECHAT" name="WECHAT">
                     <div>请留下您的微信号方便我们联系你</div>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">QQ：</label>
                 <div class="layui-input-block">
-                    <input type="text" placeholder="请输入QQ号" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+                    <input type="text" disabled placeholder="请输入QQ号" autocomplete="off" class="layui-input" id="QQ" name="QQ">
                     <div>请留下您的QQ号方便我们联系你</div>
                 </div>
             </div>
@@ -79,22 +86,18 @@
             <div class="layui-form-item">
                 <label class="layui-form-label"><span>*</span>解决进展：</label>
                 <div class="layui-input-block">
-                    <!-- <select name="city" xm-select="select1" xm-select-skin="normal">
-                    </select> -->
-                    <!-- id="roleselset" -->
-                    <select  lay-verify="required" name="ROLE_ID">
-                        <option value="">反馈类型</option>
-                        <option value="0">硬件故障</option>
-                        <option value="0">软件故障</option>
-                        <option value="0">硬件故障</option>
-                        <option value="0">硬件故障</option>
+                    <select  lay-verify="required" id="STATUS" name="STATUS">
+                        <option value="1">处理中</option>
+                        <option value="2">已关闭</option>
+                        <option value="3">已解决</option>
+                        <option value="4">待定</option>
                     </select>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label"><span>*</span>解决记录：</label>
                 <div class="layui-input-block">
-                    <textarea placeholder="请尽量详细的描述您遇到的故障" class="layui-textarea"></textarea>
+                    <textarea id="REASON" name="REASON" placeholder="请尽量详细的描述您遇到的故障" class="layui-textarea"></textarea>
                 </div>
             </div>
         </div>

@@ -9,29 +9,37 @@ layui.config({
     layer = layui.layer,
     setter = layui.setter,
     router = layui.router(),
-    tree = layui.tree,//树型组件
-    util = layui.util,//树型组件
     data = '';
     // var server = setter.baseUrl;
 
     var server = setter.baseUrl;
     var uri = window.location.search;
-    
-    var role_ID = setter.getUrlParam("role_ID",uri) || "";
+    var statusarr = ["","处理中","已关闭","已解决","待定"];
+    var typesName = {
+        "硬件故障":1,
+        "软件故障":2,
+        "硬件使用障碍":3,
+        "软件使用障碍":4,
+        "优化建议":5,
+        "投诉反馈":6,
+        "其它":7
+    }
+    var ID = setter.getUrlParam("ID",uri) || "";
 
-    if(role_ID){
+    if(ID){
         //编辑
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/role/toEdit",
+            url: server + "/ADMINM/aftersales/toEditAfterSales",
             dataType: "json",
             method: 'get',
-            data:{"ROLE_ID":role_ID},
+            data:{"ID":ID},
             success: function(obj) {
+                console.log(obj)
                 if(obj.code == 1){
-                    changeRoleHtml(obj.data || {});
+                    changeSalesHtml(obj.afterSales || {});
                 }else{
-                    layer.msg(obj.msg || "获取角色详情错误");
+                    layer.msg(obj.msg || "获取详情错误");
                 }
                
             }
@@ -46,55 +54,39 @@ layui.config({
         // });
         console.log(data.field)
         var condi = {};
-        condi = data.field;
-        //写死组id
-        condi.PARENT_ID = 1;
+        condi.ID = ID;
+        condi.STATUS = statusarr[+data.field.STATUS];
+        condi.REASON = data.field.REASON;
 
-        if(role_ID){
-            //编辑
-            editRole(condi);
-        }else{
-            addRole(condi);
-        }
-        
+        updateAfterSales(condi);
         return false;
     });
 
-    function changeRoleHtml(obj){
-        $("#ROLE_NAME").val(obj.ROLE_NAME || "");
-        $("#BZ").val(obj.BZ || "");
+    function changeSalesHtml(obj){
+        $("#FEEDBACKTYPE").val(typesName[obj.feedbacktype]);
+        $("#DESCRIBE").val(obj.describe || "");
+        var imgs = (obj.imgpath || "").split(',');
+        changeImgPathHtml(imgs);
+        $("#PHONE").val(obj.phone || "");
+        $("#WECHAT").val(obj.wechat || "");
+        $("#QQ").val(obj.qq || "");
+        
+        layui.form.render();
+    }
+    function changeImgPathHtml(imgs){
+        var html = [];
+        imgs.forEach(function(img){
+            html.push("<img src='" + (server + img) + "' />");
+        })
+        
+        $("#IMGPATH").html(html.join(''));
     }
 
-    function addRole(condi){
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/add",
-            dataType: "json",
-            method: 'post',
-            data:condi,
-            success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("添加成功");
-
-                    setTimeout(function(){
-                        //刷新父页面
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-               		    parent.layer.close(index);
-                    },1500);
-                }else{
-                    layer.msg(obj.msg || "添加失败");
-                }
-            }
-        });
-    }
-
-    function editRole(condi){
-        condi.ROLE_ID = role_ID;
+    function updateAfterSales(condi){
 
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/role/edit",
+            url: server + "/ADMINM/aftersales/updateAfterSales",
             dataType: "json",
             method: 'post',
             data:condi,
@@ -107,7 +99,7 @@ layui.config({
                         window.parent.location.reload();
                         var index = parent.layer.getFrameIndex(window.name);
                		    parent.layer.close(index);
-                    },1500);
+                    },500);
                 }else{
                     layer.msg(obj.msg || "修改失败");
                 }
