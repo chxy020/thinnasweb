@@ -127,23 +127,25 @@ layui.config({
             loginOut();
         });
         $("#forgetbtn").bind("click",function(){
-            layer.open({
-                type: 2,
-                title: '忘记密码',
-                area: ['400px', '300px'],
-                btn: ['确定', '取消'],
-                btnAlign: 'c',
-                maxmin: true,
-                content: 'user/modify.html',
-                yes: function(index, layero) {
-                    var submit = layero.find('iframe').contents().find("#submit");
-                    submit.click();
-                }
-            });
+            changePwd();
         });
     }
 
-
+    function changePwd(){
+        layer.open({
+            type: 2,
+            title: '修改密码',
+            area: ['400px', '300px'],
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            maxmin: true,
+            content: 'user/modify.html',
+            yes: function(index, layero) {
+                var submit = layero.find('iframe').contents().find("#submit");
+                submit.click();
+            }
+        });
+    }
     function loginOut(){
         layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确定退出系统吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'退出登录',btnAlign:'c'}, function() {
             $.Ajax({
@@ -169,6 +171,10 @@ layui.config({
     active = {
         loginout: function() {
             loginOut();
+            return;
+        },
+        changepwd: function() {
+            changePwd();
             return;
         }
     };
