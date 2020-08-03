@@ -27,6 +27,8 @@ layui.config({
                 $("#headimg").attr("src",user.headimg || "images/headImg.png");
                 $("#phone").html(user.phone || "");
                 $("#username").html(user.username || "");
+                
+                window.__user = obj.user;
             }
             if(obj.menuList){
                 let menu = obj.menuList || []
@@ -80,7 +82,7 @@ layui.config({
     
     function buildMenuData(data){
         var html = [];
-        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-fuwu2","icon-fuwu2","icon-xitongguanli"]
+        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-data-analysis","icon-fuwu2","icon-xitongguanli"]
         if(data && data.length > 0){
             data.forEach(function(obj){
                 var name = obj.menu_NAME || "";
@@ -129,9 +131,13 @@ layui.config({
                 type: 2,
                 title: '忘记密码',
                 area: ['400px', '300px'],
+                btn: ['确定', '取消'],
+                btnAlign: 'c',
                 maxmin: true,
                 content: 'user/modify.html',
                 yes: function(index, layero) {
+                    var submit = layero.find('iframe').contents().find("#submit");
+                    submit.click();
                 }
             });
         });

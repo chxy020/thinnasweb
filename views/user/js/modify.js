@@ -3,36 +3,83 @@ layui.config({
 }).extend({
     setter: "config"
 }).use(['setter','form'], function(){
-    // var laydate = layui.laydate;
-    var  form = layui.form;
+    var form = layui.form;
+    var $ = layui.$;
+    var setter = layui.setter;
+    var server = setter.baseUrl;
+
+
+    $("#pwdeye1,#pwdeye2,#pwdeye3").bind('click',function(){
+        if($(this).hasClass("icon-hide")){
+            $(this).removeClass("icon-hide");
+            $(this).addClass("icon-show");
+            $(this).prev().attr("type","text");
+        }else{
+            $(this).removeClass("icon-show");
+            $(this).addClass("icon-hide");
+            $(this).prev().attr("type","password");
+        }
+    });
+
     //监听提交
-    form.on('submit(login)', function(data){
-        // alert(888)
-        layer.msg(JSON.stringify(data.field),function(){
-            location.href='index.html'
-        });
+    form.on('submit(submit)', function(data){
+        console.log(data.field)
+
+        if(data.field.password2 != data.field.password3){
+            layer.msg("新密码输入不一致");
+            return false;
+        }
+
+        var condi = {};
+        condi.OPASSWORD = data.field.password1;
+        condi.NPASSWORD = data.field.password2;
+
+
+
+        updatePassWord(condi);
+        
         return false;
     });
 
-    var $ = layui.$,
-        active = {
-            forgetPop: function() {
-                layer.open({
-                    type: 2,
-                    title: '忘记密码',
-                    area: ['400px', '300px'],
-                    // btn: ['确定', '取消'],
-                    // btnAlign: 'c',
-                    maxmin: true,
-                    content: 'forget.html',
-                    yes: function(index, layero) {
-                    }
-                });
-            },
-        };
+    function updatePassWord(condi){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/user/updatePassWord",
+            dataType: "json",
+            method: 'post',
+            data:condi,
+            success: function(obj) {
+                if(obj.code == 1){
+                    layer.msg("修改成功");
+                    logOut();
+                    // setTimeout(function(){
+                    //     //刷新父页面
+                    //     window.parent.location.reload();
+                    //     var index = parent.layer.getFrameIndex(window.name);
+               		//     parent.layer.close(index);
+                    // },500);
+                }else{
+                    layer.msg(obj.msg || "修改失败");
+                }
+            }
+        });
+    }
 
-    $('.layadmin-link').on('click', function() {
-        var type = $(this).data('type');
-        active[type] ? active[type].call(this) : '';
-    });
+    function logOut(){
+        $.Ajax({
+            async: false,
+            type: "post",
+            url:server + "/ADMINM/logout",
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function(obj) {
+            },
+            //失败的回调函数
+            error: function() {
+                console.log("error")
+            }
+        })
+    }
 });
