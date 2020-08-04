@@ -17,6 +17,7 @@ layui.config({
     var uri = window.location.search;
     
     var user = window.parent.__user;
+    
     var userHeadImg = "images/headImg.png";
 
     function setUserInfoHtml(){
@@ -48,7 +49,7 @@ layui.config({
             //如果上传失败
             if(res.code == 1){
                 userHeadImg = res.HEADIMG;
-                // $("#headimg").attr("src",server + res.HEADIMG);
+                $("#headimg").attr("src",server + res.HEADIMG);
             }
             //上传成功
         },
@@ -69,23 +70,45 @@ layui.config({
         // layer.msg(JSON.stringify(data.field),function(){
         //     location.href='index.html'
         // });
-        console.log(data.field)
-        // var condi = {};
-        // condi = data.field;
-        // //写死组id
-        // condi.PARENT_ID = 1;
-
-        // if(role_ID){
-        //     //编辑
-        //     editRole(condi);
-        // }else{
-        //     addRole(condi);
-        // }
         
+        console.log(data.field)
+        var condi = {};
+        condi.HEADIMG = userHeadImg;
+        condi.NAME = data.field.name;
+        condi.USER_ID = user.user_ID;
+        updateUserInfo(condi);
+
         return false;
     });
 
 
+    
+
+    function updateUserInfo(condi){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/user/updateUserInfo",
+            dataType: "json",
+            method: 'post',
+            data:condi,
+            success: function(obj) {
+                if(obj.code == 1){
+                    layer.msg("修改成功");
+                    
+                    user.headimg = obj.HEADIMG;
+                    user.name = obj.NAME;
+                    // setTimeout(function(){
+                    //     //刷新父页面
+                    //     window.parent.location.reload();
+                    //     var index = parent.layer.getFrameIndex(window.name);
+               		//     parent.layer.close(index);
+                    // },1500);
+                }else{
+                    layer.msg(obj.msg || "修改失败");
+                }
+            }
+        });
+    }
 
 
     var $ = layui.$,
@@ -116,81 +139,6 @@ layui.config({
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function changeRoleHtml(obj){
-        $("#ROLE_NAME").val(obj.ROLE_NAME || "");
-        $("#BZ").val(obj.BZ || "");
-    }
-
-    function addRole(condi){
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/add",
-            dataType: "json",
-            method: 'post',
-            data:condi,
-            success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("添加成功");
-
-                    setTimeout(function(){
-                        //刷新父页面
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-               		    parent.layer.close(index);
-                    },1500);
-                }else{
-                    layer.msg(obj.msg || "添加失败");
-                }
-            }
-        });
-    }
-
-    function editRole(condi){
-        condi.ROLE_ID = role_ID;
-
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/edit",
-            dataType: "json",
-            method: 'post',
-            data:condi,
-            success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("修改成功");
-
-                    setTimeout(function(){
-                        //刷新父页面
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-               		    parent.layer.close(index);
-                    },1500);
-                }else{
-                    layer.msg(obj.msg || "修改失败");
-                }
-            }
-        });
-    }
     
 
 });

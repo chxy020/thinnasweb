@@ -24,7 +24,10 @@ layui.config({
         success: function (obj) {
             if(obj.user){
                 var user = obj.user || {};
-                $("#headimg").attr("src",user.headimg || "images/headImg.png");
+                if(user.headimg != "" && user.headimg.indexOf("headImg.png") == -1){
+                    $("#headimg").attr("src",server + user.headimg);
+                }
+
                 $("#phone").html(user.phone || "");
                 $("#username").html(user.username || "");
                 
