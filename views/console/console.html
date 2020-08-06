@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>数据分析</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="./../css/reset.css">
+    <meta charset="utf-8">
+    <title>数据分析</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="./../css/reset.css">
 
+    <script src="../../layuiadmin/layui/layui.js"></script>
+
+    <script src="../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../js/jquery_ex.js"></script>
     <style>
     @media screen and (min-width:992px) {
         .layui-col-md2 {width: 14.28571428%;}
+    }
+    .layui-col-md2 .chart{
+        height: 80px;
     }
     </style>
  
@@ -22,8 +29,8 @@
         <div class="layui-col-md12">
             <div class="grid-demo grid-demo-bg1">
                 <div class="console_top">
-                    <div class="console_top_time">11:13:52  2018-09-21 周五</div><!---时间--->
-                    <div class="console_top_full"></div><!---全屏--->
+                    <div id="console_top_time" class="console_top_time"></div><!---时间--->
+                    <div id="console_top_full" class="console_top_full"></div><!---全屏--->
                 </div>
             </div>
         </div>
@@ -37,37 +44,37 @@
         <div class="layui-col-md2">
             <div class="t">总用户数</div>
             <div class="s"><span>2.23</span>万个</div>
-            <div>折线图</div>
+            <div id="line1" class="chart"></div>
         </div>
         <div class="layui-col-md2">
             <div class="t">日活用户数</div>
             <div class="s"><span>1523</span>万个</div>
-            <div>折线图</div>
+            <div id="line2" class="chart"></div>
         </div>
         <div class="layui-col-md2">
             <div class="t">设备用户比例</div>
             <div class="s"><span>72</span>%</div>
-            <div>折线图</div>
+            <div id="line3" class="chart"></div>
         </div>
         <div class="layui-col-md2">
             <div class="c clearfix">备数总设 <span>72.2<i>万台</i></span></div>
             <div class="d">外部设备比例<span>10%<s>7.2万台</s></span></div> 
-            <div>折线图</div>
+            <div id="line4" class="chart"></div>
         </div>
         <div class="layui-col-md2">
             <div class="t">公网IP数</div>
             <div class="s"><span>72</span>万个</div>
-            <div>折线图</div>
+            <div id="line5" class="chart"></div>
         </div>
         <div class="layui-col-md2">
             <div class="t">存储容量</div>
             <div class="s"><span>32.32</span>PB</div>
-            <div>折线图</div>
+            <div id="line6" class="chart"></div>
         </div>
         <div class="layui-col-md2">
             <div class="t">共享空间数</div>
             <div class="s">500TB  <span>3.2</span>万个</div>
-            <div>折线图</div>
+            <div id="line7" class="chart"></div>
         </div>
     </div>
     <div class="layui-row">
@@ -78,8 +85,8 @@
                 <div class="left_bottom"></div>
                 <div class="right_top"></div>
                 <div class="right_bottom"></div>
-                <div  class="positionR" style="margin:0 20px;height: 580px;background-color: salmon;">
-                    <div class="map_right_list">
+                <div id="mapchart" class="positionR" style="margin:0 20px;height: 580px;">
+                    <!-- <div class="map_right_list">
                         <div class="map_right_t">
                             在线用户数：<span class="a">4000</span>/<span>10000</span>
                         </div>
@@ -113,7 +120,7 @@
                                   </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     地图
                 </div>
             </div>
@@ -125,14 +132,14 @@
                 <div class="left_bottom"></div>
                 <div class="right_top"></div>
                 <div class="right_bottom"></div>
-                <div class="positionR" style="margin:0 20px;height: 220px;background-color: salmon;">
-                    <ul class="right_tips">
+                <div id="useractiveline" class="positionR" style="margin:0 20px;height: 220px;">
+                    <!-- <ul class="right_tips">
                         <li class="a"><span>•</span>上传</li>
                         <li><span>•</span>下载</li>
                         <li class="a"><span>•</span>浏览</li>
                         <li><span>•</span>全部</li>
                     </ul>
-                    地图
+                    地图 -->
                 </div>
             </div>
             <div class="positionR box_yinying">
@@ -141,8 +148,8 @@
                 <div class="left_bottom"></div>
                 <div class="right_top"></div>
                 <div class="right_bottom"></div>
-                <div class="positionR" style="margin:0 20px;height: 290px;background-color: salmon;">
-                    <ul class="right_tips2">
+                <div id="filetypepie" class="positionR" style="margin:0 20px;height: 290px;">
+                    <!-- <ul class="right_tips2">
                         <li class="a"><img src="../images/icon1.png" width="16"/>文档<span>256</span></li>
                         <li class="b"><img src="../images/icon2.png" width="16"/>音频<span>3566</span></li>
                         <li class="c"><img src="../images/icon3.png" width="16"/>图片<span>342</li>
@@ -150,23 +157,16 @@
                         <li class="e"><img src="../images/icon5.png" width="16"/>视频<span>5652</span></li>
                         <li class="f"><img src="../images/icon6.png" width="16"/>其他<span>1.11万</span></li>
                     </ul>
-                    地图
+                    地图 -->
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+<script src="../../js/echarts.min.js"></script>
+<script src="console.js"></script>
 
-
-  <script src="./layui/layui.js?t=1"></script>  
-  <script>
-  layui.config({
-    base: './' //静态资源所在路径
-  }).extend({
-    index: 'lib/index' //主入口模块
-  }).use(['index', 'console']);
-  </script>
 </body>
 </html>
 
