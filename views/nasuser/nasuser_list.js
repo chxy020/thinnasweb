@@ -233,7 +233,7 @@ layui.config({
                         align: 'left',
                         width:120,
                         templet: function(data) {
-                            return data.activetimes + "<i class='layui-icon iconfont icon-zu211' lay-event='times'></i>"
+                            return data.activetimes + "<i class='layui-icon iconfont icon-zu211' lay-event='loglist'></i>"
                         },
                     }
                 ]
@@ -470,11 +470,27 @@ layui.config({
             // console.log("data.id=====",data.id)
             // console.log("equipment")
             // top.layui.index.openTabsPage("device/device_list.html", '设备管理');
-        } else if (obj.event === 'times'){//跳转c端操作日志
+        } else if (obj.event === 'loglist'){//跳转c端操作日志
             console.log("data.id=====",data.id)
             console.log("00000000000000")
             //在主窗口打开 操作日志 页面 
-            // top.layui.index.openTabsPage("system/operation_log.html", 'c端操作日志');
+            // top.layui.index.openTabsPage("system/log_list.html", '操作日志');
+
+            layer.open({
+				type: 2,
+				title: '操作日志',
+                // content: '../device/device_list.html?uid='+'5bea735b8c324eafbfd11b679eb758d0',
+                content: '../log_list/log_list.html?username='+username,
+                maxmin: true,
+                area: ['100%', '100%'],
+                //添加自定义样式
+				skin: 'layer-ext-greytitle',
+				scrollbar: false,
+				yes: function(index, layero) {
+				},
+				success: function(layero, index) {
+				}
+			});
         }
 
     })
@@ -680,7 +696,7 @@ layui.config({
         function openMsg() {
             subtips = layer.tips(_data, '#'+_id,{tips:[3,'#666'],time: 30000});
         }
-    })
+    });
     /*右侧菜单HOVER显示提示文字 end*/
 
     /* 点击查看更多操作 三部分组成 CSS html js 3.10 */

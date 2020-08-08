@@ -97,6 +97,8 @@ layui.config({
                     
                     user.headimg = obj.HEADIMG;
                     user.name = obj.NAME;
+
+                    window.parent.__getUserInfo(obj.USER_ID);
                     // setTimeout(function(){
                     //     //刷新父页面
                     //     window.parent.location.reload();

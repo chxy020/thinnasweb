@@ -297,7 +297,7 @@ layui.config({
     //监听指定开关
     form.on('switch(switchTest)', function(data){
         layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-        offset: '6px'
+            offset: '6px'
         });
         layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
     });
