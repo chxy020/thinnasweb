@@ -202,12 +202,12 @@ layui.config({
                     },
 
                     {
-                        field: 'avaliable',
+                        field: 'available',
                         title: '可用空间<i class="layui-icon iconfont icon-zu200 m5" lay-tips="包含自有设备空间、共享空间、安全云空间等"></i>',
                         align: 'left',
                         width:100,
                         templet: function(data) {
-                            console.log("data=========+++",data)
+                            // console.log("data=========+++",data)
                             //编辑
                             var userSpaceListArr = [];
                             $.Ajax({
@@ -218,8 +218,8 @@ layui.config({
                                 data:{"DEVICEID":data.deviceid},
                                 success: function(obj) {
                                     if(obj.code == 1){
-                                        console.log("obj-------------------",obj.userSpaceList)
-                                        userSpaceListArr=obj.userSpaceList
+                                        // console.log("obj-------------------",obj.userSpaceList)
+                                        userSpaceListArr = obj.userSpaceList;
                                     }else{
                                         layer.msg(obj.msg);
                                     }
@@ -227,20 +227,20 @@ layui.config({
                             });
 
                             if(userSpaceListArr.length){
-                                console.log("userSpaceListArr.length-------------------",userSpaceListArr.length)
+                                // console.log("userSpaceListArr.length-------------------",userSpaceListArr.length)
                                 var htmlStr = "";
                                 var usedStr = 0;
                                 for (i = 0; i < userSpaceListArr.length; i++) { 
                                     // console.log("000")
                                     htmlStr += "<tr><td>"+userSpaceListArr[i].nickname+"</td><td>"+ userSpaceListArr[i].total + "MB | 可用" + userSpaceListArr[i].used + "MB | 已用" + userSpaceListArr[i].available +"MB</td><td>"+userSpaceListArr[i].filecount+"</td></tr>";
-                                    usedStr += parseInt(userSpaceListArr[i].used)
+                                    usedStr += parseInt(userSpaceListArr[i].used);
                                 }
                                 // console.log("htmlStr====",htmlStr);
                                 var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>用户</th><th>空间使用情况</th><th>文件数</th></tr>"+htmlStr+"</table></div></div></div>"
                                 // console.log("contStr====",contStr);
-                                return +usedStr+'MB'+contStr
+                                return +usedStr+'MB'+contStr;
                             }else{
-                                return data.avaliable+'MB'
+                                return data.available+'MB'
                             }
                         },
                     },
@@ -452,95 +452,6 @@ layui.config({
     })
     var $ = layui.$,
     active = {
-        //点击搜索
-        search: function() {
-            table.render({
-                elem: '#test-table-operate',
-                height: 'full-100',
-                url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-                    ,
-                xhrFields: {
-                    withCredentials: true
-                },
-                where: {
-                    "rule": $('#demoReload').val(),
-                    "status":0
-                },
-                method: 'get',
-                page: {
-                    layout: ['prev', 'page', 'next', 'count', 'skip']
-                },
-                cols: [
-                    [ //表头
-                        {
-                            type: 'checkbox',
-                            fixed: 'left',
-                        },
-                        {
-                            field: 'id',
-                            title: '序号',
-                            unresize: 'false',
-                            width:60,
-                        },
-                        {
-                            width: 100,
-                            title: '操作',
-                            toolbar: '#test-table-operate-barDemo',
-                        },
-                        {
-                            field: 'name',
-                            title: '姓名',
-                            align: 'left',
-                        }, {
-                            field: 'roomname',
-                            title: '手机号',
-                            align: 'left',
-                        },
-                        {
-                            field: 'roomname',
-                            title: '角色',
-                            align: 'left',
-                            templet: function(data) {
-                                    return data.name + "<span class='layui-badge table-icon-style2'>2</span>"
-                            },
-                        },
-                        {
-                            field: 'roomname',
-                            title: '备注',
-                            align: 'left',
-                        },
-                        {
-                            field: 'roomname',
-                            title: '最近登录',
-                            align: 'left',
-                            templet: function(data) {
-                                return data.name + "<i class='layui-icon table-icon-style3'>&#xe60e;</i>"
-                            },
-                        },
-                        {
-                            field: 'modifytime',
-                            title: '创建时间',
-                            align: 'left',
-                        },
-                        
-                    ]
-                ],
-                event: true,
-                page: true,
-                limit: 15,
-                skin: 'line',
-                even: true,
-                limits: [5, 10, 15],
-                done: function(res, curr, count) {
-                    table_data = res.data;
-
-                    layer.closeAll('loading');
-                    arrangeList.length = 0;
-                    // layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-                    // layer.close(index);    //返回数据关闭loading
-                },
-            });
-        },
         //点击添加
         add: function() {
             layer.open({

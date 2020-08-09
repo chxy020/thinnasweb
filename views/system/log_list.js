@@ -37,7 +37,24 @@ layui.config({
         }
     });
 
-    
+    $.Ajax({
+        async: false,
+        url: server + "/ADMINM/user/listUserName",
+        dataType: "json",
+        method: 'get',
+        success: function(obj) {
+            console.log(obj);
+            userNameSelectHtml(obj.userNames||[]);
+        }
+    });
+
+    function userNameSelectHtml(userNames){
+        for (i = 0; i < userNames.length; i++) {
+            var name = userNames[i] || "";
+            $('#usernameselect').append(new Option(name, name));
+        }
+        layui.form.render("select");
+    }
 
     function tableRender(){
         var keywords = $("#keyword").val() || "";
@@ -196,6 +213,9 @@ layui.config({
     });
 
     form.on('select(component-typeselect)', function(data){
+        tableRender();
+    });
+    form.on('select(component-usernameselect)', function(data){
         tableRender();
     });
 

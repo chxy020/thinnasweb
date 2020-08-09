@@ -224,12 +224,11 @@ layui.config({
 
         var fontColor = '#30eee9';
         option = {
-            backgroundColor: '#11183c',
             grid: {
                 left: '5%',
                 right: '2%',
-                top: '10%',
-                bottom: '15%',
+                top: '15%',
+                bottom: '5%',
                 containLabel: true
             },
             tooltip: {
@@ -242,15 +241,14 @@ layui.config({
                 }
             },
             legend: {
-                data: ['C1', 'C2', 'C3', 'D1', 'D2', 'D3'],
+                data: ['上传', '下载', '浏览', '全部'],
                 itemWidth: 20,
                 itemHeight: 10,
                 textStyle: {
                     fontSize: 14,
                     color: '#65aaf1',
                 },
-                right: '35%', //距离右侧
-                top: "5%"
+                top: "3%"
                 // left : '50%'
             },
             xAxis: [{
@@ -305,7 +303,7 @@ layui.config({
                 }
             }],
             series: [{
-                    name: 'C1',
+                    name: '上传',
                     type: 'line',
                     stack: '总量',
                     symbol: 'circle',
@@ -340,7 +338,7 @@ layui.config({
                     data:dataC1
                 },
                 {
-                    name: 'C2',
+                    name: '下载',
                     type: 'line',
                     stack: '总量',
                     symbol: 'circle',
@@ -369,7 +367,7 @@ layui.config({
                     data: dataC2
                 },
                 {
-                    name: 'C3',
+                    name: '浏览',
                     type: 'line',
                     stack: '总量',
                     symbol: 'circle',
@@ -397,7 +395,7 @@ layui.config({
                     data: dataC3
                 },
                 {
-                    name: 'D1',
+                    name: '全部',
                     type: 'line',
                     stack: '总量',
                     symbol: 'circle',
@@ -423,62 +421,6 @@ layui.config({
                         }
                     },
                     data: dataD1
-                },
-                {
-                    name: 'D2',
-                    type: 'line',
-                    stack: '总量',
-                    symbol: 'circle',
-                    symbolSize: 8,
-                    showSymbol: false,
-                    itemStyle: {
-                        normal: {
-                            color: '#6FE81A',
-                            lineStyle: {
-                                color: "#6FE81A",
-                                width: 1
-                            },
-                            areaStyle: {
-                                //color: '#94C9EC'
-                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
-                                    offset: 0.4,
-                                    color: 'rgba(7,44,90,0.1)'
-                                }, {
-                                    offset: 1,
-                                    color: 'rgba(0,212,199,0.9)'
-                                }]),
-                            }
-                        }
-                    },
-                    data: dataD2
-                },
-                {
-                    name: 'D3',
-                    type: 'line',
-                    stack: '总量',
-                    symbol: 'circle',
-                    showSymbol: false,
-                    symbolSize: 8,
-                    itemStyle: {
-                        normal: {
-                            color: '#aecb56',
-                            lineStyle: {
-                                color: "#aecb56",
-                                width: 1
-                            },
-                            areaStyle: {
-                                //color: '#94C9EC'
-                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
-                                    offset: 0.4,
-                                    color: 'rgba(7,44,90,0.1)'
-                                }, {
-                                    offset: 1,
-                                    color: 'rgba(0,212,199,0.9)'
-                                }]),
-                            }
-                        }
-                    },
-                    data: dataD3
                 }
             ]
         };
@@ -487,12 +429,11 @@ layui.config({
 
     function pieChart(){
         var option = {
-            backgroundColor: "#0f375f",
             legend: {
                 orient: 'vertical',
                 top: "center",
                 right: "5%",
-                data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7'],
+                data: ['文档', '图片', '视频', '音频', '应用', '其它'],
                 textStyle: {
                     color: "#fff",
                     fontSize: 16
@@ -522,7 +463,7 @@ layui.config({
                 },
                 data: [{
                         value: 1,
-                        name: 'rose1',
+                        name: '文档',
                         itemStyle: {
                             color: "rgba(50,123,250,0.7)",
                             borderColor: "rgba(50,123,250,1)",
@@ -531,7 +472,7 @@ layui.config({
                     },
                     {
                         value: 2,
-                        name: 'rose2',
+                        name: '图片',
                         itemStyle: {
                             color: "rgba(244,201,7,0.7)",
                             borderColor: "rgba(244,201,7,1)",
@@ -540,7 +481,7 @@ layui.config({
                     },
                     {
                         value: 3,
-                        name: 'rose3',
+                        name: '视频',
                         itemStyle: {
                             color: "rgba(23,216,161,0.7)",
                             borderColor: "rgba(23,216,161,1)",
@@ -549,7 +490,7 @@ layui.config({
                     },
                     {
                         value: 4,
-                        name: 'rose4',
+                        name: '音频',
                         itemStyle: {
                             color: "rgba(122,60,235,0.7)",
                             borderColor: "rgba(122,60,235,1)",
@@ -558,7 +499,16 @@ layui.config({
                     },
                     {
                         value: 5,
-                        name: 'rose5',
+                        name: '应用',
+                        itemStyle: {
+                            color: "rgba(15,197,243,0.7)",
+                            borderColor: "rgba(15,197,243,1)",
+                            borderWidth: 3
+                        }
+                    },
+                    {
+                        value: 6,
+                        name: '其它',
                         itemStyle: {
                             color: "rgba(15,197,243,0.7)",
                             borderColor: "rgba(15,197,243,1)",
@@ -698,20 +648,20 @@ layui.config({
 
     function registerMap(code,name) {
         // const _url = `assets/echarts/hebei.json`;
-        let _url = `/assets/geoJson/100000.json`;
+        let _url = `/ADMINM/static/assets/geoJson/100000.json`;
         if(code != "100000"){
             if(code.substring(2,6) == "0000"){
                 //省
-                _url = `/assets/geoJson/100000/` + code + ".geoJson";
+                _url = `/ADMINM/static/assets/geoJson/100000/` + code + ".geoJson";
             }else if(code.substring(4,6) == "00"){
                 //市
                 let file = code.substring(0,2);
-                _url = `/assets/geoJson/100000/` + file + "0000/" + code + ".geoJson";
+                _url = `/ADMINM/static/assets/geoJson/100000/` + file + "0000/" + code + ".geoJson";
             }else{
                 //县
                 let file1 = code.substring(0,2);
                 let file2 = code.substring(0,4);
-                _url = `/assets/geoJson/100000/` + file1 + "0000/" + file2 +"00/" + code + ".geoJson";
+                _url = `/ADMINM/static/assets/geoJson/100000/` + file1 + "0000/" + file2 +"00/" + code + ".geoJson";
             }
         }
         
@@ -736,4 +686,14 @@ layui.config({
         //         this.setHotPoint([]);
     }
 
+
+    $("#usermap").bind("click",function(){
+        $("#usermap").addClass("on");
+        $("#devicemap").removeClass("on");
+    });
+    $("#devicemap").bind("click",function(){
+        $("#devicemap").addClass("on");
+        $("#usermap").removeClass("on");
+
+    });
 });

@@ -43,7 +43,7 @@ layui.config({
                     var info = obj.deviceInfo || {};
                     var table2 = [];
                     table2.push('<p><span>' + info.total + 'MB</span></p>');
-					table2.push('<p>可用：<span>' + info.avaliable + 'MB</span></p>');
+					table2.push('<p>可用：<span>' + info.available + 'MB</span></p>');
 					table2.push('<p>已用：<span>' + info.used + 'MB</span></p>');
 					table2.push('<p>文件数：<span>' + info.times + '</span></p>');
                     $("#tableinfo2").html(table2.join(''));

@@ -188,43 +188,47 @@ layui.config({
                         align: 'left',
                         width:100,
                         templet: function(data) {
-                            console.log("data=========+++",data)
                             // return data.available + "<i class='layui-icon iconfont icon-zu204' lay-event='space'></i>"
                             //编辑
                             var userSpaceListArr = [];
                             $.Ajax({
                                 async: false,
-                                url: server + "/ADMINM/device/DeviceDetails",
+                                url: server + "/ADMINM/jqkjUser/listUserSpaceType",
                                 dataType: "json",
                                 method: 'get',
-                                data:{"DEVICEID":data.deviceid},
+                                data:{"UID":data.uid},
                                 success: function(obj) {
                                     if(obj.code == 1){
-                                        console.log("obj-------------------",obj.userSpaceList)
-                                        userSpaceListArr=obj.userSpaceList
+                                        // console.log("obj-------------------",obj.userSpaceList)
+                                        userSpaceListArr.push(obj.type1 || []);
+                                        userSpaceListArr.push(obj.type2 || []);
+                                        userSpaceListArr.push(obj.type3 || []);
                                     }else{
                                         layer.msg(obj.msg);
                                     }
                                 }
                             });
 
+                            
                             if(userSpaceListArr.length){
-                                console.log("userSpaceListArr.length-------------------",userSpaceListArr.length)
+                                // console.log("userSpaceListArr.length-------------------",userSpaceListArr.length)
                                 var htmlStr = "";
                                 var usedStr = 0;
                                 for (i = 0; i < userSpaceListArr.length; i++) { 
-                                    // console.log("000")
-                                    htmlStr += "<tr><td>"+userSpaceListArr[i].nickname+"</td><td>"+ userSpaceListArr[i].total + "MB | 可用" + userSpaceListArr[i].used + "MB | 已用" + userSpaceListArr[i].available +"MB</td><td>"+userSpaceListArr[i].filecount+"</td></tr>";
-                                    usedStr += parseInt(userSpaceListArr[i].used)
+                                    var data = userSpaceListArr[i] || [];
+                                    data.forEach(function(item){
+                                        // console.log("000")
+                                        htmlStr += "<tr><td>"+ (i == 0 ? "自有设备" : (i==1?"共享空间":"安全云空间")) +"</td><td>"+ item.total + "MB | 可用" + item.available + "MB | 已用" + item.used +"MB</td><td>"+item.nickname+"</td></tr>";
+                                        usedStr += parseInt(item.available)
+                                    });
                                 }
                                 // console.log("htmlStr====",htmlStr);
-                                var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>用户</th><th>空间使用情况</th><th>文件数</th></tr>"+htmlStr+"</table></div></div></div>"
+                                var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>空间类型</th><th>空间使用情况</th><th>所属NAS设备</th></tr>"+htmlStr+"</table></div></div></div>"
                                 // console.log("contStr====",contStr);
-                                return +usedStr+'MB'+contStr
+                                return +usedStr+'MB'+contStr;
                             }else{
-                                return data.available+'MB'
+                                return "0MB";
                             }
-                            
                         },
                     },
                     {
@@ -476,21 +480,21 @@ layui.config({
             //在主窗口打开 操作日志 页面 
             // top.layui.index.openTabsPage("system/log_list.html", '操作日志');
 
-            layer.open({
-				type: 2,
-				title: '操作日志',
-                // content: '../device/device_list.html?uid='+'5bea735b8c324eafbfd11b679eb758d0',
-                content: '../log_list/log_list.html?username='+username,
-                maxmin: true,
-                area: ['100%', '100%'],
-                //添加自定义样式
-				skin: 'layer-ext-greytitle',
-				scrollbar: false,
-				yes: function(index, layero) {
-				},
-				success: function(layero, index) {
-				}
-			});
+            // layer.open({
+			// 	type: 2,
+			// 	title: '操作日志',
+            //     // content: '../device/device_list.html?uid='+'5bea735b8c324eafbfd11b679eb758d0',
+            //     content: '../log_list/log_list.html?username='+username,
+            //     maxmin: true,
+            //     area: ['100%', '100%'],
+            //     //添加自定义样式
+			// 	skin: 'layer-ext-greytitle',
+			// 	scrollbar: false,
+			// 	yes: function(index, layero) {
+			// 	},
+			// 	success: function(layero, index) {
+			// 	}
+			// });
         }
 
     })
@@ -699,30 +703,26 @@ layui.config({
     });
     /*右侧菜单HOVER显示提示文字 end*/
 
-    /* 点击查看更多操作 三部分组成 CSS html js 3.10 */
-    // if($(".layui-table-header table tr").length==1){
-    //     $(".layui-table-header").css("min-height",195)
-    // }else{
-    //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateA").css("top",-55);
-    //     $("table").find("tr:last").find("td:nth-child(6)").find(".moreOperateArr").css({"top":49,"background-image":"url('../../../images/tips_darr.png')"});
-    // }
-    $('.moreOperate').each(function(){
-        $(this).hover(function() {
-            var X = $(this).offset().left;
-            var parentX = $(this).parent().offset().left;
-
-            console.log(X)
-            console.log(parentX)
-            $(this).children(".moreOperateA").css("left",X-parentX-37).show();
-        }, function() {
-            $(this).children(".moreOperateA").hide();
-        });
+    /* 表格中 鼠标移上 显示更多详细CSS html js*/
+    $(document).on("mouseenter",".moreOperate",function(){
+        var offsetTop = $(this).offset().top;
+        var documentHeihgt=$(document).height();//浏览器当前窗口文档的高度
+        var moreOperateAHeihgt=$(this).children(".moreOperateA").height()+30;
+        // console.log("offsetTop ,documentHeihgt ,moreOperateAHeihgt===",offsetTop ,documentHeihgt ,moreOperateAHeihgt)
+        // console.log("documentHeihgt-offsetTop===",documentHeihgt-offsetTop)
+        if((documentHeihgt-offsetTop)<moreOperateAHeihgt){
+            // console.log("1111");
+            $(this).children(".moreOperateA").css("top",-(moreOperateAHeihgt-54));
+            $(this).children(".moreOperateA").children(".moreOperateArr").css({"top":"auto","bottom":"10px"})
+        }
+        $(".laytable-cell-1-0-8").css("overflow", "visible");
+        $(this).children(".moreOperateA").show();
     })
-
-
-
-
-    /* 点击查看更多操作 三部分组成 CSS html js end 3.10 */
+    $(document).on("mouseleave",".moreOperate",function(){
+        $(".laytable-cell-1-0-8").css("overflow", "hidden");
+        $(this).children(".moreOperateA").hide();
+    })
+    /* 表格中 鼠标移上 显示更多详细CSS html js end*/
 
 
 
