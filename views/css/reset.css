@@ -501,8 +501,8 @@ padding: 10px 0;
 .map_right_list{
     position: absolute;
     right:20px;
-    top:20px;
-
+    top:60px;
+    z-index: 99;
 }
 .map_right_t{
     font-size: 18px;
