@@ -12,13 +12,12 @@ layui.config({
     var server = setter.baseUrl;
     var timer = null;
     var isFull = false;
-    var mapCode = {
-        adcode:"100000"
-    };
+    var mapCode = "100000";
+
     var mapOptions = {
         title:{
             text:"中国",
-            show:true,
+            show:false,
             top:3,
             left:90,
             textStyle:{
@@ -591,6 +590,43 @@ layui.config({
 
 
     
+    var chinaCode = {
+        "河南":"410000",
+        "广东":"440000",
+        "内蒙古":"150000",
+        "黑龙江":"230000",
+        "新疆":"650000",
+        "湖北":"420000",
+        "辽宁":"210000",
+        "山东":"370000",
+        "江苏":"320000",
+        "陕西":"610000",
+        "上海":"310000",
+        "贵州":"520000",
+        "重庆":"500000",
+        "西藏":"540000",
+        "安徽":"340000",
+        "福建":"350000",
+        "湖南":"430000",
+        "海南":"460000",
+        "青海":"630000",
+        "广西":"450000",
+        "宁夏":"640000",
+        "江西":"360000",
+        "浙江":"330000",
+        "河北":"130000",
+        "香港":"810000",
+        "台湾":"710000",
+        "澳门":"820000",
+        "甘肃":"620000",
+        "四川":"510000",
+        "吉林":"220000",
+        "天津":"120000",
+        "云南":"530000",
+        "北京":"110000",
+        "山西":"140000"
+    };
+
     var mapChart;
     function mapInit(){
         
@@ -599,54 +635,22 @@ layui.config({
         mapChart.on('click', function(params){
             console.log(params);
             
-            if (!params.name) return;
-            if (this.config.adcodepath.length == 4) return;
-
-            let name = params.name;
-           
-            let cd = this.getCityCode(name,false);
-            //cd 可能是 省,市,区
-            if(cd.length > 0){
-                this.config.city_code = cd[0].citycode;
-                this.config.county_code = cd[0].countycode || -1;
-
-                let adcode = cd[0].adcode || "";
-                if(adcode){
-                    // this.options.title.text = name;
-
-                    this.config.adcode = adcode;
-                    this.config.adcodepath.push(adcode);
-
-                    this.config.title = name;
-                    this.options.title.text = name;
-                    this.config.adnamepath.push(name);
-                    
-                    this.loadData();
-
-                    this.previewEffectService.clickMapDownSub(this.config);
-                }
-            }else{
-                this.config.city_code = -1;
-                this.config.county_code = -1;
-                this.previewEffectService.clickMapDownSub(this.config);
+            if (!params.name){
+                return;
             }
+            // if (this.config.adcodepath.length == 4) return;
+            var adcode = chinaCode[params.name] || "";
+            if(!adcode){
+                return;
+            }
+            mapCode = adcode;
+            registerMap(adcode);
         }.bind(this));
 
-
-        registerMap(mapCode.adcode,mapCode.adcode)
-        
-        // .subscribe(t => {
-            // this.setSeries(this.respData,this.config.adcode);
-            
-            // this.options.geo.map = this.config.adcode;
-            // this.chart.setOption(this.options);
-            // this.chart.resize();
-
-            // this.setHotPoint([]);
-        // });
+        registerMap(mapCode);
     }
 
-    function registerMap(code,name) {
+    function registerMap(code) {
         // const _url = `assets/echarts/hebei.json`;
         let _url = `/ADMINM/static/assets/geoJson/100000.json`;
         if(code != "100000"){
@@ -671,21 +675,21 @@ layui.config({
             dataType: "json",
             method: 'get',
             success: function(mapjson) {
-                echarts.registerMap(name, mapjson);
+                echarts.registerMap(code, mapjson);
+
+                mapOptions.geo.map = code;
                 mapChart.setOption(mapOptions);
                 mapChart.resize();
             }
         });
-
-        // this.setSeries(this.respData,this.config.adcode);
-                
-        //         this.options.geo.map = this.config.adcode;
-        //         this.chart.setOption(this.options);
-        //         this.chart.resize();
-
-        //         this.setHotPoint([]);
     }
 
+    $("#mapbackbtn").bind("click",function(){
+        if(mapCode != "100000"){
+            mapCode = "100000";
+            registerMap(mapCode);
+        }
+    });
 
     $("#usermap").bind("click",function(){
         $("#usermap").addClass("on");
@@ -694,6 +698,5 @@ layui.config({
     $("#devicemap").bind("click",function(){
         $("#devicemap").addClass("on");
         $("#usermap").removeClass("on");
-
     });
 });

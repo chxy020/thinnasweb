@@ -216,9 +216,14 @@ layui.config({
                                 var usedStr = 0;
                                 for (i = 0; i < userSpaceListArr.length; i++) { 
                                     var data = userSpaceListArr[i] || [];
-                                    data.forEach(function(item){
+                                    data.forEach(function(item,ii){
+                                        var total = 0;
+                                        data.forEach(function(dd){
+                                            total = total + (+dd.total);
+                                        });
+
                                         // console.log("000")
-                                        htmlStr += "<tr><td>"+ (i == 0 ? "自有设备" : (i==1?"共享空间":"安全云空间")) +"</td><td>"+ item.total + "MB | 可用" + item.available + "MB | 已用" + item.used +"MB</td><td>"+item.nickname+"</td></tr>";
+                                        htmlStr += "<tr><td>"+ (ii == 0 ? ((i == 0 ? "自有设备" : (i==1?"共享空间":"安全云空间")) + " | "+total+"MB") : "") +"</td><td>"+ item.total + "MB | 可用" + item.available + "MB | 已用" + item.used +"MB</td><td>"+item.nickname+"</td></tr>";
                                         usedStr += parseInt(item.available)
                                     });
                                 }
