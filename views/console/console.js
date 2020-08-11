@@ -520,57 +520,65 @@ layui.config({
         return option;
     }
 
-
+    var linechart1;
+    var linechart2;
+    var linechart3;
+    var linechart4;
+    var linechart5;
+    var linechart6;
+    var linechart7;
     function addLineChart(){
         var line1 = $("#line1");
-        var linechart1 = echarts.init(line1[0]);
+        linechart1 = echarts.init(line1[0]);
         var option = lineChart();
         linechart1.setOption(option);
 
         var line2 = $("#line2");
-        var linechart2 = echarts.init(line2[0]);
+        linechart2 = echarts.init(line2[0]);
         var option = lineChart();
         linechart2.setOption(option);
 
         var line3 = $("#line3");
-        var linechart3 = echarts.init(line3[0]);
+        linechart3 = echarts.init(line3[0]);
         var option = lineChart();
         linechart3.setOption(option);
 
         var line4 = $("#line4");
-        var linechart4 = echarts.init(line4[0]);
+        linechart4 = echarts.init(line4[0]);
         var option = lineChart();
         linechart4.setOption(option);
 
         var line5 = $("#line5");
-        var linechart5 = echarts.init(line5[0]);
+        linechart5 = echarts.init(line5[0]);
         var option = lineChart();
         linechart5.setOption(option);
 
         var line6 = $("#line6");
-        var linechart6 = echarts.init(line6[0]);
+        linechart6 = echarts.init(line6[0]);
         var option = lineChart();
         linechart6.setOption(option);
 
         var line7 = $("#line7");
-        var linechart7 = echarts.init(line7[0]);
+        linechart7 = echarts.init(line7[0]);
         var option = lineChart();
         linechart7.setOption(option);
     }
 
+    var userLineChart;
     function addUserActiveLine(){
         var useractiveline = $("#useractiveline");
-        var chart = echarts.init(useractiveline[0]);
+        userLineChart = echarts.init(useractiveline[0]);
         var option = lineChart2();
-        chart.setOption(option);
+        userLineChart.setOption(option);
     }
 
+    var fileTypePieChart;
     function addFileTypePie(){
         
         var filetypepie = $("#filetypepie");
-        var chart = echarts.init(filetypepie[0]);
+        fileTypePieChart = echarts.init(filetypepie[0]);
         var option = pieChart();
-        chart.setOption(option);
+        fileTypePieChart.setOption(option);
     }
     
     getCurrentDate();
@@ -699,4 +707,23 @@ layui.config({
         $("#devicemap").addClass("on");
         $("#usermap").removeClass("on");
     });
+
+    var tout = null;
+    $(window).bind("resize",function(){
+        clearTimeout(tout);
+        setTimeout(function(){
+            if(linechart1 && userLineChart && fileTypePieChart && mapChart){
+                linechart1.resize();
+                linechart2.resize();
+                linechart3.resize();
+                linechart4.resize();
+                linechart5.resize();
+                linechart6.resize();
+                linechart7.resize();
+                userLineChart.resize();
+                fileTypePieChart.resize();
+                mapChart.resize();
+            }
+        },500);
+    })
 });
