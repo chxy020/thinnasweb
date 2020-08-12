@@ -500,7 +500,7 @@ padding: 10px 0;
 
 .map_right_list{
     position: absolute;
-    right:20px;
+    right:-10px;
     top:60px;
     z-index: 99;
 }
