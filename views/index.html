@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <!-- <title>thinNAS</title> -->
-    <title>后台管理</title>
+    <title>ThinNAS运营系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="alternate icon" type="image/png" sizes="16x16" href="images/favicon.png">
@@ -20,7 +20,7 @@
         <div class="layui-header">
             <div class="layui-logo layui-icon layui-side" lay-href="system/account_list.html">
                 <!-- <span>ThinNAS运营系统</span> -->
-                <span>ThinNAS后台管理</span>
+                <span>ThinNAS运营系统</span>
             </div>
             <!-- 头部区域 -->
             <ul class="layui-nav layui-layout-left">
@@ -55,7 +55,7 @@
                     </a>
                 </div>
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-                    <!-- <li data-name="get" class="layui-nav-item">
+                    <li data-name="get" class="layui-nav-item">
                         <a href="javascript:;" lay-href="" lay-tips="数据分析" >
                             <i class="layui-icon iconfont icon-data-analysis"></i>
                             <cite>数据分析</cite>
@@ -108,7 +108,15 @@
                             <dd data-name="property"><a lay-href="system/log_list.html">修改密码</a></dd>
                             <dd data-name="property" data-type="loginout"><a href="javascript:;">退出登录</a></dd>
                         </dl>
-                    </li> -->
+                    </li>
+                    <li data-name="get" class="layui-nav-item">
+                        <a href="javascript:;" lay-href="aftersales/aftersales_list.html" lay-tips="软件应用" lay-direction="2">
+                            <i class="layui-icon iconfont icon-jurassic_apply"></i>
+                            <cite>软件应用</cite>
+                        </a>
+                    </li>
+                
+                
                 </ul>
             </div>
         </div>

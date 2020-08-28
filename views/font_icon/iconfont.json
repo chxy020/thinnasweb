@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1031625",
+      "name": "ios",
+      "font_class": "ios",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "1177676",
+      "name": "Windows",
+      "font_class": "windows",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "1496251",
+      "name": "苹果",
+      "font_class": "pingguo",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "2075246",
+      "name": "安卓",
+      "font_class": "anzhuo",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "10529944",
+      "name": "刷新",
+      "font_class": "shuaxin",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "10593759",
+      "name": "应用,软件配置_jurassic",
+      "font_class": "jurassic_apply",
+      "unicode": "e697",
+      "unicode_decimal": 59031
+    },
+    {
       "icon_id": "15843831",
       "name": "组 225",
       "font_class": "zu225",

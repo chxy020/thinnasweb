@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>软件应用更新</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="./../css/reset.css">
+    <link rel="stylesheet" href="./../font_icon/iconfont.css"><!-- 阿里自定义图标 -->
+    <script src="../../layuiadmin/layui/layui.js"></script>
+    <script src="../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../js/jquery_ex.js"></script>
+    <style>
+        .softbt{
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .layui-form-label {
+            width: 90px;
+        }
+        .layui-input-block {
+            margin-left: 120px;
+        }
+        .uploadImg img{
+            width: 100px;
+            height: 100px;
+            margin-left: 5px;
+            border: 1px solid #ccc;
+        }
+        .unit{
+            border-radius:5px;
+            padding:0 5px;
+            background-color:teal;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<form method="post" class="layui-form" >
+    <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0; ">
+        <div style="margin-left:35px;margin-bottom:20px">
+            <h4 class="softbt">AI存储APP</h4>
+            <i class="layui-icon iconfont icon-anzhuo"></i> 当前版本：V 3.0.0.0
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">更新文件：</label>
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" id="test5"><i class="layui-icon"></i>选择文件</button>
+            </div>
+            <div id="IMGPATH" style="margin-left: 118px;" class="uploadImg">
+            </div>
+            <div style="margin-left: 120px;margin-top: 10px;">Thinnas_v3.5.0.apk <span class="unit">55M</span></div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">更新版本：</label>
+            <div class="layui-input-block">
+                <input type="text" placeholder="单行输入" autocomplete="off" class="layui-input" id="PHONE" name="PHONE">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">适用系统：</label>
+            <div class="layui-input-block">
+                <select id="FEEDBACKTYPE" lay-verify="required" name="FEEDBACKTYPE">
+                    <option value="0">选择系统版本</option>
+                    <option value="1">Android 5.5.0</option>
+                    <option value="2">Android 5.5.0</option>
+                    <option value="3">Android 5.5.0</option>
+                    <option value="4">Android 5.5.0</option>
+                    <option value="5">Android 5.5.0</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">更新特性：</label>
+            <div class="layui-input-block">
+                <textarea id="DESCRIBE" name="DESCRIBE" lay-verify="required" placeholder="多行输入" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </div>
+    <button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">提交</button>
+</form>
+<script src="update_pop.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

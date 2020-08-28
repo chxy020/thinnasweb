@@ -1,8 +1,11 @@
 body {background-color:#fff;}
-.login-bg {background:#fff url(../images/banner_04.jpg) no-repeat center;background-size:cover;overflow:hidden;}
+.login-bg {background:#fff url(../images/login_bg.jpg) no-repeat center;background-size:cover;overflow:hidden;}
 .layui-anim-up {margin:100px auto 0 auto;padding:30px;background-color:#ffffff;box-sizing:border-box;width:400px;/* height:670px;*/line-height:20px;border-radius:8px;box-shadow:0px 0px 16px 1px rgba(217,217,217,1);border:1px solid rgba(255,0,0,0);}
 .login_logo {height:64px;line-height:64px;color:#3691FF;font-size:28px;text-align:center;}
-.login_message {margin-top:5px;height:50px;line-height:50px;color:#3691FF;font-size:24px;text-align:center;}
+.login_message {margin-top:5px;margin-bottom:80px;height:50px;line-height:50px;color:#373839;font-size:28px;text-align:center;}
+
+.login_message span{color:#373839;font-size:16px;margin-left:10px}
+
 .login_vis {line-height:22px;color:#5E5E5E;font-size:14px;text-align:center;margin-bottom:30px;}
 .iconfont.icon-show:hover {color:#ff6600;}
 .iconfont.icon-hide:hover {color:#ff6600;}
@@ -28,3 +31,5 @@ body {background-color:#fff;}
 .text2 {font-size:12px;color:rgba(38,50,56,0.43);text-align:center;margin-top:20px;}
 .login .layui-layer-btn {text-align:center;padding:0;pointer-events:auto;user-select:none;-webkit-user-select:none;}
 .login .layui-layer-btn a {height:32px;line-height:32px;}
+.loginw1200{width: 400px;height: 590px;padding-left: 700px;padding-right: 100px;padding-top: 170px;background:#fff url(../images/login_img.png) no-repeat center top;margin:0 auto}
+.loginw1200 .layui-form-item {margin-bottom: 25px;}

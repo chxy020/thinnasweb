@@ -21,10 +21,9 @@
     <script src="../../js/jquery-3.1.1.min.js"></script>
 </head>
 <body class="login-bg">
-<div class="login layui-anim layui-anim-up">
-    <div class="login_logo">logo</div>
-    <div class="login_message">ThinNAS运营系统</div>
-    <div class="login_vis">V1.0.0</div>
+<!-- <div class="login layui-anim layui-anim-up"> -->
+<div class="login loginw1200">
+    <div class="login_message">ThinNAS运营系统<span>V1.0.0</span></div>
     <form method="post" class="layui-form" >
         <div class="layui-form-item">
             <input id="username" name="username" placeholder="请输入手机号/账号" type="text" lay-verify="required" class="layui-input" >
@@ -45,26 +44,27 @@
         <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login" id="login">登 录</button>
     </form>
 </div>
+<!-- </div> -->
 
 <script src="js/login.js"></script>
 <script>
 //登录框位置
-function wLoanWrapPosition(params,contDiv) {
-    var windowH=$(window).height();
-    console.log("1",windowH);
-    console.log("1",params);
-    if(windowH > params){
-        $(contDiv).css({'margin-top':(windowH-params)/2});
-    }else{
-        $(contDiv).css({'margin-top':'20px'});
-        $('.login-bg').css({'height':'540px'});
-    }
-}
-wLoanWrapPosition(540,'.layui-anim-up');
+// function wLoanWrapPosition(params,contDiv) {
+//     var windowH=$(window).height();
+//     console.log("1",windowH);
+//     console.log("1",params);
+//     if(windowH > params){
+//         $(contDiv).css({'margin-top':(windowH-params)/2});
+//     }else{
+//         $(contDiv).css({'margin-top':'20px'});
+//         $('.login-bg').css({'height':'540px'});
+//     }
+// }
+// wLoanWrapPosition(540,'.layui-anim-up');
 //浏览器窗口变化时 位置重置
-$(window).resize(function() {
-    wLoanWrapPosition(540,'.layui-anim-up');
-});
+// $(window).resize(function() {
+//     wLoanWrapPosition(540,'.layui-anim-up');
+// });
 </script>
 </body>
 </html>
