@@ -400,11 +400,12 @@ padding: 10px 0;
     margin-bottom: 46px;
 }
 
-.mr20{
-    margin-right: 20px;
+.box_yinying.mr20{
+    margin-right: 0;
+    margin-bottom: 40px;
 }
-.mb30{
-    margin-bottom: 30px;
+.box_yinying.mb30{
+    margin-bottom: 40px;
 }
 .layui-col-md2 .t{
     font-size: 14px;
@@ -456,11 +457,13 @@ padding: 10px 0;
 
 .box_yinying .layui-col-md2{
     padding:15px;
-    border-right:1px solid #2ec3ff;
+    border-right:none;
+    margin:0 20px;
+    border-bottom:1px solid #2ec3ff ;
     color: #fff;
 }
 .box_yinying .layui-col-md2:last-child{
-    border-right:none
+    border-bottom:none
 }
 
 .top_btitle{
