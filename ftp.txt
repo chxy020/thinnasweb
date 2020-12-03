@@ -4,4 +4,5 @@ Hzsj!1234
 
 端口22
 
+前端页面上传路径
 /home/tomcat7/webapps/ADMINM/static

@@ -1,4 +1,8 @@
 ﻿
+
+http://139.196.147.194:8080/ADMINM/static/views/user/login.html
+
+
 图片验证码
 http://39.107.249.187:8080/ADMINM/code.do
 

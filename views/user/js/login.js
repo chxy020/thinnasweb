@@ -91,6 +91,7 @@ layui.config({
         // http://39.107.249.187:8080/ADMINM/code.do
         var t = new Date().getTime();
         $("#codeImg").attr("src",server + "/ADMINM/code.do?t=" + t);
+        // $("#codeImg").attr("src",server + "/ADMINM/code?t=" + t);
     }
     
     function login(){
