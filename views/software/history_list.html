@@ -86,15 +86,31 @@
 			<div class="layui-form layui-col-space5">
 				
 				<div class="layui-tab" style="position: relative">
-					<div class="rclose"><i class="layui-icon layui-icon-close"></i></div>
-					<ul class="layui-tab-title">
-						<li class="layui-this">全部更新</li>
-						<li>PC</li>
-						<li>Android</li>
+					<!-- <div data-type="rclose" class="layui-ds rclose" style="top: -5px;z-index: 9;"><i class="layui-icon layui-icon-close"></i></div> -->
+					<ul id="versiontab" class="layui-tab-title">
+						<li id="alltab" class="layui-this">全部更新</li>
+						<li id="androidtab">Android</li>
+						<li id="pctab">PC</li>
 					</ul>
 					<div class="layui-tab-content" style="padding:10px 0 0;">
 						<div class="layui-tab-item layui-show">
-							<table cellpadding="0" cellspacing="0" class="softtable">
+							<table id="allversion" cellpadding="0" cellspacing="0" class="softtable">
+								<!--
+								<tr>
+									<th>边缘存储3.1.22版本<span>更新时间：2020-12-23 10：45：06</span></th>
+									<th width="30%">
+										<button type="button" class="layui-btn layui-btn-normal">点击下载</button>
+										<button type="button" class="layui-btn layui-btn-danger">删除文件</button>
+									</th>
+								</tr>
+								<tr>
+									<td colspan=3>
+										<p class="tc">上传用户：rwy</p>
+										<h3>更新内容：</h3>
+										<p>1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 </p>
+									</td>
+								</tr>
+								
 								<tr>
 									<th>边缘存储3.1.22版本<span>更新时间：2020-12-23 10：45：06</span></th>
 									<th width="30%">
@@ -123,24 +139,11 @@
 										<p>1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 </p>
 									</td>
 								</tr>
-								<tr>
-									<th>边缘存储3.1.22版本<span>更新时间：2020-12-23 10：45：06</span></th>
-									<th width="30%">
-										<button type="button" class="layui-btn layui-btn-normal">点击下载</button>
-										<button type="button" class="layui-btn layui-btn-danger">删除文件</button>
-									</th>
-								</tr>
-								<tr>
-									<td colspan=3>
-										<p class="tc">上传用户：rwy</p>
-										<h3>更新内容：</h3>
-										<p>1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 1、修改日志 2、添加评论 3、优化上传速度 </p>
-									</td>
-								</tr>
+								 -->
 							</table>
 						</div>
-						<div class="layui-tab-item">PC</div>
-						<div class="layui-tab-item">Android</div>
+						<!-- <div class="layui-tab-item">PC</div> -->
+						<!-- <div class="layui-tab-item">Android</div> -->
 					</div>
 				</div>
 			</div>

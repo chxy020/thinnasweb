@@ -144,6 +144,15 @@ layui.config({
                 html.push('</li>');
             });
 
+            
+
+            html.push('<li data-name="get" class="layui-nav-item">');
+            html.push('<a href="javascript:;" lay-href="software/software_list.html" lay-tips="软件应用" lay-direction="2">');
+            html.push('<i class="layui-icon iconfont icon-jurassic_apply"></i>');
+            html.push('<cite>软件应用</cite>');
+            html.push('</a>');
+            html.push('</li>');
+
             $("#LAY-system-side-menu").html(html.join(''));
         }
 

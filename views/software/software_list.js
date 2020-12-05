@@ -8,14 +8,32 @@ layui.config({
         laydate = layui.laydate,
         form = layui.form;
         $ = layui.jquery;
+    
+    var server = setter.baseUrl;
+    
     var $ = layui.$,
     active = {
+        history:function(){
+            layer.open({
+                type: 2,
+                title: '历史版本',
+                area: ['100%', '100%'],
+                // btn: ['保存', '取消'],
+                // btnAlign: 'c',
+                maxmin: true,
+                content: 'history_list.html',
+                yes: function(index, layero) {
+                    // var submit = layero.find('iframe').contents().find("#submit");
+                    // submit.click();
+                }
+            });
+        },
         //刷新
         update: function() {
             layer.open({
                 type: 2,
                 title: '更新软件版本',
-                area: ['40%', '50%'],
+                area: ['100%', '100%'],
                 btn: ['确定', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
@@ -25,6 +43,8 @@ layui.config({
                     submit.click();
                 }
             });
+
+            
         },
     };
 

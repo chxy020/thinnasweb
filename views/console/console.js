@@ -679,8 +679,8 @@ layui.config({
         
         $.Ajax({
             async: false,
-            url: _url,
-            dataType: "json",
+            url: server + _url,
+            dataType: "text",
             method: 'get',
             success: function(mapjson) {
                 echarts.registerMap(code, mapjson);
@@ -688,7 +688,8 @@ layui.config({
                 mapOptions.geo.map = code;
                 mapChart.setOption(mapOptions);
                 mapChart.resize();
-            }
+            },
+
         });
     }
 
