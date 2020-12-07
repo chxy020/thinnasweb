@@ -14,19 +14,7 @@ layui.config({
     var $ = layui.$,
     active = {
         history:function(){
-            layer.open({
-                type: 2,
-                title: '历史版本',
-                area: ['100%', '100%'],
-                // btn: ['保存', '取消'],
-                // btnAlign: 'c',
-                maxmin: true,
-                content: 'history_list.html',
-                yes: function(index, layero) {
-                    // var submit = layero.find('iframe').contents().find("#submit");
-                    // submit.click();
-                }
-            });
+            showHistoryList();
         },
         //刷新
         update: function() {
@@ -54,8 +42,76 @@ layui.config({
         active[type] ? active[type].call(this) : '';
     });
 
+    getNowApp();
 
+    function getNowApp(){
+        var server = "http://139.196.147.194:8084";
+        layer.load(2);
+        $.Ajax({
+            async: true,
+            url: server + "/jqkj/tvApk/getNowApp",
+            dataType: "json",
+            method: 'get',
+            success: function(obj) {
+                layer.closeAll();
+                if(obj.status == 0){
+                    var list = obj.data || [];
+                    buildNowVersionHtml(list);
+                }else{
+                    layer.msg("获取最新版本错误");
+                }
+            },
+            error:function(obj){
+                layer.closeAll();
+            }
+        });
+    }
 
+    function buildNowVersionHtml(list){
+        for(var i = 0,len = list.length; i < len; i++){
+            var item = list[i] || {};
+            var type = item.type;
+            if(type === 0){
+                var html = [];
+                html.push('<td rowspan=2 width="20%"><h4 class="softbt">AI存储APP</h4></td>');
+                html.push('<td width="15%"><i class="layui-icon iconfont icon-anzhuo"></i> V ' + item.version + '</td>');
+                html.push('<td width="20%">适用系统：'+ item.description + '</td>');
+                html.push('<td width="25%">更新时间：'+ item.updatetime + '</td>');
+                html.push('<td width="10%"><div class="layui-ds" data-type="update"><i class="layui-icon iconfont icon-shuaxin"></i> 更新</div></td>');
+                html.push('<td width="10%"><a href="javascript:;" data-type="history" class="layui-ds lishi-btn">历史版本</a></td>');
+                
+                $("#app0").html(html.join(''));
+            }else if(type == 1){
+                var html = [];
+                html.push('<td rowspan=2 width="20%"><h4 class="softbt">ThinNAS PC电脑端</h4></td>');
+                html.push('<td width="15%"><i class="layui-icon iconfont icon-windows"></i> V ' + item.version + '</td>');
+                html.push('<td width="20%">适用系统：'+ item.description + '</td>');
+                html.push('<td width="25%">更新时间：'+ item.updatetime + '</td>');
+                html.push('<td width="10%"><div class="layui-ds" data-type="update"><i class="layui-icon iconfont icon-shuaxin"></i> 更新</div></td>');
+                html.push('<td width="10%"><a href="javascript:;" data-type="history" class="layui-ds lishi-btn">历史版本</a></td>');
+                $("#app1").html(html.join(''));
+            }
+        }
+        
+        $(".lishi-btn").unbind("click");
+        $(".lishi-btn").bind("click",function(){
+            showHistoryList();
+        });
+    }
 
-
+    function showHistoryList(){
+        layer.open({
+            type: 2,
+            title: '历史版本',
+            area: ['100%', '100%'],
+            // btn: ['保存', '取消'],
+            // btnAlign: 'c',
+            maxmin: true,
+            content: 'history_list.html',
+            yes: function(index, layero) {
+                // var submit = layero.find('iframe').contents().find("#submit");
+                // submit.click();
+            }
+        });
+    }
 });

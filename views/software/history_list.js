@@ -76,21 +76,45 @@ layui.config({
             }
         });
     }
+
+    function logicalDel(id){
+        var server = "http://139.196.147.194:8084";
+        layer.load(2);
+        $.Ajax({
+            async: true,
+            url: server + "/jqkj/file/logicalDel",
+            dataType: "json",
+            method: 'post',
+            data:{id:id,isdelete:1},
+            success: function(obj) {
+                layer.closeAll();
+                if(obj.status == 0){
+                    // var list = obj.data || [];
+                    // buildAllVersionHtml(list);
+                }else{
+                    layer.msg("删除apk错误");
+                }
+            },
+            error:function(obj){
+                layer.closeAll();
+            }
+        });
+    }
     
     function buildAllVersionHtml(list){
         var html = [];
         for(var i = 0,len = list.length; i < len; i++){
             var item = list[i] || {};
             html.push('<tr>');
-            html.push('<th>' + item.version + '<span>更新时间：' + item.updatetime + '</span></th>');
+            html.push('<th> V ' + item.version + '<span>更新时间：' + item.updatetime + '</span></th>');
             html.push('<th width="30%">');
             html.push('<button type="button" data="' + item.path + '" class="downloadbtn layui-btn layui-btn-normal">点击下载</button>');
-            html.push('<button type="button" data="' + item.apkMD5 + '" class="deletebtn layui-btn layui-btn-danger">删除文件</button>');
+            html.push('<button type="button" data="' + item.id + '" class="deletebtn layui-btn layui-btn-danger">删除文件</button>');
             html.push('</th>');
             html.push('</tr>');
             html.push('<tr>');
             html.push('<td colspan=3>');
-            html.push('<p class="tc">上传用户：rwy</p>');
+            html.push('<p class="tc">上传用户：' + item.username + '</p>');
             html.push('<h3>更新内容：</h3>');
             html.push('<p>' + item.description + '</p>');
             html.push('</td>');
@@ -103,11 +127,15 @@ layui.config({
 
             $("#allversion .downloadbtn").bind("click",function(ele){
                 var data = $(ele.currentTarget).attr("data");
-                console.log(data)
+                window.open(data,"_blank")
             }.bind(this));
             $("#allversion .deletebtn").bind("click",function(ele){
                 var data = $(ele.currentTarget).attr("data");
-                console.log(data)
+                // console.log(data)
+                
+                layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
+                    logicalDel(data);
+                });
             }.bind(this));
         }else{
             html.push('<tr>');
