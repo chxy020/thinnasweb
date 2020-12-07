@@ -75,7 +75,7 @@ layui.config({
                 var html = [];
                 html.push('<td rowspan=2 width="20%"><h4 class="softbt">AI存储APP</h4></td>');
                 html.push('<td width="15%"><i class="layui-icon iconfont icon-anzhuo"></i> V ' + item.version + '</td>');
-                html.push('<td width="20%">适用系统：'+ item.description + '</td>');
+                html.push('<td width="20%">适用系统：Android 5.5.0 及以上</td>');
                 html.push('<td width="25%">更新时间：'+ item.updatetime + '</td>');
                 html.push('<td width="10%"><div class="layui-ds" data-type="update"><i class="layui-icon iconfont icon-shuaxin"></i> 更新</div></td>');
                 html.push('<td width="10%"><a href="javascript:;" data-type="history" class="layui-ds lishi-btn">历史版本</a></td>');
@@ -85,7 +85,7 @@ layui.config({
                 var html = [];
                 html.push('<td rowspan=2 width="20%"><h4 class="softbt">ThinNAS PC电脑端</h4></td>');
                 html.push('<td width="15%"><i class="layui-icon iconfont icon-windows"></i> V ' + item.version + '</td>');
-                html.push('<td width="20%">适用系统：'+ item.description + '</td>');
+                html.push('<td width="20%">适用系统：Windows 7 及以上</td>');
                 html.push('<td width="25%">更新时间：'+ item.updatetime + '</td>');
                 html.push('<td width="10%"><div class="layui-ds" data-type="update"><i class="layui-icon iconfont icon-shuaxin"></i> 更新</div></td>');
                 html.push('<td width="10%"><a href="javascript:;" data-type="history" class="layui-ds lishi-btn">历史版本</a></td>');
