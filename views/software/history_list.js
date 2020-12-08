@@ -40,8 +40,14 @@ layui.config({
         active[type] ? active[type].call(this) : '';
     });
 
+    var tabid = "alltab";
     $("#versiontab > li").bind("click",function(ele){
         var id = $(ele.currentTarget).attr("id");
+        tabid = id;
+        getVersionList(id);
+    });
+
+    function getVersionList(id){
         if(id == "alltab"){
             getAllVersionList(0);
         }else if(id == "androidtab"){
@@ -49,9 +55,9 @@ layui.config({
         }else{
             getAllVersionList(2);
         }
-    });
+    }
 
-    getAllVersionList(0);
+    getVersionList("alltab");
 
     function getAllVersionList(type){
         var server = "http://139.196.147.194:8084";
@@ -89,6 +95,7 @@ layui.config({
             success: function(obj) {
                 layer.closeAll();
                 if(obj.status == 0){
+                    getVersionList(tabid);
                     // var list = obj.data || [];
                     // buildAllVersionHtml(list);
                 }else{
@@ -108,8 +115,14 @@ layui.config({
             html.push('<tr>');
             html.push('<th> V ' + item.version + '<span>更新时间：' + item.updatetime + '</span></th>');
             html.push('<th width="30%">');
-            html.push('<button type="button" data="' + item.path + '" class="downloadbtn layui-btn layui-btn-normal">点击下载</button>');
-            html.push('<button type="button" data="' + item.id + '" class="deletebtn layui-btn layui-btn-danger">删除文件</button>');
+            if(item.isdelete == 1){
+                html.push('<button disabled style="background:#ccc;" type="button" data="' + item.path + '" class="downloadbtn layui-btn layui-btn-normal">点击下载</button>');
+                html.push('<button disabled style="background:#ccc;" type="button" data="' + item.id + '" class="deletebtn layui-btn layui-btn-danger">删除文件</button>');
+                
+            }else{
+                html.push('<button type="button" data="' + item.path + '" class="downloadbtn layui-btn layui-btn-normal">点击下载</button>');
+                html.push('<button type="button" data="' + item.id + '" class="deletebtn layui-btn layui-btn-danger">删除文件</button>');
+            }
             html.push('</th>');
             html.push('</tr>');
             html.push('<tr>');

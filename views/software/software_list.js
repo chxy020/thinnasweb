@@ -18,21 +18,7 @@ layui.config({
         },
         //刷新
         update: function() {
-            layer.open({
-                type: 2,
-                title: '更新软件版本',
-                area: ['100%', '100%'],
-                btn: ['确定', '取消'],
-                btnAlign: 'c',
-                maxmin: true,
-                content: 'update_pop.html',
-                yes: function(index, layero) {
-                    var submit = layero.find('iframe').contents().find("#submit");
-                    submit.click();
-                }
-            });
-
-            
+            updateApp();
         },
     };
 
@@ -77,8 +63,8 @@ layui.config({
                 html.push('<td width="15%"><i class="layui-icon iconfont icon-anzhuo"></i> V ' + item.version + '</td>');
                 html.push('<td width="20%">适用系统：Android 5.5.0 及以上</td>');
                 html.push('<td width="25%">更新时间：'+ item.updatetime + '</td>');
-                html.push('<td width="10%"><div class="layui-ds" data-type="update"><i class="layui-icon iconfont icon-shuaxin"></i> 更新</div></td>');
-                html.push('<td width="10%"><a href="javascript:;" data-type="history" class="layui-ds lishi-btn">历史版本</a></td>');
+                html.push('<td width="10%"><div data="1_' + item.version + '" class="layui-ds updatebtn" style="cursor: pointer;"><i class="layui-icon iconfont icon-shuaxin"></i> 更新</div></td>');
+                html.push('<td width="10%"><a href="javascript:;" class="layui-ds lishi-btn lishibtn">历史版本</a></td>');
                 
                 $("#app0").html(html.join(''));
             }else if(type == 1){
@@ -87,15 +73,22 @@ layui.config({
                 html.push('<td width="15%"><i class="layui-icon iconfont icon-windows"></i> V ' + item.version + '</td>');
                 html.push('<td width="20%">适用系统：Windows 7 及以上</td>');
                 html.push('<td width="25%">更新时间：'+ item.updatetime + '</td>');
-                html.push('<td width="10%"><div class="layui-ds" data-type="update"><i class="layui-icon iconfont icon-shuaxin"></i> 更新</div></td>');
-                html.push('<td width="10%"><a href="javascript:;" data-type="history" class="layui-ds lishi-btn">历史版本</a></td>');
+                html.push('<td width="10%"><div data="2_' + item.version + '" class="layui-ds updatebtn" style="cursor: pointer;"><i class="layui-icon iconfont icon-shuaxin"></i> 更新</div></td>');
+                html.push('<td width="10%"><a href="javascript:;" class="layui-ds lishi-btn lishibtn">历史版本</a></td>');
                 $("#app1").html(html.join(''));
             }
         }
         
-        $(".lishi-btn").unbind("click");
-        $(".lishi-btn").bind("click",function(){
+        $(".lishibtn").unbind("click");
+        $(".lishibtn").bind("click",function(){
             showHistoryList();
+        });
+        $(".updatebtn").unbind("click");
+        $(".updatebtn").bind("click",function(ele){
+            var data = $(ele.currentTarget).attr("data");
+            console.log(data);
+            var d = data.split('_');
+            updateApp(d[0],d[1]);
         });
     }
 
@@ -111,6 +104,22 @@ layui.config({
             yes: function(index, layero) {
                 // var submit = layero.find('iframe').contents().find("#submit");
                 // submit.click();
+            }
+        });
+    }
+
+    function updateApp(t,v){
+        layer.open({
+            type: 2,
+            title: '更新软件版本',
+            area: ['100%', '100%'],
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            maxmin: true,
+            content: 'update_pop.html?t=' + t + '&v=' + v,
+            yes: function(index, layero) {
+                var submit = layero.find('iframe').contents().find("#submit");
+                submit.click();
             }
         });
     }

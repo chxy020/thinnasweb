@@ -16,139 +16,67 @@ layui.config({
     var server = setter.baseUrl;
     var uri = window.location.search;
     
-    var types = ["","硬件故障","软件故障","硬件使用障碍","软件使用障碍","优化建议","投诉反馈","其它"];
-    var imgpaths = [];
+    var user = window.parent.__user || {};
+    
 
-    var role_ID = setter.getUrlParam("role_ID",uri) || "";
+    var type = +setter.getUrlParam("t",uri) || "";
+    var version = setter.getUrlParam("v",uri) || "";
 
+    var titles = ["","AI存储APP","ThinNAS PC电脑端"];
+    var icons = ["","icon-anzhuo","icon-windows"];
+    if(type){
+        $("#title").html(titles[type]);
+        $("#appicon").addClass(icons[type]);
+    }
+    if(version){
+        $("#versionnum").html(version);
+    }
+    
+    $("#username").val("test");
 
-    upload.render({
-        elem: '#test5',
-        multiple: true,
-        url: server + "/ADMINM/aftersales/uploadImgFile", //改成您自己的上传接口
-        accept: 'images', //视频
-        exts: 'jpg|png|jpeg', //只允许图片
-        acceptMime:"image/jpg, image/png, image/jpeg",
-        field:"clientFile",
-        number:9,
-        before:function(){
-            layer.load(2);
-        },
-        done: function(res){
-            layer.closeAll();
-            console.log(res)
-            if(res.code == 1){
-                layer.msg('上传成功');
-                res.IMGPATH = res.IMGPATH.replace(",","");
-                imgpaths.push(res.IMGPATH);
-                changeImgPathHtml(res.IMGPATH);
-            }else{
-                layer.msg('上传失败');
-            }
+    console.log(user.username,type,version)
 
-            // ID: "81caf154951d4eaab3d5cbe4c2b99792"
-            // PATH: "/ADMINM/uploadFiles/file/81caf154951d4eaab3d5cbe4c2b99792.mp4"
-            // code: 1
-        }
-    });
+    // var userHeadImg = "images/headImg.png";
 
-
-    // if(role_ID){
-    //     //编辑
-    //     $.Ajax({
-    //         async: false,
-    //         url: server + "/ADMINM/role/toEdit",
-    //         dataType: "json",
-    //         method: 'get',
-    //         data:{"ROLE_ID":role_ID},
-    //         success: function(obj) {
-    //             if(obj.code == 1){
-    //                 changeRoleHtml(obj.data || {});
-    //             }else{
-    //                 layer.msg(obj.msg || "获取角色详情错误");
-    //             }
-               
-    //         }
-    //     });
+    // function setUserInfoHtml(){
+    //     if(user.headimg != "" && user.headimg.indexOf("headImg.png") == -1){
+    //         $("#headimg").attr("src",server + user.headimg);
+    //         userHeadImg = user.headimg;
+    //     }
+    //     $("#username").val(user.username);
+    //     $("#role_NAME").val(user.role.role_NAME);
+    //     $("#name").val(user.name);
+        
     // }
+    // setUserInfoHtml();
+
     
     //监听提交
     form.on('submit(submit)', function(data){
-        // alert(888)
-        // layer.msg(JSON.stringify(data.field),function(){
-        //     location.href='index.html'
-        // });
-        // console.log(data.field)
-
-        if(imgpaths.length == 0){
-            layer.msg("请上传截图");
-            return false;
-        }
-
-        var condi = {};
-        condi.FEEDBACKTYPE = types[+data.field.FEEDBACKTYPE];
-        condi.DESCRIBE = data.field.DESCRIBE;
-        condi.IMGPATH = imgpaths.join(',');
-        condi.PHONE = data.field.PHONE;
-        condi.WECHAT = data.field.WECHAT;
-        condi.QQ = data.field.QQ;
-
-
-
-        saveAfterSales(condi);
-
-        // if(role_ID){
-        //     //编辑
-        //     editRole(condi);
-        // }else{
-        //     addRole(condi);
-        // }
         
+        saveApp();
         return false;
     });
 
-    function changeImgPathHtml(img){
-        var html = "<img src='" + (server + img) + "' />";
-        $("#IMGPATH").append(html);
-    }
 
-    function saveAfterSales(condi){
+    function saveApp(){
+        layer.load(2);
+        server = "http://139.196.147.194:8084"
+        var url = server + "/jqkj/user/updateAppVersion";
+        var formdata = new FormData(document.getElementById("form"))
         $.Ajax({
-            async: false,
-            url: server + "/ADMINM/aftersales/saveAfterSales",
-            dataType: "json",
+            url: url,
+            // dataType: "json",
             method: 'post',
-            data:condi,
+            data:formdata,
+            processData:false,   //  告诉jquery不要处理发送的数据
+            contentType:false,   // 告诉jquery不要设置content-Type请求头
             success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("添加成功");
+                layer.closeAll();
 
-                    setTimeout(function(){
-                        //刷新父页面
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-               		    parent.layer.close(index);
-                    },500);
-                }else{
-                    layer.msg(obj.msg || "添加失败");
-                }
-            }
-        });
-    }
-
-    function editRole(condi){
-        condi.ROLE_ID = role_ID;
-
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/edit",
-            dataType: "json",
-            method: 'post',
-            data:condi,
-            success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("修改成功");
-
+                if(obj.status == 1){
+                    layer.msg("上传成功");
+                    
                     setTimeout(function(){
                         //刷新父页面
                         window.parent.location.reload();
@@ -156,11 +84,15 @@ layui.config({
                		    parent.layer.close(index);
                     },1500);
                 }else{
-                    layer.msg(obj.msg || "修改失败");
+                    layer.msg(obj.msg || "上传失败");
                 }
+            },
+            error:function(){
+                layer.closeAll();
             }
         });
     }
+
     
 
 });
