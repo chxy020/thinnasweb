@@ -38,12 +38,23 @@ layui.config({
             zoom:1.2,
             itemStyle: {
                 normal: {
-                    areaColor: '#163356',
+                    areaColor: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 2.5,
+                        colorStops: [{
+                            offset: 0, color: '#ffffff00' // 0% 处的颜色
+                        }, {
+                            offset: 1, color: '#ffffff80' // 100% 处的颜色
+                        }],
+                        global: false // 缺省为 false
+                    },
                     borderWidth: 1,
-                    borderColor: '#1f5c94'
+                    borderColor: '#548AA3'
                 },
                 emphasis: {
-                    areaColor: 'lightblue'
+                    areaColor: '#389BB7'
                 }
             }
         },
@@ -159,20 +170,21 @@ layui.config({
                 }
             }],
             series: [{
-                name: '课时',
+                name: '用户数',
                 type: 'line',
+                symbolSize: 0,
                 data: [23,60,20,36,23,85],
                 lineStyle: {
                     normal: {
-                        width: 1,
+                        width: 2,
                         color: {
                             type: 'linear',
                             colorStops: [{
                                 offset: 0,
-                                color: '#A9F387' // 0% 处的颜色
+                                color: '#0464D5' // 0% 处的颜色
                             }, {
                                 offset: 1,
-                                color: '#48D8BF' // 100% 处的颜色
+                                color: '#06DED0' // 100% 处的颜色
                             }],
                             globalCoord: false // 缺省为 false
                         },
@@ -461,57 +473,57 @@ layui.config({
                     smooth: true
                 },
                 data: [{
-                        value: 1,
+                        value: 5,
                         name: '文档',
                         itemStyle: {
-                            color: "rgba(50,123,250,0.7)",
+                            color: "#FBB033",
                             borderColor: "rgba(50,123,250,1)",
-                            borderWidth: 3
+                            borderWidth: 0
                         }
                     },
                     {
                         value: 2,
                         name: '图片',
                         itemStyle: {
-                            color: "rgba(244,201,7,0.7)",
+                            color: "#8D83FE",
                             borderColor: "rgba(244,201,7,1)",
-                            borderWidth: 3
+                            borderWidth: 0
                         }
                     },
                     {
                         value: 3,
                         name: '视频',
                         itemStyle: {
-                            color: "rgba(23,216,161,0.7)",
+                            color: "#007FFD",
                             borderColor: "rgba(23,216,161,1)",
-                            borderWidth: 3
+                            borderWidth: 0
                         }
                     },
                     {
                         value: 4,
                         name: '音频',
                         itemStyle: {
-                            color: "rgba(122,60,235,0.7)",
+                            color: "#F1D669",
                             borderColor: "rgba(122,60,235,1)",
-                            borderWidth: 3
+                            borderWidth: 0
                         }
                     },
                     {
                         value: 5,
                         name: '应用',
                         itemStyle: {
-                            color: "rgba(15,197,243,0.7)",
+                            color: "#87E187",
                             borderColor: "rgba(15,197,243,1)",
-                            borderWidth: 3
+                            borderWidth: 0
                         }
                     },
                     {
                         value: 6,
                         name: '其它',
                         itemStyle: {
-                            color: "rgba(15,197,243,0.7)",
+                            color: "#D2CFD0",
                             borderColor: "rgba(15,197,243,1)",
-                            borderWidth: 3
+                            borderWidth: 0
                         }
                     }
                 ]
@@ -531,36 +543,120 @@ layui.config({
         var line1 = $("#line1");
         linechart1 = echarts.init(line1[0]);
         var option = lineChart();
+        option.series[0].name = "用户数";
+        option.series[0].lineStyle.normal.color = {
+            type: 'linear',
+            colorStops: [{
+                offset: 0,
+                color: '#0464D5' // 0% 处的颜色
+            }, {
+                offset: 1,
+                color: '#06DED0' // 100% 处的颜色
+            }],
+            globalCoord: false // 缺省为 false
+        };
         linechart1.setOption(option);
 
         var line2 = $("#line2");
         linechart2 = echarts.init(line2[0]);
         var option = lineChart();
+        option.series[0].name = "日活用户数";
+        option.series[0].lineStyle.normal.color = {
+            type: 'linear',
+            colorStops: [{
+                offset: 0,
+                color: '#3A5EFF' // 0% 处的颜色
+            }, {
+                offset: 1,
+                color: '#2EC3FF' // 100% 处的颜色
+            }],
+            globalCoord: false // 缺省为 false
+        };
         linechart2.setOption(option);
 
         var line3 = $("#line3");
         linechart3 = echarts.init(line3[0]);
         var option = lineChart();
+        option.series[0].name = "设备用户比例";
+        option.series[0].lineStyle.normal.color = {
+            type: 'linear',
+            colorStops: [{
+                offset: 0,
+                color: '#C26BD6' // 0% 处的颜色
+            }, {
+                offset: 1,
+                color: '#3927B0' // 100% 处的颜色
+            }],
+            globalCoord: false // 缺省为 false
+        };
         linechart3.setOption(option);
 
         var line4 = $("#line4");
         linechart4 = echarts.init(line4[0]);
         var option = lineChart();
+        option.series[0].name = "备数总设";
+        option.series[0].lineStyle.normal.color = {
+            type: 'linear',
+            colorStops: [{
+                offset: 0,
+                color: '#FABC4F' // 0% 处的颜色
+            }, {
+                offset: 1,
+                color: '#F8892F' // 100% 处的颜色
+            }],
+            globalCoord: false // 缺省为 false
+        };
         linechart4.setOption(option);
 
         var line5 = $("#line5");
         linechart5 = echarts.init(line5[0]);
         var option = lineChart();
+        option.series[0].name = "公网IP数";
+        option.series[0].lineStyle.normal.color = {
+            type: 'linear',
+            colorStops: [{
+                offset: 0,
+                color: '#F13633' // 0% 处的颜色
+            }, {
+                offset: 1,
+                color: '#D70E34' // 100% 处的颜色
+            }],
+            globalCoord: false // 缺省为 false
+        };
         linechart5.setOption(option);
 
         var line6 = $("#line6");
         linechart6 = echarts.init(line6[0]);
         var option = lineChart();
+        option.series[0].name = "存储容量";
+        option.series[0].lineStyle.normal.color = {
+            type: 'linear',
+            colorStops: [{
+                offset: 0,
+                color: '#3A5EFF' // 0% 处的颜色
+            }, {
+                offset: 1,
+                color: '#2EC3FF' // 100% 处的颜色
+            }],
+            globalCoord: false // 缺省为 false
+        };
         linechart6.setOption(option);
 
         var line7 = $("#line7");
         linechart7 = echarts.init(line7[0]);
         var option = lineChart();
+        option.series[0].name = "共享空间数";
+        option.series[0].lineStyle.normal.color = {
+            type: 'linear',
+            colorStops: [{
+                offset: 0,
+                color: '#FABC4F' // 0% 处的颜色
+            }, {
+                offset: 1,
+                color: '#F8892F' // 100% 处的颜色
+            }],
+            globalCoord: false // 缺省为 false
+        };
         linechart7.setOption(option);
     }
 

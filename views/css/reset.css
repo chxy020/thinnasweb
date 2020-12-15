@@ -508,7 +508,7 @@ padding: 10px 0;
     z-index: 99;
 }
 .map_right_t{
-    font-size: 18px;
+    font-size: 15px;
     color: #f0eff6;
     text-align: right;
     margin-bottom: 20px;
@@ -527,7 +527,7 @@ padding: 10px 0;
     width: 50%;
 }
 .text_lista li{
-    font-size: 16px;
+    font-size: 12px;
     color: #f0eff6;
     margin: 10px;
 }
