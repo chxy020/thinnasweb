@@ -457,7 +457,7 @@ layui.config({
             series: [{
                 name: '半径模式',
                 type: 'pie',
-                radius: ['30%', '80%'],
+                radius: ['30%', '60%'],
                 center: ['40%', '50%'],
                 roseType: 'radius',
                 label: {
