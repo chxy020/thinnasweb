@@ -330,21 +330,44 @@ padding: 10px 0;
 }
 .console_top_time{
     position: absolute;
-    left:10px;
-    top:25px;
-    height: 46px;
-    line-height: 46px;
+    left: 0;
+    top: 40px;
+    padding-left: 20px;
+    height: 56px;
+    line-height: 56px;
     color: #06ded0;
     font-size: 16px;
+    background: url(../images/cs_topbg_03.png) no-repeat right center;
+    width: 200px;
 }
+
+
 .console_top_full{
+    /* position: absolute;
+    right:0;
+    top:50px;
+    height: 40px;
+    width: 40px;
+    background: url(../images/cs_topfull.png) no-repeat center; */
     position: absolute;
-    right:30px;
-    top:30px;
+    right: 0;
+    top: 40px;
+    padding-right: 20px;
+    height: 56px;
+    color: #06ded0;
+    font-size: 16px;
+    background: url(../images/cs_topbg_05.png) no-repeat left center;
+    width: 200px;
+}
+.console_top_full span{
+    float: right;
+    display: block;
     height: 40px;
     width: 40px;
     background: url(../images/cs_topfull.png) no-repeat center;
 }
+
+
 
 .top_line{
     position: absolute;
