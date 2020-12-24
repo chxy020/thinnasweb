@@ -139,7 +139,11 @@ layui.config({
                         field: 'device_id',
                         title: '设备ID',
                         align: 'left',
+                        width:240,
                         toolbar: '#test-table-operate-barDemo',
+                        // templet: function(data) {
+                        //     return '<a class="a_blue" lay-event="details" id="details">' + data.device_id + '</a>'
+                        // },
                     }, {
                         field: 'status',
                         title: '是否在线',
@@ -422,7 +426,7 @@ layui.config({
                 layer.close(index);
             });
         } else if (obj.event === 'details') {
-            console.log("data.deviceid===",data.deviceid);
+            console.log("data.details_id===",data.device_id);
             layer.open({
                 type: 2,
                 title: '设备详情',
@@ -431,7 +435,7 @@ layui.config({
                 // btn: ['保存', '取消'],
                 // btnAlign: 'c',
                 maxmin: true,
-                content: 'device_details.html?deviceid='+data.deviceid,
+                content: 'device_details.html?deviceid='+data.device_id,
                 // content: 'account_edit_pop.html?id=" + data.id,
                 yes: function(index, layero) {
                 }
