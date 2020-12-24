@@ -82,15 +82,17 @@ layui.config({
         table.render({
             elem: '#test-table-operate',
             height: 'full-60',//必须留着
-            url: server + "/ADMINM/device/listDevices",
+            // url: server + "/ADMINM/device/listDevices",
+            url: server + "/ADMINM/device/getUserDeviceList",
             where:{
-                "keywords":keywords||"",
-                "STATUS":status,
-                "bindtimeStart":bindtimeStart,
-                "bindtimeEnd":bindtimeEnd,
+                "search":keywords||"",
+                "device_status":status,
+                "startTime":bindtimeStart ?  bindtimeStart + " 00:00:00" : "",
+                "endTime":bindtimeEnd ? bindtimeEnd + " 00:00:00" : "",
                 "uid":uid
             },
-            method: 'get',
+
+            method: 'post',
             xhrFields: {
                 withCredentials: true
             }
@@ -134,7 +136,7 @@ layui.config({
                     //     toolbar: '#test-table-operate-barDemo',
                     // },
                     {
-                        field: 'deviceid',
+                        field: 'device_id',
                         title: '设备ID',
                         align: 'left',
                         toolbar: '#test-table-operate-barDemo',
@@ -142,13 +144,11 @@ layui.config({
                         field: 'status',
                         title: '是否在线',
                         align: 'left',
+                        width:80,
                         templet: function(data) {
                             return data.status == 1 ? "在线" : "离线";
                         },
                     },
-
-
-
 
                     {
                         field: 'nickname',
@@ -169,14 +169,14 @@ layui.config({
                                 // return data.name + contStr
                         },
                     },
-                    {
-                        field: 'status_BIND',
-                        title: '状态',
-                        align: 'left',
-                        templet: function(data) {
-                            return data.status_BIND == 1 ? "绑定激活" : "未绑定";
-                        },
-                    },
+                    // {
+                    //     field: 'status_BIND',
+                    //     title: '状态',
+                    //     align: 'left',
+                    //     templet: function(data) {
+                    //         return data.status_BIND == 1 ? "绑定激活" : "未绑定";
+                    //     },
+                    // },
                     {
                         field: 'uname',
                         title: '管理员',
@@ -187,7 +187,7 @@ layui.config({
                         // },
                     },
                     {
-                        field: 'bindtime',
+                        field: 'createtime',
                         title: '绑定/激活时间',
                         align: 'left',
                         // templet: function(data) {
@@ -196,7 +196,7 @@ layui.config({
                         // },
                     },
                     {
-                        field: 'usercount',
+                        field: 'uidnum',
                         title: '设备用户数',
                         align: 'left',
                     },
@@ -207,41 +207,42 @@ layui.config({
                         align: 'left',
                         width:100,
                         templet: function(data) {
+                            return data.available+'MB'
                             // console.log("data=========+++",data)
                             //编辑
-                            var userSpaceListArr = [];
-                            $.Ajax({
-                                async: false,
-                                url: server + "/ADMINM/device/DeviceDetails",
-                                dataType: "json",
-                                method: 'get',
-                                data:{"DEVICEID":data.deviceid},
-                                success: function(obj) {
-                                    if(obj.code == 1){
-                                        // console.log("obj-------------------",obj.userSpaceList)
-                                        userSpaceListArr = obj.userSpaceList;
-                                    }else{
-                                        layer.msg(obj.msg);
-                                    }
-                                }
-                            });
+                            // var userSpaceListArr = [];
+                            // $.Ajax({
+                            //     async: false,
+                            //     url: server + "/ADMINM/device/DeviceDetails",
+                            //     dataType: "json",
+                            //     method: 'get',
+                            //     data:{"DEVICEID":data.deviceid},
+                            //     success: function(obj) {
+                            //         if(obj.code == 1){
+                            //             // console.log("obj-------------------",obj.userSpaceList)
+                            //             userSpaceListArr = obj.userSpaceList;
+                            //         }else{
+                            //             layer.msg(obj.msg);
+                            //         }
+                            //     }
+                            // });
 
-                            if(userSpaceListArr.length){
-                                // console.log("userSpaceListArr.length-------------------",userSpaceListArr.length)
-                                var htmlStr = "";
-                                var usedStr = 0;
-                                for (i = 0; i < userSpaceListArr.length; i++) { 
-                                    // console.log("000")
-                                    htmlStr += "<tr><td>"+userSpaceListArr[i].nickname+"</td><td>"+ userSpaceListArr[i].total + "MB | 可用" + userSpaceListArr[i].used + "MB | 已用" + userSpaceListArr[i].available +"MB</td><td>"+userSpaceListArr[i].filecount+"</td></tr>";
-                                    usedStr += parseInt(userSpaceListArr[i].used);
-                                }
-                                // console.log("htmlStr====",htmlStr);
-                                var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>用户</th><th>空间使用情况</th><th>文件数</th></tr>"+htmlStr+"</table></div></div></div>"
-                                // console.log("contStr====",contStr);
-                                return +usedStr+'MB'+contStr;
-                            }else{
-                                return data.available+'MB'
-                            }
+                            // if(userSpaceListArr.length){
+                            //     // console.log("userSpaceListArr.length-------------------",userSpaceListArr.length)
+                            //     var htmlStr = "";
+                            //     var usedStr = 0;
+                            //     for (i = 0; i < userSpaceListArr.length; i++) { 
+                            //         // console.log("000")
+                            //         htmlStr += "<tr><td>"+userSpaceListArr[i].nickname+"</td><td>"+ userSpaceListArr[i].total + "MB | 可用" + userSpaceListArr[i].used + "MB | 已用" + userSpaceListArr[i].available +"MB</td><td>"+userSpaceListArr[i].filecount+"</td></tr>";
+                            //         usedStr += parseInt(userSpaceListArr[i].used);
+                            //     }
+                            //     // console.log("htmlStr====",htmlStr);
+                            //     var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>用户</th><th>空间使用情况</th><th>文件数</th></tr>"+htmlStr+"</table></div></div></div>"
+                            //     // console.log("contStr====",contStr);
+                            //     return +usedStr+'MB'+contStr;
+                            // }else{
+                            //     return data.available+'MB'
+                            // }
                         },
                     },
                     {
@@ -249,6 +250,9 @@ layui.config({
                         title: '近7天活跃次数<i class="layui-icon iconfont icon-zu200 m5" lay-tips="最近7天内，打开APP次数，含电视APP"></i>',
                         align: 'left',
                         width:120,
+                        templet: function(data) {
+                            return 0;
+                        }
                     },
                     
                 ]
@@ -258,13 +262,13 @@ layui.config({
                     top.location.href = setter.loginUrl;
                     return;
                 }
-                if(res.code == 1){
+                if(res.code == 0){
                     //res 即为原始返回的数据
                     return {
                         "code": 0,
                         "msg": "",
                         "count": res.count,
-                        "data": res.deviceList
+                        "data": res.data
                     };
                 }else{
                     return {
@@ -282,7 +286,7 @@ layui.config({
             limit: 15,
             skin: 'line',
             even: true,
-            limits: [5, 10, 15],
+            limits: [10, 15,30],
             done: function(res, curr, count) {
                 // table_data = res.data;
 

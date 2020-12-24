@@ -32,7 +32,7 @@
 						<option value="0">离线</option>
 					</select>
 				</div>
-				<div class="layui-input-inline layui-show-xs-block">
+				<!-- <div class="layui-input-inline layui-show-xs-block">
 					<select name="contrller">
 						<option value="">选择设备状态</option>
 						<option value="0">全部</option>
@@ -40,7 +40,7 @@
 						<option value="2">已激活未绑定</option>
 						<option value="3">未绑定</option>
 					</select>
-				</div>
+				</div> -->
 				<div class="layui-input-inline layui-show-xs-block">
 					<input type="text" name="bindtime" id="bindtime" placeholder="选择绑定时间区间" autocomplete="off" class="layui-input">
 				</div>
@@ -58,7 +58,7 @@
 			</div>
 			<table id="test-table-operate" lay-filter="test-table-operate"></table>
 			<script type="text/html" id="test-table-operate-barDemo">
-				<a class="a_blue" lay-event="details" id="details">{{d.deviceid}}</a>
+				<a class="a_blue" lay-event="details" id="details">{{d.device_id}}</a>
 			</script>
 
 			

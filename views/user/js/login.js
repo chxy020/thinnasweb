@@ -11,8 +11,10 @@ layui.config({
 
     var saveAccount = false;
 
-    $("#username").val("admin");
-    $("#password").val("Zj666");
+    // $("#username").val("admin");
+    // $("#password").val("Zj666");
+    var uuid = "";
+
 
     var active = {
         forgetPop: function() {
@@ -90,54 +92,70 @@ layui.config({
         console.log("getImageCode----");
         // http://39.107.249.187:8080/ADMINM/code.do
         var t = new Date().getTime();
-        $("#codeImg").attr("src",server + "/ADMINM/code.do?t=" + t);
+        // $("#codeImg").attr("src",server + "/ADMINM/code/generate?t=" + t);
         // $("#codeImg").attr("src",server + "/ADMINM/code?t=" + t);
+
+        $.ajax({
+            type: "POST",
+            url: server + "/ADMINM/code/generate",
+            dataType: 'json',
+            async: true,
+            // data: {t:t},
+            xhrFields: {
+                withCredentials: true
+            },
+            //成功的回调函数
+            success: function (obj) {
+                if(obj.code == 0){
+                    var data = obj.data || {};
+                    $("#codeImg").attr("src",data.base64);
+
+                    uuid = data.uuid;
+                }else{
+                    layer.msg(data.msg);
+                }
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
     }
     
     function login(){
         // KEYDATA格式qwer+用户名+,fh,+密码Q+,fh,+图片验证码
         var username = $("#username").val();
         var password = $("#password").val();
-        var code = "qwer"+username+",fh,"+password+"Q"+",fh,"+$("#code").val();
+        var code = $("#code").val();
+        // var code = "qwer"+username+",fh,"+password+"Q"+",fh,"+$("#code").val();
         // data:{KEYDATA:"qweradmin,fh,Zj666Q,fh,zykj",tm:new Date().getTime()},
-        console.log(123123)
+        // console.log(123123)
         $.ajax({
             type: "POST",
-            url: server + "/ADMINM/login_login",
+            // url: server + "/ADMINM/login_login",
+            url: server + "/ADMINM/login/login",
             dataType: 'json',
             async: true,
-            data: {KEYDATA:code,tm:new Date().getTime()},
+            data: {
+                username:username,
+                password:password,
+                code:code,
+                codeUUID:uuid,
+            },
             xhrFields: {
                 withCredentials: true
             },
-            // xhrFields: {
-            //     withCredentials: true
-            // },
-            // contentType: "application/json;charset=utf-8",
-            // data: JSON.stringify({
-            //     "KEYDATA":"qweradmin,fh,Zj666Q,fh,zykj"
-            // }),
-            // data:{
-            //     KEYDATA:"qweradmin,fh,Zj666Q,fh,zykj"
-            // },
             //成功的回调函数
             success: function (data) {
-                var msg = "";
-                if("success" == data.result){
+                if(data.code == 0){
                     saveAccountName();
 
                     location.href = "../index.html"
                     // window.location.href="main/index";
                     // alert("登录成功");
                     return;
-                }else if("usererror" == data.result){
-                    msg = "用户名或密码有误";
-                }else if("codeerror" == data.result){
-                    msg = "验证码输入有误";
                 }else{
-                    msg = "缺少参数";
+                    layer.msg(data.msg);
                 }
-                layer.msg(msg);
             },
             error: function (error) {
                 console.log(error)

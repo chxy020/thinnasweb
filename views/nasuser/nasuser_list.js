@@ -81,16 +81,18 @@ layui.config({
         table.render({
             elem: '#test-table-operate',
             height: 'full-60',//必须留着
-            url: server + "/ADMINM/jqkjUser/listUsers",
+            // url: server + "/ADMINM/jqkjUser/listUsers",
+            url: server + "/ADMINM/appUser/getAppUserList",
             where:{
-                "keywords":keywords||"",
-                "STATUS":status,
-                "SEX":sex,
-                "IS_MANAGEDEVICE":device,
-                "registtimeStart":bindtimeStart,
-                "registtimeEnd":bindtimeEnd
+                "search":keywords||"",
+                "userState":status,
+                "sex":sex,
+                "isDevice":device,
+                "startTime":bindtimeStart ?  bindtimeStart + " 00:00:00" : "",
+                "endTime":bindtimeEnd ? bindtimeEnd + " 00:00:00" : ""
+                
             },
-            method: 'get',
+            method: 'post',
             xhrFields: {
                 withCredentials: true
             }
@@ -138,7 +140,7 @@ layui.config({
                         title: '手机号',
                         align: 'left',
                     }, {
-                        field: 'nickName',
+                        field: 'loginName',
                         title: '昵称',
                         align: 'left',
                     },
@@ -174,15 +176,15 @@ layui.config({
                         align: 'left',
                     },
                     {
-                        field: 'manageDevicecount',
+                        field: 'device_num',
                         title: '管理设备数',
                         align: 'left',
                         templet: function(data) {
-                            return data.manageDevicecount + "<i class='layui-icon iconfont icon-zu201' lay-event='equipment'></i>"
+                            return data.device_num + "<i class='layui-icon iconfont icon-zu201' lay-event='equipment'></i>"
                         },
                     },
                     {
-                        field: 'available',
+                        field: 'userSpaces',
                         // title: '可用空间',
                         title: '可用空间<i class="layui-icon iconfont icon-zu200 m5" lay-tips="包含自有设备空间、共享空间、安全云空间等"></i>',
                         align: 'left',
@@ -190,24 +192,24 @@ layui.config({
                         templet: function(data) {
                             // return data.available + "<i class='layui-icon iconfont icon-zu204' lay-event='space'></i>"
                             //编辑
-                            var userSpaceListArr = [];
-                            $.Ajax({
-                                async: false,
-                                url: server + "/ADMINM/jqkjUser/listUserSpaceType",
-                                dataType: "json",
-                                method: 'get',
-                                data:{"UID":data.uid},
-                                success: function(obj) {
-                                    if(obj.code == 1){
-                                        // console.log("obj-------------------",obj.userSpaceList)
-                                        userSpaceListArr.push(obj.type1 || []);
-                                        userSpaceListArr.push(obj.type2 || []);
-                                        userSpaceListArr.push(obj.type3 || []);
-                                    }else{
-                                        layer.msg(obj.msg);
-                                    }
-                                }
-                            });
+                            var userSpaceListArr = data.userSpaces || [];
+                            // $.Ajax({
+                            //     async: false,
+                            //     url: server + "/ADMINM/jqkjUser/listUserSpaceType",
+                            //     dataType: "json",
+                            //     method: 'get',
+                            //     data:{"UID":data.uid},
+                            //     success: function(obj) {
+                            //         if(obj.code == 1){
+                            //             // console.log("obj-------------------",obj.userSpaceList)
+                            //             userSpaceListArr.push(obj.type1 || []);
+                            //             userSpaceListArr.push(obj.type2 || []);
+                            //             userSpaceListArr.push(obj.type3 || []);
+                            //         }else{
+                            //             layer.msg(obj.msg);
+                            //         }
+                            //     }
+                            // });
 
                             
                             if(userSpaceListArr.length){
@@ -215,17 +217,18 @@ layui.config({
                                 var htmlStr = "";
                                 var usedStr = 0;
                                 for (i = 0; i < userSpaceListArr.length; i++) { 
-                                    var data = userSpaceListArr[i] || [];
-                                    data.forEach(function(item,ii){
-                                        var total = 0;
-                                        data.forEach(function(dd){
-                                            total = total + (+dd.total);
-                                        });
-
-                                        // console.log("000")
-                                        htmlStr += "<tr><td>"+ (ii == 0 ? ((i == 0 ? "自有设备" : (i==1?"共享空间":"安全云空间")) + " | "+total+"MB") : "") +"</td><td>"+ item.total + "MB | 可用" + item.available + "MB | 已用" + item.used +"MB</td><td>"+item.nickname+"</td></tr>";
-                                        usedStr += parseInt(item.available)
-                                    });
+                                    // var data = userSpaceListArr[i] || [];
+                                    // data.forEach(function(item,ii){
+                                    //     var total = 0;
+                                    //     data.forEach(function(dd){
+                                    //         total = total + (+dd.total);
+                                    //     });
+                                    //     htmlStr += "<tr><td>"+ (ii == 0 ? ((i == 0 ? "自有设备" : (i==1?"共享空间":"安全云空间")) + " | "+total+"MB") : "") +"</td><td>"+ item.total + "MB | 可用" + item.available + "MB | 已用" + item.used +"MB</td><td>"+item.nickname+"</td></tr>";
+                                    //     usedStr += parseInt(item.available)
+                                    // });
+                                    var item = userSpaceListArr[i] || {};
+                                    htmlStr += "<tr><td>"+ item.name +"</td><td>"+ item.total_space + "MB | 可用" + (item.total_space - item.used_space) + "MB | 已用" + item.used_space +"MB</td><td>"+item.device_id+"</td></tr>";
+                                    usedStr += parseInt(item.used_space);
                                 }
                                 // console.log("htmlStr====",htmlStr);
                                 var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>空间类型</th><th>空间使用情况</th><th>所属NAS设备</th></tr>"+htmlStr+"</table></div></div></div>"
@@ -237,12 +240,12 @@ layui.config({
                         },
                     },
                     {
-                        field: 'activetimes',
+                        field: 'e_num',
                         title: '近7天活跃次数<i class="layui-icon iconfont icon-zu200 m5" lay-tips="最近7天内，打开APP次数，含电视APP"></i>',
                         align: 'left',
                         width:120,
                         templet: function(data) {
-                            return data.activetimes + "<i class='layui-icon iconfont icon-zu211' lay-event='loglist'></i>"
+                            return data.e_num + "<i class='layui-icon iconfont icon-zu211' lay-event='loglist'></i>"
                         },
                     }
                 ]
@@ -252,13 +255,13 @@ layui.config({
                     top.location.href = setter.loginUrl;
                     return;
                 }
-                if(res.code == 1){
+                if(res.code == 0){
                     //res 即为原始返回的数据
                     return {
                         "code": 0,
                         "msg": "",
                         "count": res.count,
-                        "data": res.userList
+                        "data": res.data
                     };
                 }else{
                     return {
@@ -273,10 +276,10 @@ layui.config({
 
             event: true,
             
-            limit: 5,
+            limit: 15,
             skin: 'line',
             even: true,
-            limits: [5, 10, 15],
+            limits: [10, 15,30],
             done: function(res, curr, count) {
                 // table_data = res.data;
 

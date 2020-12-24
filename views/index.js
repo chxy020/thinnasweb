@@ -12,7 +12,8 @@ layui.config({
     $.Ajax({
         async: false,
         type: "POST",
-        url: server + "/ADMINM/main/index",
+        // url: server + "/ADMINM/main/index",
+        url: server + "/ADMINM/menu/getParentMeun",
         // url: server + "/ADMINM/role",
         datatype: 'json',
         // contentType:"application/x-www-form-urlencoded",
@@ -24,10 +25,11 @@ layui.config({
         success: function (obj) {
             if(obj.user){
                 // window.__user = obj.user;
-                getUserInfo(obj.user.user_ID);
+                // getUserInfo(obj.user.user_ID);
             }
-            if(obj.menuList){
-                let menu = obj.menuList || []
+
+            if(obj && obj instanceof Array){
+                let menu = obj || []
                 buildMenuData(menu);
             }
             // var data = msg.data;
@@ -108,15 +110,15 @@ layui.config({
     
     function buildMenuData(data){
         var html = [];
-        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-data-analysis","icon-fuwu2","icon-xitongguanli"]
+        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-data-analysis","icon-fuwu2","icon-xitongguanli","","","","","icon-jurassic_apply"]
         if(data && data.length > 0){
             data.forEach(function(obj){
-                var name = obj.menu_NAME || "";
-                var url = obj.menu_HTML || "";
-                var icon = imgclass[obj.menu_ID] || ""
+                var name = obj.menuName || "";
+                var url = obj.menuHtml || "";
+                var icon = imgclass[obj.menuId] || ""
                 html.push('<li data-name="get" class="layui-nav-item">');
 
-                if(obj.subMenu && obj.subMenu.length > 0){
+                if(obj.children && obj.children.length > 0){
                     html.push('<a href="javascript:;" lay-tips="' + name + '">');
                 }else{
                     html.push('<a href="javascript:;" lay-href="' + url +'" lay-tips="' + name + '">');
@@ -124,13 +126,13 @@ layui.config({
                 html.push('<i class="layui-icon iconfont ' + icon +'"></i>');
                 html.push('<cite>' + name + '</cite>');
                 html.push('</a>');
-               
+                
                 // debugger
-                if(obj.subMenu && obj.subMenu.length > 0){
+                if(obj.children && obj.children.length > 0){
                     html.push('<dl class="layui-nav-child">');
-                    obj.subMenu.forEach(function(cnode){
-                        var name = cnode.menu_NAME || "";
-                        var url = cnode.menu_HTML || "";
+                    obj.children.forEach(function(cnode){
+                        var name = cnode.menuName || "";
+                        var url = cnode.menuHtml || "";
                         if(name == "退出登录"){
                             html.push('<dd id="loginoutbtn"><a href="javascript:;">'+name+'</a></dd>');
                         }else if(name == "修改密码"){
@@ -144,14 +146,12 @@ layui.config({
                 html.push('</li>');
             });
 
-            
-
-            html.push('<li data-name="get" class="layui-nav-item">');
-            html.push('<a href="javascript:;" lay-href="software/software_list.html" lay-tips="软件应用" lay-direction="2">');
-            html.push('<i class="layui-icon iconfont icon-jurassic_apply"></i>');
-            html.push('<cite>软件应用</cite>');
-            html.push('</a>');
-            html.push('</li>');
+            // html.push('<li data-name="get" class="layui-nav-item">');
+            // html.push('<a href="javascript:;" lay-href="software/software_list.html" lay-tips="软件应用" lay-direction="2">');
+            // html.push('<i class="layui-icon iconfont icon-jurassic_apply"></i>');
+            // html.push('<cite>软件应用</cite>');
+            // html.push('</a>');
+            // html.push('</li>');
 
             $("#LAY-system-side-menu").html(html.join(''));
         }
@@ -186,12 +186,18 @@ layui.config({
             $.Ajax({
                 async: false,
                 type: "post",
-                url:server + "/ADMINM/logout",
+                // url:server + "/ADMINM/logout",
+                url:server + "/ADMINM/login/logout",
                 dataType: "json",
                 xhrFields: {
                     withCredentials: true
                 },
                 success: function(obj) {
+                    if(obj.code == 0){
+                        location.href = '/ADMINM/static/views/user/login.html';
+                    }else{
+                        layer.msg(obj.msg);
+                    }
                 },
                 //失败的回调函数
                 error: function() {

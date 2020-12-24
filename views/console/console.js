@@ -775,7 +775,7 @@ layui.config({
         
         $.Ajax({
             async: false,
-            url: server + _url,
+            url: _url,
             dataType: "text",
             method: 'get',
             success: function(mapjson) {
