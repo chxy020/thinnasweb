@@ -148,6 +148,7 @@ layui.config({
                         field: 'sex',
                         title: '性别',
                         align: 'left',
+                        width: 60,
                         templet: function(data) {
                             return data.sex == 1 ? "男" : "女";
                         },
@@ -156,6 +157,7 @@ layui.config({
                         field: 'status',
                         title: '状态',
                         align: 'left',
+                        width: 60,
                         templet: function(data) {
                             return data.status == 1 ? "启用" : "停用";
                         },
