@@ -149,7 +149,10 @@ layui.config({
                 if(data.code == 0){
                     saveAccountName();
 
+                    window.sessionStorage.setItem("__userinfo",JSON.stringify(data.data));
+
                     location.href = "../index.html"
+
                     // window.location.href="main/index";
                     // alert("登录成功");
                     return;

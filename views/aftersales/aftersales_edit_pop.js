@@ -14,7 +14,7 @@ layui.config({
 
     var server = setter.baseUrl;
     var uri = window.location.search;
-    var statusarr = ["","处理中","已关闭","已解决","待定"];
+    var statusarr = ["","解决中","已关闭","已解决","待定"];
     var typesName = {
         "硬件故障":1,
         "软件故障":2,
@@ -24,26 +24,32 @@ layui.config({
         "投诉反馈":6,
         "其它":7
     }
-    var ID = setter.getUrlParam("ID",uri) || "";
+    var _id = setter.getUrlParam("id",uri) || "";
 
-    if(ID){
+    if(_id){
         //编辑
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/aftersales/toEditAfterSales",
-            dataType: "json",
-            method: 'get',
-            data:{"ID":ID},
-            success: function(obj) {
-                console.log(obj)
-                if(obj.code == 1){
-                    changeSalesHtml(obj.afterSales || {});
-                }else{
-                    layer.msg(obj.msg || "获取详情错误");
-                }
+        // $.Ajax({
+        //     async: false,
+        //     url: server + "/ADMINM/aftersales/toEditAfterSales",
+        //     dataType: "json",
+        //     method: 'get',
+        //     data:{"ID":ID},
+        //     success: function(obj) {
+        //         console.log(obj)
+        //         if(obj.code == 1){
+        //             changeSalesHtml(obj.afterSales || {});
+        //         }else{
+        //             layer.msg(obj.msg || "获取详情错误");
+        //         }
                
-            }
-        });
+        //     }
+        // });
+
+        var data = window.sessionStorage.getItem("__aftersales_"+_id) || "";
+        if(data){
+            data = JSON.parse(data);
+            changeSalesHtml(data);
+        }
     }
 
     //监听提交
@@ -54,29 +60,36 @@ layui.config({
         // });
         console.log(data.field)
         var condi = {};
-        condi.ID = ID;
-        condi.STATUS = statusarr[+data.field.STATUS];
-        condi.REASON = data.field.REASON;
+        condi.id = _id;
+        condi.status = statusarr[+data.field.status];
+        condi.reason = data.field.reason;
 
         updateAfterSales(condi);
         return false;
     });
 
     function changeSalesHtml(obj){
-        $("#FEEDBACKTYPE").val(typesName[obj.feedbacktype]);
-        $("#DESCRIBE").val(obj.describe || "");
+        $("#feedbacktype").val(typesName[obj.feedbacktype]);
+        $("#describe").val(obj.describe || "");
         var imgs = (obj.imgpath || "").split(',');
         changeImgPathHtml(imgs);
-        $("#PHONE").val(obj.phone || "");
-        $("#WECHAT").val(obj.wechat || "");
-        $("#QQ").val(obj.qq || "");
+        $("#phone").val(obj.phone || "");
+        $("#wechat").val(obj.wechat || "");
+        $("#qq").val(obj.qq || "");
         
+        var status = obj.status || "";
+        statusarr.forEach(function(item,index){
+            if(item == status){
+                $("#status").val(index);
+            }
+        });
+
         layui.form.render();
     }
     function changeImgPathHtml(imgs){
         var html = [];
         imgs.forEach(function(img){
-            html.push("<img src='" + (server + img) + "' />");
+            html.push("<img src='" + (img) + "' />");
         })
         
         $("#IMGPATH").html(html.join(''));
@@ -86,12 +99,12 @@ layui.config({
 
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/aftersales/updateAfterSales",
+            url: server + "/ADMINM/aftersales/updateAftersales",
             dataType: "json",
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("修改成功");
 
                     setTimeout(function(){

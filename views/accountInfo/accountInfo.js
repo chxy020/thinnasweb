@@ -22,46 +22,46 @@ layui.config({
 
     function setUserInfoHtml(){
         if(user.headimg != "" && user.headimg.indexOf("headImg.png") == -1){
-            $("#headimg").attr("src",server + user.headimg);
+            $("#headimg").attr("src",user.headimg);
             userHeadImg = user.headimg;
         }
         $("#username").val(user.username);
-        $("#role_NAME").val(user.role.role_NAME);
+        $("#roleName").val(user.role.roleName);
         $("#name").val(user.name);
         
     }
     setUserInfoHtml();
 
     //普通图片上传 头像上传
-    upload.render({
-        elem: '#test1',
-        url: server + "/ADMINM/user/uploadHeadImg", 
-        exts: 'jpg|png|jpeg', //只允许图片
-        acceptMime:"image/jpg, image/png, image/jpeg",
-        field:"headImg",
-        before: function(obj){
-            //预读本地文件示例，不支持ie8
-            // obj.preview(function(index, file, result){
-            //     $('#demo1').attr('src', result); //图片链接（base64）
-            // });
-        },
-        done: function(res){
-            //如果上传失败
-            if(res.code == 1){
-                userHeadImg = res.HEADIMG;
-                $("#headimg").attr("src",server + res.HEADIMG);
-            }
-            //上传成功
-        },
-        error: function(){
-            //演示失败状态，并实现重传
-            // var demoText = $('#demoText');
-            // demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-            // demoText.find('.demo-reload').on('click', function(){
-            //     uploadInst.upload();
-            // });
-        }
-    });
+    // upload.render({
+    //     elem: '#test1',
+    //     url: server + "/ADMINM/user/uploadHeadImg", 
+    //     exts: 'jpg|png|jpeg', //只允许图片
+    //     acceptMime:"image/jpg, image/png, image/jpeg",
+    //     field:"headImg",
+    //     before: function(obj){
+    //         //预读本地文件示例，不支持ie8
+    //         // obj.preview(function(index, file, result){
+    //         //     $('#demo1').attr('src', result); //图片链接（base64）
+    //         // });
+    //     },
+    //     done: function(res){
+    //         //如果上传失败
+    //         if(res.code == 1){
+    //             userHeadImg = res.HEADIMG;
+    //             $("#headimg").attr("src",server + res.HEADIMG);
+    //         }
+    //         //上传成功
+    //     },
+    //     error: function(){
+    //         //演示失败状态，并实现重传
+    //         // var demoText = $('#demoText');
+    //         // demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+    //         // demoText.find('.demo-reload').on('click', function(){
+    //         //     uploadInst.upload();
+    //         // });
+    //     }
+    // });
 
     
     //监听提交
@@ -131,7 +131,21 @@ layui.config({
                 }
             });
         },
-        
+        updateheader:function(){
+            layer.open({
+                type: 2,
+                title: '修改头像',
+                area: ['500px', '200px'],
+                btn: ['确定', '取消'],
+                btnAlign: 'c',
+                maxmin: true,
+                content: 'header_pop.html',
+                yes: function(index, layero) {
+                    var submit = layero.find('iframe').contents().find("#submit");
+                    submit.click();
+                }
+            });
+        }
     };
     
     //给页面里的layui-dS 绑定事件

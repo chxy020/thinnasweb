@@ -18,37 +18,40 @@
     <div class="layui-form-item">
         <label class="layui-form-label"><span>*</span>用户名：</label>
         <div class="layui-input-block">
-            <input type="text" lay-verify="required" placeholder="请输入用户名" disabled autocomplete="off" class="layui-input" id="USERNAME" name="USERNAME">
+            <input type="text" lay-verify="required" placeholder="请输入用户名" disabled autocomplete="off" class="layui-input" id="username" name="username">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label"><span>*</span>密码：</label>
         <div class="layui-input-block">
-            <input type="text" placeholder="请输入手机号" autocomplete="off" class="layui-input" id="PASSWORD" name="PASSWORD">
+            <input type="text" placeholder="请输入手机号" autocomplete="off" class="layui-input" id="password" name="password">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span>*</span>姓名：</label>
-        <div class="layui-input-block">
-            <input type="text" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input" id="NAME" name="NAME">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span>*</span>手机号：</label>
-        <div class="layui-input-block">
-            <input type="text" lay-verify="required" maxlength="11" placeholder="请输入手机号" autocomplete="off" class="layui-input" id="PHONE" name="PHONE">
-        </div>
-    </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label"><span>*</span>角色：</label>
         <div class="layui-input-block">
             <!-- <select name="city" xm-select="select1" xm-select-skin="normal">
             </select> -->
-            <select id="roleselset" lay-verify="required" name="ROLE_ID">
+            <select id="roleId" lay-verify="required" name="roleId">
                 <option value="">选择角色</option>
             </select>
         </div>
     </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span>*</span>昵称：</label>
+        <div class="layui-input-block">
+            <input type="text" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" id="name" name="name">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span>*</span>手机号：</label>
+        <div class="layui-input-block">
+            <input type="text" lay-verify="required" maxlength="11" placeholder="请输入手机号" autocomplete="off" class="layui-input" id="phone" name="phone">
+        </div>
+    </div>
+    
     <!-- <div class="layui-form-item">
         <label class="layui-form-label"><span>*</span>密码：</label>
         <div class="layui-input-block">
@@ -64,13 +67,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">备注：</label>
         <div class="layui-input-block">
-            <input type="text" placeholder="请输入备注" autocomplete="off" class="layui-input" id="BZ" name="BZ">
+            <input type="text" placeholder="请输入备注" autocomplete="off" class="layui-input" id="bz" name="bz">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label"><span>*</span>状态：</label>
         <div class="switchStyle">
-            <input type="checkbox" checked="" value="1" lay-skin="switch" id="STATUS" ><!--开-->
+            <input type="checkbox" checked="" value="1" lay-skin="switch" id="status" ><!--开-->
             <!-- <input type="checkbox" lay-skin="switch"> --><!--关-->
         </div>
     </div>

@@ -25,8 +25,9 @@ layui.config({
     var isEdit = setter.getUrlParam("isEdit",uri) || "";
     
     if(isEdit){
-        $("#filepath").html(filePath.replace("/ADMINM/uploadFiles/file",""));
-        $("#NAME").val(fileName);
+        // $("#filepath").html(filePath.replace("/ADMINM/uploadFiles/file",""));
+        $("#name").val(fileName);
+        $("#id").val(fileId);
     }
 
     //视频
@@ -65,36 +66,56 @@ layui.config({
         //     location.href='index.html'
         // });
         
-        console.log(data.field)
-        if(!filePath){
-            layer.msg("没有上传文件");
-            return false;
-        }
-        var condi = {};
-        condi.NAME = data.field.NAME;
-        condi.PATH = filePath;
-        condi.ID = fileId;
+        // console.log(data.field)
+        // if(!filePath){
+        //     layer.msg("没有上传文件");
+        //     return false;
+        // }
+        // var condi = {};
+        // condi.NAME = data.field.NAME;
+        // condi.PATH = filePath;
+        // condi.ID = fileId;
 
-        if(isEdit){
-            updateCourse(condi);
-        }else{
-            saveCourse(condi);
-        }
+        // if(isEdit){
+        //     updateCourse(condi);
+        // }else{
+        //     saveCourse(condi);
+        // }
+
+        saveCourse();
+
         return false;
     });
 
     
 
-    function saveCourse(condi){
+    function saveCourse(){
+        layer.load(2);
+
+        var url = server + "/ADMINM/aftersales/addCourse";
+        if(fileId){
+            url = server + "/ADMINM/aftersales/updateCourse";
+        }
+        var formdata = new FormData(document.getElementById("form"))
+
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/course/saveCourse",
-            dataType: "json",
+            url: url,
+            // dataType: "json",
             method: 'post',
-            data:condi,
+            data:formdata,
+            processData:false,   //  告诉jquery不要处理发送的数据
+            contentType:false,   // 告诉jquery不要设置content-Type请求头
             success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("添加成功");
+                layer.closeAll();
+                
+                if(obj.code == 0){
+                    if(isEdit){
+                        layer.msg("修改成功");
+                    }else{
+                        layer.msg("添加成功");
+                    }
+
 
                     setTimeout(function(){
                         //刷新父页面
@@ -109,30 +130,5 @@ layui.config({
         });
     }
 
-    function updateCourse(condi){
-
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/course/updateCourse",
-            dataType: "json",
-            method: 'post',
-            data:condi,
-            success: function(obj) {
-                if(obj.code == 1){
-                    layer.msg("修改成功");
-
-                    setTimeout(function(){
-                        //刷新父页面
-                        window.parent.location.reload();
-                        var index = parent.layer.getFrameIndex(window.name);
-               		    parent.layer.close(index);
-                    },500);
-                }else{
-                    layer.msg(obj.msg || "修改失败");
-                }
-            }
-        });
-    }
-    
 
 });

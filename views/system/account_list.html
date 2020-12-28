@@ -26,16 +26,15 @@
 					<input type="text" id="keyword" name="keyword" placeholder="搜索姓名/手机号" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-input-inline layui-show-xs-block">
-					<select id="roleselset" name="contrller">
+					<select id="roleselset" lay-filter="component-roleselset" name="contrller">
 						<option value="">筛选角色</option>
 					</select>
 				</div>
 				<div class="layui-input-inline layui-show-xs-block">
-					<select name="contrller">
+					<select id="userState" name="contrller" lay-filter="component-userState">
 						<option value="">选择状态</option>
-						<option value="0">全部</option>
 						<option value="1">启用</option>
-						<option value="2">禁用</option>
+						<option value="0">停用</option>
 					</select>
 				</div>
 				<!-- <div class="layui-input-inline layui-show-xs-block">
@@ -49,9 +48,9 @@
 				<button class="layui-btn layui-ds layui-btn-primary" data-type="del" id="del" data="删除">
 					<i class="layui-icon">&#xe640;</i>
 				</button>
-				<button class="layui-btn layui-ds layui-btn-primary" data-type="resetPassword" id="resetPassword" data="重置密码">
+				<!-- <button class="layui-btn layui-ds layui-btn-primary" data-type="resetPassword" id="resetPassword" data="重置密码">
 					<i class="layui-icon">&#xe672;</i>
-				</button>
+				</button> -->
 				<button class="layui-btn layui-ds layui-btn-primary" data-type="refresh" id="refresh" data="刷新">
 					<i class="layui-icon">&#xe666;</i>
 				</button>
@@ -61,7 +60,7 @@
 				<a class="layui-icon table-icon-style" lay-event="edit" id="edit">&#xe642;</a>
 				<a class="layui-icon table-icon-style" lay-event="del" id="del">&#xe640;</a>
 				<div class="switchStyle" lay-event="switch" id="switch">
-					{{#  if(d.STATUS == 1){ }}
+					{{#  if(d.status == 1){ }}
 					<input type="checkbox" checked="" lay-skin="switch"><!--开-->
 					{{#  } else{ }}
 					<input type="checkbox" lay-skin="switch">

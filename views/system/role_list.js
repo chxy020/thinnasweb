@@ -28,11 +28,12 @@ layui.config({
         table.render({
             elem: '#test-table-operate',
             height: 'full-100',//必须留着
-            url: server + "/ADMINM/role",
+            // url: server + "/ADMINM/role",
+            url: server + "/ADMINM/role/getRoleList",
             // where:{
 		    //     "keywords":keywords||""
             // },
-            method: 'get',
+            method: 'post',
             xhrFields: {
                 withCredentials: true
             }
@@ -78,7 +79,7 @@ layui.config({
                         align: 'left',
                     },
                     {
-                        field: 'role_NAME',
+                        field: 'roleName',
                         title: '角色名称',
                         align: 'left',
                     },
@@ -88,20 +89,20 @@ layui.config({
                         minWidth: 120,
                         align: 'left',
                         templet: function(data) {
-                            if(data.member.length){
+                            if(data.userList.length){
                                 var names = [];
-                                data.member.forEach(function(item){
+                                data.userList.forEach(function(item){
                                     names.push(item.name);
                                 });
                                 // console.log(names);
                                 var htmlStr = "";
-                                for (i = 0; i < data.member.length; i++) { 
+                                for (i = 0; i < data.userList.length; i++) { 
                                     // console.log("000")
-                                    htmlStr += "<tr><td>"+data.member[i].name+"</td><td>"+data.member[i].phone+"</td></tr>";
+                                    htmlStr += "<tr><td>"+data.userList[i].name+"</td><td>"+data.userList[i].phone+"</td></tr>";
                                 }
                                 // 表格中 鼠标移上 显示更多详细CSS html js
                                 // console.log("htmlStr====",htmlStr);
-                                var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.member.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
+                                var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.userList.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
                                 // console.log("contStr====",contStr);
                                 return names.slice(0,2).join(',') + contStr
                             }else{
@@ -122,20 +123,30 @@ layui.config({
                     top.location.href = setter.loginUrl;
                     return;
                 }
-                return {
-                    "code": 0,
-                    "msg": "",
-                    "count": 0,
-                    "data": res.roleList_z || [] 
+                if(res.code == 0){
+                    //res 即为原始返回的数据
+                    return {
+                        "code": 0,
+                        "msg": "",
+                        "count": res.count,
+                        "data": res.data
+                    };
+                }else{
+                    return {
+                        "code": 0,
+                        "msg": "接口数据错误",
+                        "count": 0, 
+                        "data": [] 
+                    }
                 }
             },
             
+            page: true,
             event: true,
-            page: false,
-            limit: Number.MAX_VALUE,
+            limit: 15,
             skin: 'line',
             even: true,
-            // limits: [5, 10, 15],
+            limits: [10, 15,30],
             done: function(res, curr, count) {
                 // table_data = res.data;
 
@@ -246,6 +257,8 @@ layui.config({
                 // layer.close(index);
             });
         } else if (obj.event === 'edit') {
+
+            window.sessionStorage.setItem("role_" + data.roleId,JSON.stringify(data));
             layer.open({
                 type: 2,
                 title: '编辑角色',
@@ -253,7 +266,7 @@ layui.config({
                 btn: ['保存', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
-                content: 'role_add_pop.html?role_ID='+data.role_ID,
+                content: 'role_add_pop.html?role_ID='+data.roleId,
                 yes: function(index, layero) {
                     var submit = layero.find('iframe').contents().find("#submit");
                     submit.click();

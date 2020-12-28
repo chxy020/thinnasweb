@@ -2,51 +2,62 @@ layui.config({
     base: '../../layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
-}).use(['index', 'form','jquery'], function () {
+}).use(['index', 'form','jquery','tree','util','upload'], function () {
     var $ = layui.$,
+    upload = layui.upload,
     setter = layui.setter,
     form = layui.form,
     layer = layui.layer,
-    setter = layui.setter;
+    setter = layui.setter,
+    router = layui.router(),
+    data = '';
     // var server = setter.baseUrl;
 
     var server = setter.baseUrl;
     var uri = window.location.search;
     
-    var name = setter.getUrlParam("name",uri) || "";
-    var qcid = setter.getUrlParam("id",uri) || "";
-    $("#name").val(name);
+    // var filePath = "";
+    // var fileId = "";
 
+    
     //监听提交
     form.on('submit(submit)', function(data){
-        // console.log(data.field)
-        var condi = {};
-        var name = $("#name").val();
-        condi.name = name;
-        condi.id = qcid;
-        updateQuestionC(condi);
+        updateUserImage();
+
         return false;
     });
 
-    function updateQuestionC(condi){
+    
+
+    function updateUserImage(){
+        layer.load(2);
+
+        var url = server + "/ADMINM/user/updateUserImage";
+        
+        var formdata = new FormData(document.getElementById("form"))
+
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/quest/updateQuestClassify",
-            dataType: "json",
+            url: url,
             method: 'post',
-            data:condi,
+            data:formdata,
+            processData:false,   //  告诉jquery不要处理发送的数据
+            contentType:false,   // 告诉jquery不要设置content-Type请求头
             success: function(obj) {
+                layer.closeAll();
+                
                 if(obj.code == 0){
                     layer.msg("修改成功");
+
 
                     setTimeout(function(){
                         //刷新父页面
                         window.parent.location.reload();
                         var index = parent.layer.getFrameIndex(window.name);
                		    parent.layer.close(index);
-                    },1500);
+                    },500);
                 }else{
-                    layer.msg(obj.msg || "修改失败");
+                    layer.msg(obj.msg || "添加失败");
                 }
             }
         });

@@ -41,16 +41,25 @@ layui.config({
     // //layui.formSelects.value('select1', [1], false);  //删除 已选择 [北京]
 
     
-    $.Ajax({
-        async: false,
-        url: server + "/ADMINM/user/goAddU",
-        dataType: "json",
-        method: 'get',
-        success: function(obj) {
-            console.log(obj);
-            roleSelectHtml(obj.roleList);
+    function getAllRole(){
+        $.Ajax({
+            async: false,
+            url: server + "/ADMINM/role/getAllRole",
+            dataType: "json",
+            method: 'post',
+            success: function(obj) {
+                roleSelectHtml(obj.data || []);
+            }
+        });
+    }
+
+    function roleSelectHtml(roleList){
+        for (i = 0; i < roleList.length; i++) {
+            var role = roleList[i] || {};
+            $('#roleId').append(new Option(role.roleName, role.roleId));
         }
-    });
+        layui.form.render("select");
+    }
 
     //监听提交
     form.on('submit(submit)', function(data){
@@ -60,14 +69,14 @@ layui.config({
         // });
         console.log(data.field)
         var condi = {};
-        var phone = data.field.PHONE;
+        var phone = data.field.phone;
         condi = data.field
         if(!setter.isTel(phone)){
 			layer.msg("手机号输入错误");
 			return false;
         }
-        var status = $("#STATUS").prop("checked") == true ? 0 : 1;
-        condi.STATUS = status;
+        var status = $("#status").prop("checked") == true ? 1 : 0;
+        condi.status = status;
         
         //写死 USERNAME(用户名) PASSWORD（密码）
         // condi.USERNAME = "USER" + new Date().getTime();
@@ -77,13 +86,6 @@ layui.config({
         return false;
     });
 
-    function roleSelectHtml(roleList){
-        for (i = 0; i < roleList.length; i++) {
-            var role = roleList[i] || {};
-            $('#roleselset').append(new Option(role.role_NAME, role.role_ID));
-        }
-        layui.form.render("select");
-    }
 
 
     function addSystemUser(condi){
@@ -93,12 +95,13 @@ layui.config({
 
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/user/saveU",
+            // url: server + "/ADMINM/user/saveU",
+            url: server + "/ADMINM/user/add",
             dataType: "json",
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("添加成功");
 
                     setTimeout(function(){
@@ -114,5 +117,6 @@ layui.config({
         });
     }
     
+    getAllRole();
 
 });

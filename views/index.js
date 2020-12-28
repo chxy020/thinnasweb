@@ -28,6 +28,7 @@ layui.config({
                 // getUserInfo(obj.user.user_ID);
             }
 
+            getUserInfo();
             if(obj && obj instanceof Array){
                 let menu = obj || []
                 buildMenuData(menu);
@@ -79,33 +80,44 @@ layui.config({
 
     window.__getUserInfo = getUserInfo;
     function getUserInfo(userid){
-        $.Ajax({
-            async: false,
-            type: "GET",
-            url: server + "/ADMINM/user/userInfo",
-            datatype: 'json',
-            data:{"USER_ID":userid},
-            xhrFields: {
-                withCredentials: true
-            },
-            //成功的回调函数
-            success: function (obj) {
-                if(obj.code == 1){
-                    var user = obj.user || {};
-                    if(user.headimg != "" && user.headimg.indexOf("headImg.png") == -1){
-                        $("#headimg").attr("src",server + user.headimg);
-                    }
+        var user = window.sessionStorage.getItem("__userinfo") || "";
+        if(user){
+            user = JSON.parse(user);
+            if(user.headimg != "" && user.headimg.indexOf("headImg.png") == -1){
+                $("#headimg").attr("src",user.headimg);
+            }
+            $("#phone").html(user.phone || "");
+            $("#username").html(user.username || "");
 
-                    $("#phone").html(user.phone || "");
-                    $("#username").html(user.username || "");
+            window.__user = user;
+        }
+        // $.Ajax({
+        //     async: false,
+        //     type: "GET",
+        //     url: server + "/ADMINM/user/userInfo",
+        //     datatype: 'json',
+        //     data:{"USER_ID":userid},
+        //     xhrFields: {
+        //         withCredentials: true
+        //     },
+        //     //成功的回调函数
+        //     success: function (obj) {
+        //         if(obj.code == 1){
+        //             var user = obj.user || {};
+        //             if(user.headimg != "" && user.headimg.indexOf("headImg.png") == -1){
+        //                 $("#headimg").attr("src",server + user.headimg);
+        //             }
 
-                    window.__user = obj.user;
-                }
-            },
-            error: function (error) {
-                console.log(error)
-            },
-        });
+        //             $("#phone").html(user.phone || "");
+        //             $("#username").html(user.username || "");
+
+        //             window.__user = obj.user;
+        //         }
+        //     },
+        //     error: function (error) {
+        //         console.log(error)
+        //     },
+        // });
     }
     
     function buildMenuData(data){

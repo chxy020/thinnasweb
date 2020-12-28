@@ -18,24 +18,29 @@ layui.config({
     var uri = window.location.search;
     
     var role_ID = setter.getUrlParam("role_ID",uri) || "";
-
+    
     if(role_ID){
         //编辑
-        $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/toEdit",
-            dataType: "json",
-            method: 'get',
-            data:{"ROLE_ID":role_ID},
-            success: function(obj) {
-                if(obj.code == 1){
-                    changeRoleHtml(obj.data || {});
-                }else{
-                    layer.msg(obj.msg || "获取角色详情错误");
-                }
+        // $.Ajax({
+        //     async: false,
+        //     url: server + "/ADMINM/role/toEdit",
+        //     dataType: "json",
+        //     method: 'get',
+        //     data:{"ROLE_ID":role_ID},
+        //     success: function(obj) {
+        //         if(obj.code == 1){
+        //             changeRoleHtml(obj.data || {});
+        //         }else{
+        //             layer.msg(obj.msg || "获取角色详情错误");
+        //         }
                
-            }
-        });
+        //     }
+        // });
+        var roleData =  window.sessionStorage.getItem("role_" + role_ID);
+        if(roleData){
+            roleData = JSON.parse(roleData);
+            changeRoleHtml(roleData);
+        }
     }
 
     //监听提交
@@ -48,7 +53,8 @@ layui.config({
         var condi = {};
         condi = data.field;
         //写死组id
-        condi.PARENT_ID = 1;
+        // condi.PARENT_ID = 1;
+        // condi.parentId = 1;
 
         if(role_ID){
             //编辑
@@ -61,8 +67,8 @@ layui.config({
     });
 
     function changeRoleHtml(obj){
-        $("#ROLE_NAME").val(obj.ROLE_NAME || "");
-        $("#BZ").val(obj.BZ || "");
+        $("#roleName").val(obj.roleName || "");
+        $("#bz").val(obj.bz || "");
     }
 
     function addRole(condi){
@@ -73,7 +79,7 @@ layui.config({
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("添加成功");
 
                     setTimeout(function(){
@@ -90,16 +96,17 @@ layui.config({
     }
 
     function editRole(condi){
-        condi.ROLE_ID = role_ID;
+        condi.roleId = role_ID;
 
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/role/edit",
+            // url: server + "/ADMINM/role/edit",
+            url: server + "/ADMINM/role/update",
             dataType: "json",
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("修改成功");
 
                     setTimeout(function(){

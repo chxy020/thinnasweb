@@ -80,18 +80,18 @@ layui.config({
         // });
         // console.log(data.field)
 
-        if(imgpaths.length == 0){
-            layer.msg("请上传截图");
-            return false;
-        }
+        // if(imgpaths.length == 0){
+        //     layer.msg("请上传截图");
+        //     return false;
+        // }
 
         var condi = {};
-        condi.FEEDBACKTYPE = types[+data.field.FEEDBACKTYPE];
-        condi.DESCRIBE = data.field.DESCRIBE;
-        condi.IMGPATH = imgpaths.join(',');
-        condi.PHONE = data.field.PHONE;
-        condi.WECHAT = data.field.WECHAT;
-        condi.QQ = data.field.QQ;
+        condi.feedbacktype = types[+data.field.feedbacktype];
+        condi.describe = data.field.describe;
+        // condi.uploadFile = imgpaths.join(',');
+        condi.phone = data.field.phone;
+        condi.wechat = data.field.wechat;
+        condi.qq = data.field.qq;
 
 
 
@@ -115,12 +115,13 @@ layui.config({
     function saveAfterSales(condi){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/aftersales/saveAfterSales",
+            // url: server + "/ADMINM/aftersales/saveAfterSales",
+            url: server + "/ADMINM/aftersales/addAftersales",
             dataType: "json",
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("添加成功");
 
                     setTimeout(function(){

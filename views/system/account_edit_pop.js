@@ -15,21 +15,55 @@ layui.config({
     var server = setter.baseUrl;
     var uri = window.location.search;
     
-    var USER_ID = setter.getUrlParam("USER_ID",uri) || "";
+    var userId = setter.getUrlParam("userId",uri) || "";
 
-
+    
     $.Ajax({
         async: false,
-        url: server + "/ADMINM/user/goEditU",
+        url: server + "/ADMINM/role/getAllRole",
         dataType: "json",
-        method: 'get',
-        data:{"USER_ID":USER_ID},
+        method: 'post',
         success: function(obj) {
-            console.log(obj);
-            roleSelectHtml(obj.roleList);
-            changeUserHtml(obj);
+            roleSelectHtml(obj.data || []);
         }
     });
+
+    function roleSelectHtml(roleList){
+        for (i = 0; i < roleList.length; i++) {
+            var role = roleList[i] || {};
+            $('#roleId').append(new Option(role.roleName, role.roleId));
+        }
+        layui.form.render("select");
+    }
+
+    var userData = window.sessionStorage.getItem("userId_" +userId) || "";
+    if(userData){
+        userData = JSON.parse(userData);
+
+        changeUserHtml(userData);
+
+    }else{
+
+        layui.msg("没有获取账户信息");
+        return;
+    }
+
+    
+    function changeUserHtml(obj){
+        $("#username").val(obj.username || "");
+        $("#password").val(obj.password || "");
+        $("#name").val(obj.name || "");
+        $("#phone").val(obj.phone || "");
+        $("#bz").val(obj.bz || "");
+        $('#roleId').val(obj.roleId);
+        if(+obj.status == 1){
+            $("#status").prop("checked",true);
+        }else{
+            $("#status").prop("checked",false);
+        }
+        layui.form.render();
+    }
+    
 
     //监听提交
     form.on('submit(submit)', function(data){
@@ -39,57 +73,37 @@ layui.config({
         // });
         console.log(data.field)
         var condi = {};
-        var phone = data.field.PHONE;
+        var phone = data.field.phone;
         condi = data.field
         if(!setter.isTel(phone)){
 			layer.msg("手机号输入错误");
 			return false;
         }
-        var status = $("#STATUS").prop("checked") == true ? 0 : 1;
-        condi.STATUS = status;
+        var status = $("#status").prop("checked") == true ? 1 : 0;
+        condi.status = status;
 
         editSystemUser(condi);
         return false;
     });
     
-    function changeUserHtml(obj){
-        $("#USERNAME").val(obj.USERNAME || "");
-        // $("#PASSWORD").val(obj.PASSWORD || "");
-        $("#NAME").val(obj.NAME || "");
-        $("#PHONE").val(obj.PHONE || "");
-        $("#BZ").val(obj.BZ || "");
-        $('#roleselset').val(obj.ROLE_ID);
-        if(+obj.STATUS == 1){
-            $("#STATUS").prop("checked",false);
-        }else{
-            $("#STATUS").prop("checked",true);
-        }
-        layui.form.render();
-    }
 
-    function roleSelectHtml(roleList){
-        for (i = 0; i < roleList.length; i++) {
-            var role = roleList[i] || {};
-            $('#roleselset').append(new Option(role.role_NAME, role.role_ID));
-        }
-        layui.form.render("select");
-    }
 
     function editSystemUser(condi){
         // USERNAME(用户名) NUMBER（编号） 
         // PASSWORD（密码） NAME（名字） PHONE（电话） BZ （备注） STATUS （0正常1冻结） 
         // ROLE_ID（goAddU返回的参数选择哪个角色就是绑定这个id）
 
-        condi.USER_ID = USER_ID;
+        condi.userId = userId;
 
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/user/editU",
+            // url: server + "/ADMINM/user/editU",
+            url: server + "/ADMINM/user/update",
             dataType: "json",
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("修改成功");
 
                     setTimeout(function(){

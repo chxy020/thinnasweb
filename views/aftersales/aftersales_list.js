@@ -11,7 +11,7 @@ layui.config({
 
     var server = setter.baseUrl;
 
-    var statusarr = ["","处理中","已关闭","已解决","待定"];
+    var statusarr = ["","解决中","已关闭","已解决","待定"];
     var types = ["","硬件故障","软件故障","硬件使用障碍","软件使用障碍","优化建议","投诉反馈","其它"];
     var arrangeList = [];
     var rangetimeStart = "";
@@ -57,64 +57,66 @@ layui.config({
             height: 'full-100',//必须留着
             // 暂时用DATA数据
             // url: server + "/ADMINM/aftersales/listAfterSales",
+            url: server + "/ADMINM/aftersales/getAftersalesList",
             where:{
-                "FEEDBACKTYPE":type,
-                "STATUS":status,
-                "timeStart":rangetimeStart,
-                "timeEnd":rangetimeEnd
+                "feedbacktype":type,
+                "solve_status":status,
+                "startTime":rangetimeStart ? rangetimeStart + " 00:00:00" : "",
+                "endTime":rangetimeEnd ? rangetimeEnd + " 00:00:00" : ""
             },
-            method: 'get',
+            method: 'post',
             xhrFields: {
                 withCredentials: true
             }
             // DATA数据
-            ,data:[
-                {
-                    createtime: "2020-08-02 20:03:06",
-                    describe: "qwerqwer",
-                    feedbacktype: "软件使用障碍",
-                    id: 7,
-                    imgpath: "http://img1.99114.com/group3/M00/44/ED/rBADvVsg22mAB3PxAANeHq0SdqE776.jpg,http://img4.99114.com/group3/M00/1B/6D/rBADu18f9UeAesGwAAIfkhymy_M075.jpg,http://www.99114.com/group3/M00/1A/D9/rBADu18MDt6AasDcAAAuc92Fgoo993.jpg,http://www.99114.com/group3/M00/1A/D7/rBADu18L_6SAK7FLAAAuASbSqhQ063.jpg",
-                    jjr: null,
-                    phone: "222",
-                    qq: "4444",
-                    reason: "dddsdf解决了",
-                    status: "已解决",
-                    tjr: "admin",
-                    updatetime: "2020-08-02 20:10:54",
-                    wechat: "333",
-                }
-                ,{
-                    createtime: "2020-08-02 18:45:08",
-                    describe: "123",
-                    feedbacktype: "投诉反馈",
-                    id: 6,
-                    imgpath: "http://img.99114.com/group3/M00/44/E9/rBADvFsg24mADgpIAALIvglpQGg430_80_80.jpg,http://img4.99114.com/group3/M00/1B/A7/rBADu18oHxOAAYT3AADF37JrfjY236.jpg,http://www.99114.com/group3/M00/1A/D9/rBADu18MDt6AasDcAAAuc92Fgoo993.jpg,http://www.99114.com/group3/M00/1A/D7/rBADu18L_6SAK7FLAAAuASbSqhQ063.jpg,http://www.99114.com/group3/M00/1A/D7/rBADu18L_6SAK7FLAAAuASbSqhQ063.jpg",
-                    jjr: "admin",
-                    phone: "123",
-                    qq: "",
-                    reason: "ffffff",
-                    status: "已关闭",
-                    tjr: "admin",
-                    updatetime: "2020-08-02 20:20:57",
-                    wechat: "123"
-                }
-                ,{
-                    createtime: "2020-08-02 18:45:08",
-                    describe: "123",
-                    feedbacktype: "投诉反馈",
-                    id: 8,
-                    imgpath: "http://www.99114.com/group3/M00/1A/D7/rBADu18L_6SAK7FLAAAuASbSqhQ063.jpg",
-                    jjr: "admin",
-                    phone: "123",
-                    qq: "",
-                    reason: "ffffff",
-                    status: "已关闭",
-                    tjr: "admin",
-                    updatetime: "2020-08-02 20:20:57",
-                    wechat: "123"
-                }
-            ]
+            // ,data:[
+            //     {
+            //         createtime: "2020-08-02 20:03:06",
+            //         describe: "qwerqwer",
+            //         feedbacktype: "软件使用障碍",
+            //         id: 7,
+            //         imgpath: "http://img1.99114.com/group3/M00/44/ED/rBADvVsg22mAB3PxAANeHq0SdqE776.jpg,http://img4.99114.com/group3/M00/1B/6D/rBADu18f9UeAesGwAAIfkhymy_M075.jpg,http://www.99114.com/group3/M00/1A/D9/rBADu18MDt6AasDcAAAuc92Fgoo993.jpg,http://www.99114.com/group3/M00/1A/D7/rBADu18L_6SAK7FLAAAuASbSqhQ063.jpg",
+            //         jjr: null,
+            //         phone: "222",
+            //         qq: "4444",
+            //         reason: "dddsdf解决了",
+            //         status: "已解决",
+            //         tjr: "admin",
+            //         updatetime: "2020-08-02 20:10:54",
+            //         wechat: "333",
+            //     }
+            //     ,{
+            //         createtime: "2020-08-02 18:45:08",
+            //         describe: "123",
+            //         feedbacktype: "投诉反馈",
+            //         id: 6,
+            //         imgpath: "http://img.99114.com/group3/M00/44/E9/rBADvFsg24mADgpIAALIvglpQGg430_80_80.jpg,http://img4.99114.com/group3/M00/1B/A7/rBADu18oHxOAAYT3AADF37JrfjY236.jpg,http://www.99114.com/group3/M00/1A/D9/rBADu18MDt6AasDcAAAuc92Fgoo993.jpg,http://www.99114.com/group3/M00/1A/D7/rBADu18L_6SAK7FLAAAuASbSqhQ063.jpg,http://www.99114.com/group3/M00/1A/D7/rBADu18L_6SAK7FLAAAuASbSqhQ063.jpg",
+            //         jjr: "admin",
+            //         phone: "123",
+            //         qq: "",
+            //         reason: "ffffff",
+            //         status: "已关闭",
+            //         tjr: "admin",
+            //         updatetime: "2020-08-02 20:20:57",
+            //         wechat: "123"
+            //     }
+            //     ,{
+            //         createtime: "2020-08-02 18:45:08",
+            //         describe: "123",
+            //         feedbacktype: "投诉反馈",
+            //         id: 8,
+            //         imgpath: "http://www.99114.com/group3/M00/1A/D7/rBADu18L_6SAK7FLAAAuASbSqhQ063.jpg",
+            //         jjr: "admin",
+            //         phone: "123",
+            //         qq: "",
+            //         reason: "ffffff",
+            //         status: "已关闭",
+            //         tjr: "admin",
+            //         updatetime: "2020-08-02 20:20:57",
+            //         wechat: "123"
+            //     }
+            // ]
+
             ,page: {
                 layout: ['prev', 'page', 'next', 'count', 'skip']
             },
@@ -154,23 +156,26 @@ layui.config({
                         unresize: true,
                         sort: false,
                             templet:function (d) {
-                                console.log(server);
-                                var imgpathArr = d.imgpath.split(',');
-                                if(imgpathArr.length && d.imgpath!=""> 0){
-                                    var htmlStr = "";
-                                    for (i = 0; i < imgpathArr.length; i++) { 
-                                        if(i==0){
-                                            // htmlStr += "<img src="+server+imgpathArr[i] +"></img>";
-                                            htmlStr += "<img src="+ imgpathArr[i] +"></img>";
-                                        }else{
-                                            // htmlStr += "<img src="+server+imgpathArr[i] +" style='display: none;'></img>";
-                                            htmlStr += "<img src="+ imgpathArr[i] +" style='display: none;'></img>";
+                                if(d.imgpath){
+                                    var imgpathArr = d.imgpath.split(',');
+                                    if(imgpathArr.length && d.imgpath!=""> 0){
+                                        var htmlStr = "";
+                                        for (i = 0; i < imgpathArr.length; i++) { 
+                                            if(i==0){
+                                                // htmlStr += "<img src="+server+imgpathArr[i] +"></img>";
+                                                htmlStr += "<img src="+ imgpathArr[i] +"></img>";
+                                            }else{
+                                                // htmlStr += "<img src="+server+imgpathArr[i] +" style='display: none;'></img>";
+                                                htmlStr += "<img src="+ imgpathArr[i] +" style='display: none;'></img>";
+                                            }
                                         }
+                                        var contStr = "<div class='layer-photos-demo"+ d.id +" style='cursor:pointer;'>"+htmlStr+"</div>"
+                                        return contStr;
+                                    }else{
+                                        return '';
                                     }
-                                    var contStr = "<div class='layer-photos-demo"+ d.id +" style='cursor:pointer;'>"+htmlStr+"</div>"
-                                    return contStr;
                                 }else{
-                                    return ''
+                                    return '';
                                 }
                             }
 
@@ -204,7 +209,7 @@ layui.config({
                         title: '解决进展',
                         align: 'left',
                         templet: function(data) {
-                            if(data.status=="处理中"){
+                            if(data.status=="解决中"){
                                 return '<span style="color:#3691FF">'+data.status+'</span>'
                             }else if(data.status=="已关闭"){
                                 return '<span style="color:#ff0000">'+data.status+'</span>'
@@ -232,11 +237,21 @@ layui.config({
                     top.location.href = setter.loginUrl;
                     return;
                 }
-                return {
-                    "code": 0,
-                    "msg": "",
-                    "count": res.count,
-                    "data": res.afterSales || [] 
+                if(res.code == 0){
+                    //res 即为原始返回的数据
+                    return {
+                        "code": 0,
+                        "msg": "",
+                        "count": res.count,
+                        "data": res.data
+                    };
+                }else{
+                    return {
+                        "code": 0,
+                        "msg": "接口数据错误",
+                        "count": 0, 
+                        "data": [] 
+                    }
                 }
             },
             
@@ -245,7 +260,7 @@ layui.config({
             limit: 15,
             skin: 'line',
             even: true,
-            limits: [5, 10, 15],
+            limits: [10, 15,30],
             done: function(res, curr, count) {
                 //表格内嵌相册
                 if(res.data.length){
@@ -272,13 +287,13 @@ layui.config({
     function deleteAfterSales(id){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/aftersales/deleteAfterSales",
+            url: server + "/ADMINM/aftersales/deleteAftersales",
             dataType: "json",
-            method: 'get',
-            data:{"ID":id},
+            method: 'post',
+            data:{"id":id},
             success: function(obj) {
                 console.log(obj);
-                if(obj.code == 1){
+                if(obj.code == 0){
                     tableRender();
 
                     layer.msg("删除成功");
@@ -287,16 +302,16 @@ layui.config({
         });
     }
 
-    function deleteAfterSales(ids){
+    function deleteAfterSalesByIds(ids){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/aftersales/deleteAll",
+            url: server + "/ADMINM/aftersales/batchDeleteAftersales",
             dataType: "json",
-            method: 'get',
-            data:{"IDS":ids},
+            method: 'post',
+            data:{"ids":ids},
             success: function(obj) {
                 console.log(obj);
-                if(obj.code == 1){
+                if(obj.code == 0){
                     tableRender();
 
                     layer.msg("删除成功");
@@ -379,6 +394,7 @@ layui.config({
                 // layer.close(index);
             });
         } else if (obj.event === 'edit') {
+            window.sessionStorage.setItem("__aftersales_"+data.id,JSON.stringify(data));
             layer.open({
                 type: 2,
                 title: '编辑反馈',
@@ -386,7 +402,7 @@ layui.config({
                 btn: ['保存', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
-                content: 'aftersales_edit_pop.html?ID='+data.id,
+                content: 'aftersales_edit_pop.html?id='+data.id,
                 yes: function(index, layero) {
                     var submit = layero.find('iframe').contents().find("#submit");
                     submit.click();
@@ -424,7 +440,7 @@ layui.config({
                 return layer.msg("请选择再批量删除")
             }
             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
-                deleteAfterSales(arrangeList.join(','));
+                deleteAfterSalesByIds(arrangeList.join(','));
             })
         },
         //刷新

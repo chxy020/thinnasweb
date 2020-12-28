@@ -25,13 +25,14 @@ layui.config({
     function getlistQusetionC(){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/question/listQusetionC",
+            // url: server + "/ADMINM/question/listQusetionC",
+            url: server + "/ADMINM/quest/getQuestClassify",
             dataType: "json",
-            method: 'get',
+            method: 'post',
             success: function(obj) {
                 console.log(obj);
-                if(obj.code == 1){
-                    setListQusetionCHtml(obj.questionC || []);
+                if(obj.code == 0){
+                    setListQusetionCHtml(obj.data || []);
                 }
             }
         });
@@ -40,13 +41,13 @@ layui.config({
     function deleteQuestionC(id){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/question/deleteQuestionC",
+            url: server + "/ADMINM/quest/deleteQuestClassify",
             dataType: "json",
-            method: 'get',
-            data:{"QCID":id},
+            method: 'post',
+            data:{"id":id},
             success: function(obj) {
                 console.log(obj);
-                if(obj.code == 1){
+                if(obj.code == 0){
                     getlistQusetionC();
                     layer.msg("删除成功");
                 }
@@ -57,10 +58,10 @@ layui.config({
     function updateStatusQuestionC(id,status){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/question/updateStatusQuestionC",
+            url: server + "/ADMINM/quest/updateQuestClassify",
             dataType: "json",
-            method: 'get',
-            data:{"QCID":id,"STATUS":status},
+            method: 'post',
+            data:{"id":id,"status":status},
             success: function(obj) {
                 // console.log(obj);
                 // if(obj.code == 1){
@@ -70,18 +71,22 @@ layui.config({
         });
     }
 
-    
+    var listData = [];
+    var Qid = 0;
     function getlistQusetion(id){
+        Qid = id;
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/question/listQusetion",
+            // url: server + "/ADMINM/question/listQusetion",
+            url: server + "/ADMINM/quest/getQuestList",
             dataType: "json",
-            method: 'get',
-            data:{"QCID":id},
+            method: 'post',
+            data:{"qcid":id},
             success: function(obj) {
                 console.log(obj);
-                if(obj.code == 1){
-                    setListQusetionHtml(obj.questionC || []);
+                if(obj.code == 0){
+                    listData = obj.data;
+                    setListQusetionHtml(obj.data || []);
                 }
             }
         });
@@ -90,17 +95,19 @@ layui.config({
     function deleteQuestion(id){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/question/deleteQuestion",
+            url: server + "/ADMINM/quest/deleteQuest",
             dataType: "json",
-            method: 'get',
-            data:{"QID":id},
+            method: 'post',
+            data:{"id":id},
             success: function(obj) {
                 console.log(obj);
-                if(obj.code == 1){
+                if(obj.code == 0){
                     var qid = obj.QID;
                     $("#qd_" + qid).parent().parent().hide();
                     // getlistQusetionC();
                     layer.msg("删除成功");
+
+                    getlistQusetion(Qid);
                 }
             }
         });
@@ -112,7 +119,7 @@ layui.config({
 
         for(var i = 0,len = list.length; i < len; i++){
             var item = list[i] || {};
-            var qcid = item.qcid;
+            var qcid = item.id;
             var status = +item.status;
             if(i == 0){
                 id = qcid;
@@ -213,15 +220,15 @@ layui.config({
 
         for(var i = 0,len = list.length; i < len; i++){
             var item = list[i] || {};
-            var qid = item.qid;
+            var id = item.id;
             var qcid = item.qcid;
             
             html.push('<div class="positionR">');
             html.push('<div class="contright-cont-btn">');
-            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="add" id="qu_' + qid + '_' + qcid +'" data="编辑">');
+            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="add" id="qu_' + id + '_' + qcid +'" data="编辑">');
             html.push('<i class="layui-icon">&#xe642;</i>');
             html.push('</button>');
-            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="del" id="qd_' + qid + '" data="删除">');
+            html.push('<button class="layui-btn layui-ds layui-btn-primary" data-type="del" id="qd_' + id + '" data="删除">');
             html.push('<i class="layui-icon">&#xe640;</i>');
             html.push('</button>');
             html.push('</div>');
@@ -243,6 +250,10 @@ layui.config({
                 return;
             }
             if(type == "qu"){
+                var data = listData.filter(function(item){
+                    return item.id == id;
+                });
+                window.sessionStorage.setItem("question_"+id,JSON.stringify(data[0]));
                 updateQusetion(id,qcid);
             }else if(type == "qd"){
                 layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {

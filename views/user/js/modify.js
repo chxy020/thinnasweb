@@ -31,8 +31,8 @@ layui.config({
         }
 
         var condi = {};
-        condi.OPASSWORD = data.field.password1;
-        condi.NPASSWORD = data.field.password2;
+        condi.old_pw = data.field.password1;
+        condi.new_pw = data.field.password2;
 
 
 
@@ -49,7 +49,7 @@ layui.config({
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("修改成功");
                     logOut();
                     // setTimeout(function(){

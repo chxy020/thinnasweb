@@ -18,13 +18,13 @@ layui.config({
     function listCourse(){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/course/listCourse",
+            url: server + "/ADMINM/aftersales/getUseCourseList",
             dataType: "json",
-            method: 'get',
+            method: 'post',
             success: function(obj) {
                 console.log(obj);
-                if(obj.code == 1){
-                    listCourseHtml(obj.courseList || []);
+                if(obj.code == 0){
+                    listCourseHtml(obj.data || []);
                 }
             }
         });
@@ -33,13 +33,13 @@ layui.config({
     function deleteCourse(id,path){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/course/deleteCourse",
+            url: server + "/ADMINM/aftersales/deleteCourse",
             dataType: "json",
-            method: 'get',
-            data:{"ID":id,"PATH":path},
+            method: 'post',
+            data:{"id":id},
             success: function(obj) {
                 console.log(obj);
-                if(obj.code == 1){
+                if(obj.code == -1){
                     listCourse();
 
                     layer.msg("删除成功");
@@ -71,7 +71,7 @@ layui.config({
         
         $("#contleftlist").html(html.join(''));
         
-        $("#video1").attr("src",server + filePath);
+        $("#video1").attr("src",filePath);
         
 
         $("#contleftlist > li").bind('click',function(){
@@ -89,7 +89,7 @@ layui.config({
             $("#contleftlist > li").removeClass("on");
             $(this).addClass("on");
 
-            $("#video1").attr("src",server + path);
+            $("#video1").attr("src",path);
         });
     }
 

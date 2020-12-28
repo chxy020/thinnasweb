@@ -26,12 +26,11 @@ layui.config({
     function getAllRole(){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/role",
+            url: server + "/ADMINM/role/getAllRole",
             dataType: "json",
-            method: 'get',
+            method: 'post',
             success: function(obj) {
-                console.log(obj);
-                roleSelectHtml(obj.roleList_z || []);
+                roleSelectHtml(obj.data || []);
             }
         });
     }
@@ -39,7 +38,7 @@ layui.config({
     function roleSelectHtml(roleList){
         for (i = 0; i < roleList.length; i++) {
             var role = roleList[i] || {};
-            $('#roleselset').append(new Option(role.role_NAME, role.role_ID));
+            $('#roleselset').append(new Option(role.roleName, role.roleId));
         }
         layui.form.render("select");
     }
@@ -60,17 +59,22 @@ layui.config({
 
     function tableRender(){
         var keywords = $("#keyword").val() || "";
+        var role_id = $("#roleselset").val() || "";
+        var userState = $("#userState").val() || "";
         
         //表格加载渲染
         table.render({
             elem: '#test-table-operate',
             height: 'full-100',//必须留着
             // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-            url: server + "/ADMINM/user/listUsers",
+            // url: server + "/ADMINM/user/listUsers",
+            url: server + "/ADMINM/user/getSysUserList",
             where:{
-		        "keywords":keywords||""
+		        "search":keywords||"",
+                "role_id":role_id,
+                "userState":userState
             },
-            method: 'get',
+            method: 'post',
             xhrFields: {
                 withCredentials: true
             }
@@ -115,46 +119,51 @@ layui.config({
                         toolbar: '#test-table-operate-barDemo',
                     },
                     {
-                        field: 'NAME',
+                        field: 'username',
                         title: '姓名',
                         align: 'left',
                     }, {
-                        field: 'PHONE',
+                        field: 'phone',
                         title: '手机号',
                         align: 'left',
                     },
                     {
-                        field: 'ROLE_NAME',
+                        field: 'role',
                         title: '角色',
                         align: 'left',
                         // toolbar: '#test-table-operate-barDemoMore',
-                        // templet: function(data) {
-                        //         var htmlStr = "";
-                        //         for (i = 0; i < data.namelist.length; i++) { 
-                        //             console.log("000")
-                        //             htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
-                        //         }
-                        //         console.log("htmlStr====",htmlStr);
-                        //         var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
-                        //         console.log("contStr====",contStr);
-                        //         return data.name + contStr
-                        // },
+                        templet: function(data) {
+                            if(data.role){
+                                return data.role.roleName;
+                            }else{
+                                return "";
+                            }
+                                // var htmlStr = "";
+                                // for (i = 0; i < data.namelist.length; i++) { 
+                                //     console.log("000")
+                                //     htmlStr += "<tr><td>"+data.namelist[i].name+"</td><td>"+data.namelist[i].tel+"</td></tr>";
+                                // }
+                                // console.log("htmlStr====",htmlStr);
+                                // var contStr = "<div class='moreOperate'><span class='layui-badge table-icon-style2'>"+data.namelist.length+"</span><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>姓名</th><th>手机号</th></tr>"+htmlStr+"</table></div></div></div>"
+                                // console.log("contStr====",contStr);
+                                // return data.name + contStr
+                        }
                     },
                     {
-                        field: 'BZ',
+                        field: 'bz',
                         title: '备注',
                         align: 'left',
                     },
                     {
-                        field: 'LAST_LOGIN',
+                        field: 'lastLogin',
                         title: '最近登录',
                         align: 'left',
                         templet: function(data) {
-                            return data.LAST_LOGIN + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
+                            return data.lastLogin + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
                         },
                     },
                     {
-                        field: 'CREATETIME',
+                        field: 'createtime',
                         title: '创建时间',
                         align: 'left',
                     },
@@ -166,13 +175,13 @@ layui.config({
                     top.location.href = setter.loginUrl;
                     return;
                 }
-                if(res.code == 1){
+                if(res.code == 0){
                     //res 即为原始返回的数据
                     return {
                         "code": 0,
                         "msg": "",
                         "count": res.count,
-                        "data": res.userList
+                        "data": res.data
                     };
                 }else{
                     return {
@@ -183,12 +192,13 @@ layui.config({
                     }
                 }
             },
-            event: true,
+            
             page: true,
-            limit: 10,
+            event: true,
+            limit: 15,
             skin: 'line',
             even: true,
-            limits: [5, 10, 15],
+            limits: [10, 15,30],
             done: function(res, curr, count) {
                 // table_data = res.data;
 
@@ -235,6 +245,13 @@ layui.config({
         compositionend : function(e){
             e.target.isNeedPrevent = false;
         }
+    });
+
+    form.on('select(component-roleselset)', function(data){
+        tableRender();
+    });
+    form.on('select(component-userState)', function(data){
+        tableRender();
     });
 
     getAllRole();
@@ -399,15 +416,16 @@ layui.config({
             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
                 $.Ajax({
                     async: false,
-                    type: "get",
-                    url: server + "/ADMINM/user/deleteU",
+                    type: "post",
+                    // url: server + "/ADMINM/user/deleteU",
+                    url: server + "/ADMINM/user/delete",
                     dataType: "json",
                     data: {
-                        "USER_ID": data.USER_ID
+                        "user_id": data.userId
                     },
                     //成功的回调函数
                     success: function (msg) {
-                        if (msg.code == 1) {
+                        if (msg.code == 0) {
                             layer.msg("删除成功");
                             tableRender();
                         } else {
@@ -423,6 +441,9 @@ layui.config({
                 // layer.close(index);
             });
         } else if (obj.event === 'edit') {
+
+            window.sessionStorage.setItem("userId_" + data.userId,JSON.stringify(data));
+
             layer.open({
                 type: 2,
                 title: '编辑账号',
@@ -430,7 +451,7 @@ layui.config({
                 btn: ['保存', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
-                content: 'account_edit_pop.html?USER_ID='+data.USER_ID,
+                content: 'account_edit_pop.html?userId='+data.userId,
                 yes: function(index, layero) {
                     var submit = layero.find('iframe').contents().find("#submit");
                     submit.click();
