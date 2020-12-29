@@ -8,6 +8,16 @@ layui.config({
     var setter = layui.setter;
     var server = setter.baseUrl;
 
+    var userInfo = {};
+    function getUserInfo(userid){
+        var user = window.sessionStorage.getItem("__userinfo") || "";
+        if(user){
+            user = JSON.parse(user);
+            userInfo = user;
+        }else{
+            top.location.href = setter.loginUrl;
+        }
+    }
 
     $("#pwdeye1,#pwdeye2,#pwdeye3").bind('click',function(){
         if($(this).hasClass("icon-hide")){
@@ -21,6 +31,8 @@ layui.config({
         }
     });
 
+    getUserInfo();
+
     //监听提交
     form.on('submit(submit)', function(data){
         console.log(data.field)
@@ -33,8 +45,7 @@ layui.config({
         var condi = {};
         condi.old_pw = data.field.password1;
         condi.new_pw = data.field.password2;
-
-
+        condi.userId = userInfo.userId;
 
         updatePassWord(condi);
         
@@ -69,12 +80,19 @@ layui.config({
         $.Ajax({
             async: false,
             type: "post",
-            url:server + "/ADMINM/logout",
+            // url:server + "/ADMINM/logout",
+            url:server + "/ADMINM/login/logout",
             dataType: "json",
             xhrFields: {
                 withCredentials: true
             },
             success: function(obj) {
+                if(obj.code == 0){
+                    window.sessionStorage.setItem("__userinfo","");
+                    top.location.href = setter.loginUrl;
+                }else{
+                    layer.msg(obj.msg);
+                }
             },
             //失败的回调函数
             error: function() {

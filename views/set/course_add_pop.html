@@ -17,6 +17,53 @@
         .layui-input-block {
             margin-left: 120px;
         }
+
+        
+        .htmleaf-container{
+            margin: 0 auto;
+        }
+        .htmleaf-content-bg{
+            position: fixed;
+            left:0;
+            top:0;
+            bottom: 0;
+            right: 0;
+            background-color:rgba(0,0,0,.8);
+        }
+        .htmleaf-content{
+            width: 600px;
+            height: 100px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            margin-left:-300px;
+            margin-top:-50px;
+            color: #fff;
+        }
+        .center{text-align:center;}
+        .progressbar {
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 35px;
+            position: relative;
+            background-color: #EEEEEE;
+            box-shadow: inset 0px 1px 1px rgba(0,0,0,.1);
+        }
+
+        .proggress{
+            height: 8px;
+            width: 10px;
+            background-color: #3498db;
+            margin-top:20px
+        }
+
+        .percentCount{
+            float:right;
+            margin-top: 10px;
+            clear: both;
+            font-weight: bold;
+            font-family: Arial
+        }
     </style>
 </head>
 <body>
@@ -42,6 +89,16 @@
     </div>
     <button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">提交</button>
 </form>
+
+<div id="uploadbg" class="htmleaf-content-bg" style="display: none;">
+    <div class="htmleaf-content">
+        <h3 class="center">上传进度条</h3>
+        <div id="progressbar1"></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qiniu-js/3.1.2/qiniu.min.js"></script>
+<script src="../../js/jquery.lineProgressbar.js" type="text/javascript" charset="utf-8"></script>
 <script src="course_add_pop.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

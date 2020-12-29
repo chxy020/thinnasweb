@@ -19,7 +19,20 @@ layui.config({
     // var filePath = "";
     // var fileId = "";
 
+    var userInfo = {};
+    function getUserInfo(userid){
+        var user = window.sessionStorage.getItem("__userinfo") || "";
+        if(user){
+            user = JSON.parse(user);
+            $("#userId").val(user.userId);
+            userInfo = user;
+        }else{
+            top.location.href = setter.loginUrl;
+        }
+    }
     
+    getUserInfo();
+
     //监听提交
     form.on('submit(submit)', function(data){
         updateUserImage();

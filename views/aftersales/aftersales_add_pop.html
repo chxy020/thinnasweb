@@ -26,12 +26,12 @@
     </style>
 </head>
 <body>
-<form method="post" class="layui-form" >
+<form method="post" id="form" name="form" enctype="multipart/form-data" class="layui-form" >
     <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0; ">
         <div class="layui-form-item">
             <label class="layui-form-label"><span>*</span>反馈类型：</label>
             <div class="layui-input-block">
-                <select id="feedbacktype" lay-verify="required" name="feedbacktype">
+                <select id="feedbacktypecombo" lay-verify="required" name="feedbacktypecombo" >
                     <option value="1">硬件故障</option>
                     <option value="2">软件故障</option>
                     <option value="3">硬件使用障碍</option>
@@ -42,6 +42,7 @@
                 </select>
             </div>
         </div>
+        <input type="hidden" id="feedbacktype" name="feedbacktype"  />
         <div class="layui-form-item">
             <label class="layui-form-label"><span>*</span>问题描述：</label>
             <div class="layui-input-block">
@@ -52,9 +53,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span>*</span>上传截图：</label>
             <div class="layui-input-block">
-                <button type="button" class="layui-btn" id="test5"><i class="layui-icon"></i>上传视频</button>
+                <!-- <button type="button" class="layui-btn" id="test5"><i class="layui-icon"></i>上传视频</button> -->
                 <!-- <input type="text" placeholder="支持直接截图复制粘贴" autocomplete="off" class="layui-input" id="BZ" name="BZ"> -->
-                
+                <input type="file" lay-verify="required" class="layui-input" multiple accept=".jpg,.jpeg,.png,.gif" id="uploadFile" name="uploadFile" />
             </div>
             <div id="IMGPATH" style="margin-left: 118px;" class="uploadImg">
             </div>

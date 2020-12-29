@@ -206,6 +206,7 @@ layui.config({
                 },
                 success: function(obj) {
                     if(obj.code == 0){
+                        window.sessionStorage.setItem("__userinfo","");
                         location.href = '/ADMINM/static/views/user/login.html';
                     }else{
                         layer.msg(obj.msg);

@@ -71,8 +71,8 @@ layui.config({
     function changeSalesHtml(obj){
         $("#feedbacktype").val(typesName[obj.feedbacktype]);
         $("#describe").val(obj.describe || "");
-        var imgs = (obj.imgpath || "").split(',');
-        changeImgPathHtml(imgs);
+        // var imgs = (obj.imgpath || "").split(',');
+        changeImgPathHtml(obj.images || []);
         $("#phone").val(obj.phone || "");
         $("#wechat").val(obj.wechat || "");
         $("#qq").val(obj.qq || "");
@@ -89,7 +89,7 @@ layui.config({
     function changeImgPathHtml(imgs){
         var html = [];
         imgs.forEach(function(img){
-            html.push("<img src='" + (img) + "' />");
+            html.push("<img src='" + (img.imgurl) + "' />");
         })
         
         $("#IMGPATH").html(html.join(''));

@@ -80,22 +80,27 @@ layui.config({
         // });
         // console.log(data.field)
 
-        // if(imgpaths.length == 0){
+
+        // console.log(data.field.file.length)
+
+        // if(data.field.file.length == 0){
         //     layer.msg("请上传截图");
         //     return false;
         // }
 
-        var condi = {};
-        condi.feedbacktype = types[+data.field.feedbacktype];
-        condi.describe = data.field.describe;
-        // condi.uploadFile = imgpaths.join(',');
-        condi.phone = data.field.phone;
-        condi.wechat = data.field.wechat;
-        condi.qq = data.field.qq;
+        // var condi = {};
+        // condi.feedbacktype = types[+data.field.feedbacktype];
+        // condi.describe = data.field.describe;
+        // // condi.uploadFile = imgpaths.join(',');
+        // condi.phone = data.field.phone;
+        // condi.wechat = data.field.wechat;
+        // condi.qq = data.field.qq;
 
+        $("#feedbacktype").val(types[+data.field.feedbacktypecombo]);
 
+        saveAfterSales();
+        // saveAfterSales(condi);
 
-        saveAfterSales(condi);
 
         // if(role_ID){
         //     //编辑
@@ -112,15 +117,21 @@ layui.config({
         $("#IMGPATH").append(html);
     }
 
-    function saveAfterSales(condi){
+    function saveAfterSales(){
+        layer.load(2);
+        
+        var formdata = new FormData(document.getElementById("form"));
+
         $.Ajax({
             async: false,
-            // url: server + "/ADMINM/aftersales/saveAfterSales",
             url: server + "/ADMINM/aftersales/addAftersales",
-            dataType: "json",
             method: 'post',
-            data:condi,
+            data:formdata,
+            processData:false,   //  告诉jquery不要处理发送的数据
+            contentType:false,   // 告诉jquery不要设置content-Type请求头
             success: function(obj) {
+                layer.closeAll();
+
                 if(obj.code == 0){
                     layer.msg("添加成功");
 

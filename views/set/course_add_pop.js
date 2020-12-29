@@ -59,6 +59,76 @@ layui.config({
         }
     });
 
+
+
+
+    var _token;
+    var url = server + "/circle/examine/getQiniuyinToken";
+    $.Ajax({
+        async: false,
+        url: url,
+        // dataType: "json",
+        method: 'post',
+        // data:formdata,
+        // processData:false,   //  告诉jquery不要处理发送的数据
+        // contentType:false,   // 告诉jquery不要设置content-Type请求头
+        success: function(obj) {
+            layer.closeAll();
+            
+            if(obj.code == 0){
+                var token = obj.data;
+                _token = token;
+            }
+        },
+        error:function(){
+            layer.closeAll();
+        }
+    });
+
+
+
+    
+    function uploadFile(files){
+        if(_token){
+            var putExtra = {};
+            var config = {
+                // useCdnDomain: true,
+                // region: qiniu.region.z2
+            };
+            var guid = getGuid();
+            var observable = qiniu.upload(files,guid, _token, putExtra, config)
+            var subscription = observable.subscribe(observer) // 上传开始
+            // or
+            // var subscription = observable.subscribe(next, error, complete) // 这样传参形式也可以
+            // subscription.unsubscribe() // 上传取消
+        }else{
+            layer.msg("没有获取到token");
+        }
+    }
+
+
+
+	function getGuid(){
+		var guid = "";
+		for (var i = 1; i <= 32; i++){
+			var n = Math.floor(Math.random()*16.0).toString(16);
+			guid += n;
+			if((i==8)||(i==12)||(i==16)||(i==20)){
+				guid += "-";
+			}
+		}
+		return guid;
+	};
+
+
+
+
+    $("#file").bind("change",function(obj){
+        var files = obj.currentTarget.files;
+        uploadFile(files[0]);
+    });
+
+
     //监听提交
     form.on('submit(submit)', function(data){
         // alert(888)

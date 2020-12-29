@@ -156,17 +156,17 @@ layui.config({
                         unresize: true,
                         sort: false,
                             templet:function (d) {
-                                if(d.imgpath){
-                                    var imgpathArr = d.imgpath.split(',');
-                                    if(imgpathArr.length && d.imgpath!=""> 0){
+                                if(d.images){
+                                    var imgpathArr = d.images || [];
+                                    if(imgpathArr.length > 0){
                                         var htmlStr = "";
                                         for (i = 0; i < imgpathArr.length; i++) { 
                                             if(i==0){
                                                 // htmlStr += "<img src="+server+imgpathArr[i] +"></img>";
-                                                htmlStr += "<img src="+ imgpathArr[i] +"></img>";
+                                                htmlStr += "<img src="+ imgpathArr[i].imgurl +"></img>";
                                             }else{
                                                 // htmlStr += "<img src="+server+imgpathArr[i] +" style='display: none;'></img>";
-                                                htmlStr += "<img src="+ imgpathArr[i] +" style='display: none;'></img>";
+                                                htmlStr += "<img src="+ imgpathArr[i].imgurl +" style='display: none;'></img>";
                                             }
                                         }
                                         var contStr = "<div class='layer-photos-demo"+ d.id +" style='cursor:pointer;'>"+htmlStr+"</div>"
