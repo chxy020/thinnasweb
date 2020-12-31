@@ -17,22 +17,22 @@ layui.config({
     var server = setter.baseUrl;
     // var uri = window.location.search;
     
-    var role_ID = setter.getUrlParam("role_ID") || "";
-    var role_NAME = setter.getUrlParam("role_NAME") || "";
+    var roleId = setter.getUrlParam("roleId") || "";
+    var roleName = setter.getUrlParam("roleName") || "";
 
     var treeData = [];
 
-    if(role_ID){
-        $("#role_NAME").val(role_NAME);        
+    if(roleId){
+        $("#roleName").val(roleName);        
         //编辑
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/role/menuqx",
+            url: server + "/ADMINM/menu/getAuthorityMeuns",
             dataType: "json",
-            method: 'get',
-            data:{"ROLE_ID":role_ID},
+            method: 'post',
+            data:{"roleId":roleId},
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     buildTreeData(obj.data || []);
                 }else{
                     layer.msg(obj.msg || "获取角色详情错误");
@@ -52,7 +52,7 @@ layui.config({
         // console.log(data.field)
         // var condi = {};
         // condi = data.field;
-        // if(role_ID){
+        // if(roleId){
         //     //编辑
         //     editRole(condi);
         // }else{
@@ -67,8 +67,8 @@ layui.config({
         getTreeCheckedIds(checkData,menusIds);
 
         var condi = {};
-        condi.ROLE_ID = role_ID;
-        condi.menuIds = menusIds.join(',');
+        condi.roleId = roleId;
+        condi.menus = menusIds.join(',');
         console.log(menusIds);
         saveRoleMenuIds(condi);
         // {"ROLE_ID":ROLE_ID,"menuIds":ids};
@@ -81,9 +81,9 @@ layui.config({
         if(data && data.length > 0){
             data.forEach(function(obj){
                 var node = {
-                    id:obj.menu_ID,
-                    title:obj.menu_NAME,
-                    checked:obj.hasMenu || false,
+                    id:obj.menuId,
+                    title:obj.menuName,
+                    checked:obj.menuState || false,
                     // checked:false,
                     spread:true,
                     children:[]
@@ -91,25 +91,25 @@ layui.config({
                 // if(obj.hasMenu){
                 //     checkids.push(obj.menu_ID);
                 // }
-                if(obj.subMenu && obj.subMenu.length > 0){
-                    obj.subMenu.forEach(function(cnode){
-                        if(!cnode.hasMenu){
+                if(obj.children && obj.children.length > 0){
+                    obj.children.forEach(function(cnode){
+                        if(!cnode.menuState){
                             node.checked = false;
                         }
                     });
-                    if(obj.hasMenu == node.checked && node.checked){
+                    if(obj.menuState == node.checked && node.checked){
                         //子集都是tree,只要父级为tree,不然复选框错误
-                        obj.subMenu.forEach(function(cnode){
-                            cnode.hasMenu = false;
+                        obj.children.forEach(function(cnode){
+                            cnode.menuState = false;
                         });
                     }
 
-                    obj.subMenu.forEach(function(cnode){
+                    obj.children.forEach(function(cnode){
                         var n = {
-                            id:cnode.menu_ID,
-                            title:cnode.menu_NAME,
+                            id:cnode.menuId,
+                            title:cnode.menuName,
                             // checked:false,
-                            checked:cnode.hasMenu || false,
+                            checked:cnode.menuState || false,
                             // spread:true,
                             children:[]
                         };
@@ -214,13 +214,13 @@ layui.config({
 
     function saveRoleMenuIds(condi){
         $.Ajax({
-            async: false,
-            url: server + "/ADMINM/role/saveMenuqx",
+            async: true,
+            url: server + "/ADMINM/role/updateRoleMenu",
             dataType: "json",
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("角色栏目设置成功");
 
                     setTimeout(function(){

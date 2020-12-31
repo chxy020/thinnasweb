@@ -296,13 +296,13 @@ layui.config({
     function changeUserStatus(condi){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/jqkjUser/updateStatus",
+            url: server + "/ADMINM/appUser/updateStatus",
             dataType: "json",
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
-                    if(condi.STATUS == 1){
+                if(obj.code == 0){
+                    if(condi.status == 1){
                         layer.msg("启用成功");
                     }else{
                         layer.msg("禁用成功");
@@ -447,20 +447,20 @@ layui.config({
             });
         } else if (obj.event === 'switch') {
             var condi = {};
-            condi.UID = data.uid;
+            condi.uid = data.uid;
             if(data.status==1){
                 // data.jz=2
                 // console.log("data.jz=====11",data.jz)
                 // layer.msg("账号已禁用")
                 //把数据提交到接口里
-                condi.STATUS = 0;
+                condi.status = 0;
                 
             }else{
                 // data.jz=1
                 // layer.msg("账号已启用")
                 // console.log("data.jz=====22",data.jz)
                 //把数据提交到接口里
-                condi.STATUS = 1;
+                condi.status = 1;
             }
             changeUserStatus(condi);
         }else if (obj.event === 'equipment'){
@@ -469,7 +469,7 @@ layui.config({
             layer.open({
 				type: 2,
 				title: '设备管理',
-                // content: '../device/device_list.html?uid='+'5bea735b8c324eafbfd11b679eb758d0',
+                // content: '../device/device_list.html?uid=d24649826b9d48c58c62347cb2cd9c1c',
                 content: '../device/device_list.html?uid='+uid,
                 maxmin: true,
                 area: ['100%', '100%'],

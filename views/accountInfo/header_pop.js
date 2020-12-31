@@ -62,6 +62,7 @@ layui.config({
                 if(obj.code == 0){
                     layer.msg("修改成功");
 
+                    window.sessionStorage.setItem("__userinfo",JSON.stringify(obj.data));
 
                     setTimeout(function(){
                         //刷新父页面

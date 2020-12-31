@@ -9,10 +9,33 @@ layui.config({
     var setter = layui.setter;
     var url = setter.baseUrl;
 
+    var userInfo = {};
+    function getUserInfo(userid){
+        var user = window.sessionStorage.getItem("__userinfo") || "";
+        if(user){
+            user = JSON.parse(user);
+            userInfo = user;
+        }else{
+            top.location.href = setter.loginUrl;
+        }
+    }
+    
+    getUserInfo();
+
     var active = {
         smsCode: function() {
             console.log("smsCode--------");
-            getSmsCode();
+            var phone = $("#phone").val();
+            if(phone){
+                if(!setter.isTel(phone)){
+                    layer.msg("手机号输入错误");
+                    return false;
+                }
+                getSmsCode(phone);
+            }else{
+                layer.msg("请输入手机号")
+            }
+            
         }
     };
 
@@ -23,29 +46,62 @@ layui.config({
 
     
     //监听提交
-    form.on('submit(login)', function(data){
-        // alert(888)
-        console.log("重置密码------")
-        // layer.msg(JSON.stringify(data.field),function(){
-        //     location.href='./index.html'
-        // });
+    form.on('submit(submit)', function(data){
+        var condi = {};
+        var phone = data.field.phone;
+        if(!setter.isTel(phone)){
+			layer.msg("手机号输入错误");
+			return false;
+        }
+        condi.userId = userInfo.userId;
+        condi.code = data.field.code;
+        condi.phone = phone;
+
+        updatePhone(condi);
         return false;
     });
 
-
-    function getSmsCode(){
+    function updatePhone(condi){
         $.ajax({
-            async: false,
-            type: "get",
-            url: url + "/permission/getpremission",
+            async: true,
+            type: "post",
+            url: url + "/ADMINM/user/updatePhone",
             datatype: 'json',
+            data:condi,
             xhrFields: {
                 withCredentials: true
             },
             //成功的回调函数
-            success: function (msg) {
-                var data = msg.data;
-                if (msg.code != 0) {
+            success: function (obj) {
+                if (obj.code == 0) {
+                    
+                }else{
+                    layer.msg(obj.data || "修改手机号失败");
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+
+
+    function getSmsCode(phone){
+        $.ajax({
+            async: true,
+            type: "post",
+            url: url + "/ADMINM/code/sendsms",
+            datatype: 'json',
+            data:{"phone":phone},
+            xhrFields: {
+                withCredentials: true
+            },
+            //成功的回调函数
+            success: function (obj) {
+                if (obj.code == 0) {
+                    
+                }else{
+                    layer.msg(obj.data || "验证码发送失败");
                 }
                 smsBtnTimeCount();
             },

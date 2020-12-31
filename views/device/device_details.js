@@ -12,21 +12,22 @@ layui.config({
     var server = setter.baseUrl;
     var uri = window.location.search;
     
-    var deviceid = setter.getUrlParam("deviceid",uri) || "";
+    var device_id = setter.getUrlParam("device_id",uri) || "";
+    device_id = "744c4da721fa5da1f7bef8aa5b291842";
     
-    if(!deviceid){
+    if(!device_id){
         layer.msg("没有获取到设备id");
         return;
     }
 
-    if(deviceid){
+    if(device_id){
         //编辑
         $.Ajax({
-            async: false,
-            url: server + "/ADMINM/device/DeviceDetails",
+            async: true,
+            url: server + "/ADMINM/device/getUserDeviceDetails",
             dataType: "json",
-            method: 'get',
-            data:{"DEVICEID":deviceid},
+            method: 'post',
+            data:{"device_id":device_id},
             success: function(obj) {
                 if(obj.code == 1){
                     changeDetailInfoHtml(obj.deviceInfo || {});

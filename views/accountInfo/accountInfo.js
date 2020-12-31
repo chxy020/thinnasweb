@@ -30,6 +30,7 @@ layui.config({
         $("#name").val(user.name);
         
     }
+    window.parent.__getUserInfo();
     setUserInfoHtml();
 
     //普通图片上传 头像上传
@@ -73,9 +74,9 @@ layui.config({
         
         console.log(data.field)
         var condi = {};
-        condi.HEADIMG = userHeadImg;
-        condi.NAME = data.field.name;
-        condi.USER_ID = user.user_ID;
+        // condi.HEADIMG = userHeadImg;
+        condi.name = data.field.name;
+        // condi.USER_ID = user.user_ID;
         updateUserInfo(condi);
 
         return false;
@@ -85,20 +86,23 @@ layui.config({
     
 
     function updateUserInfo(condi){
+        condi.userId = user.userId;
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/user/updateUserInfo",
+            url: server + "/ADMINM/user/update",
             dataType: "json",
             method: 'post',
             data:condi,
             success: function(obj) {
-                if(obj.code == 1){
+                if(obj.code == 0){
                     layer.msg("修改成功");
                     
-                    user.headimg = obj.HEADIMG;
-                    user.name = obj.NAME;
+                    // user.headimg = obj.HEADIMG;
+                    user.name = condi.name;
 
-                    window.parent.__getUserInfo(obj.USER_ID);
+                    window.sessionStorage.setItem("__userinfo",JSON.stringify(user));
+
+                    window.parent.__getUserInfo();
                     // setTimeout(function(){
                     //     //刷新父页面
                     //     window.parent.location.reload();
@@ -126,7 +130,7 @@ layui.config({
                 maxmin: true,
                 content: 'replaceMobile_pop.html',
                 yes: function(index, layero) {
-                    var submit = layero.find('iframe').contents().find("#ruleclick");
+                    var submit = layero.find('iframe').contents().find("#submit");
                     submit.click();
                 }
             });

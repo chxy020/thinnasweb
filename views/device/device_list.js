@@ -435,7 +435,7 @@ layui.config({
                 // btn: ['保存', '取消'],
                 // btnAlign: 'c',
                 maxmin: true,
-                content: 'device_details.html?deviceid='+data.device_id,
+                content: 'device_details.html?device_id='+data.device_id,
                 // content: 'account_edit_pop.html?id=" + data.id,
                 yes: function(index, layero) {
                 }

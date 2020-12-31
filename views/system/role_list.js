@@ -197,11 +197,11 @@ layui.config({
         // // console.log(table.checkStatus('test-table-operate').data); // 获取表格中选中行的数据
         if (obj.checked && obj.type == 'one') {
             var devi = {};
-            devi = obj.data.role_ID;
+            devi = obj.data.roleId;
             arrangeList.push(devi)
         }
         if (!obj.checked && obj.type == 'one') {
-            var index = arrangeList.indexOf(obj.data.role_ID);
+            var index = arrangeList.indexOf(obj.data.roleId);
             if (index > -1) {
                 arrangeList.splice(index, 1);
             }
@@ -213,7 +213,7 @@ layui.config({
         if (obj.checked && obj.type == 'all') {
             $.each(table.checkStatus('test-table-operate').data, function(idx, con) {
                 var devi = {};
-                devi = con.role_ID;
+                devi = con.roleId;
 
                 arrangeList.push(devi)
             });
@@ -233,15 +233,15 @@ layui.config({
             layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
                 $.Ajax({
                     async: false,
-                    type: "get",
-                    url: server + "/ADMINM/role/delete",
+                    type: "post",
+                    url: server + "/ADMINM/role/deleteRole",
                     dataType: "json",
                     data: {
-                        "ROLE_ID": data.role_ID
+                        "roleId": data.roleId
                     },
                     //成功的回调函数
                     success: function (msg) {
-                        if (msg.code == 1) {
+                        if (msg.code == 0) {
                             layer.msg("删除成功");
                             tableRender();
                         } else {
@@ -266,7 +266,7 @@ layui.config({
                 btn: ['保存', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
-                content: 'role_add_pop.html?role_ID='+data.roleId,
+                content: 'role_add_pop.html?roleId='+data.roleId,
                 yes: function(index, layero) {
                     var submit = layero.find('iframe').contents().find("#submit");
                     submit.click();
@@ -281,7 +281,7 @@ layui.config({
                 btn: ['保存', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
-                content: 'role_menu.html?role_ID='+data.role_ID+"&role_NAME="+data.role_NAME,
+                content: 'role_menu.html?roleId='+data.roleId+"&roleName="+data.roleName,
                 yes: function(index, layero) {
                     var submit = layero.find('iframe').contents().find("#submit");
                     submit.click();
@@ -327,23 +327,21 @@ layui.config({
                     $.Ajax({
                         async: false,
                         type: "post",
-                        url:server + "/ADMINM/role/delete",
+                        url:server + "/ADMINM/role/batchDeleteRole",
                         dataType: "json",
                         //成功的回调函数
                         data: {
-                            "USER_IDS":arrangeList.join(",")
+                            "ids":arrangeList.join(',')
                         },
                         xhrFields: {
                             withCredentials: true
                         },
                         success: function(obj) {
-                            var list = obj.list || [];
-                            var msg = list[0] || {};
-                            if (msg.code == 1) {
+                            if (obj.code == 0) {
                                 layer.msg("删除成功");
                                 tableRender();
                             } else {
-                                layer.msg(msg.msg);
+                                layer.msg(obj.msg || "删除失败");
                             }
                 
                         },

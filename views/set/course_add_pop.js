@@ -27,7 +27,6 @@ layui.config({
     if(isEdit){
         // $("#filepath").html(filePath.replace("/ADMINM/uploadFiles/file",""));
         $("#name").val(fileName);
-        $("#id").val(fileId);
     }
 
     //视频
@@ -63,7 +62,7 @@ layui.config({
 
 
     var _token;
-    var url = server + "/circle/examine/getQiniuyinToken";
+    var url = server + "/ADMINM/qiniu/getQiniuyinToken";
     $.Ajax({
         async: false,
         url: url,
@@ -86,7 +85,32 @@ layui.config({
     });
 
 
-
+    var videoKey;
+    var videoSize;
+    var videoType = "mp4";
+    var observer = {
+        next(res){
+            var total = Math.ceil(res.total.percent);
+            if(total == 100){
+                videoSize = res.total.size;
+            }
+            $("#uploadbg").show();
+            $('#progressbar1').LineProgressbar({
+                percentage: total,
+                duration:0
+            });
+        },
+        error(err){
+            layer.msg("上传视频错误");
+            $("#file").val('');
+            // console.log("error----",err);
+        },
+        complete(res){
+            $("#uploadbg").hide();
+            layer.msg("上传视频成功");
+            videoKey = res.key;
+        }
+    };
     
     function uploadFile(files){
         if(_token){
@@ -137,55 +161,47 @@ layui.config({
         // });
         
         // console.log(data.field)
-        // if(!filePath){
-        //     layer.msg("没有上传文件");
-        //     return false;
-        // }
-        // var condi = {};
-        // condi.NAME = data.field.NAME;
-        // condi.PATH = filePath;
-        // condi.ID = fileId;
 
-        // if(isEdit){
-        //     updateCourse(condi);
-        // }else{
-        //     saveCourse(condi);
-        // }
+        
+        var condi = {};
+        condi.name = data.field.name;
+        
 
-        saveCourse();
+        if(isEdit){
+            condi.id = fileId;
+            if(videoKey){
+                condi.fileKey = videoKey;
+            }
+            updateCourse(condi);
+        }else{
+            if(!videoKey){
+                layer.msg("没有上传文件");
+                return false;
+            }
+            
+            condi.fileKey = videoKey;
+
+            saveCourse(condi);
+        }
+        
 
         return false;
     });
 
     
 
-    function saveCourse(){
+    function saveCourse(condi){
         layer.load(2);
-
-        var url = server + "/ADMINM/aftersales/addCourse";
-        if(fileId){
-            url = server + "/ADMINM/aftersales/updateCourse";
-        }
-        var formdata = new FormData(document.getElementById("form"))
-
         $.Ajax({
             async: false,
-            url: url,
-            // dataType: "json",
+            url: server + "/ADMINM/aftersales/addCourse",
+            dataType: "json",
             method: 'post',
-            data:formdata,
-            processData:false,   //  告诉jquery不要处理发送的数据
-            contentType:false,   // 告诉jquery不要设置content-Type请求头
+            data:condi,
             success: function(obj) {
                 layer.closeAll();
-                
                 if(obj.code == 0){
-                    if(isEdit){
-                        layer.msg("修改成功");
-                    }else{
-                        layer.msg("添加成功");
-                    }
-
+                    layer.msg("添加成功");
 
                     setTimeout(function(){
                         //刷新父页面
@@ -195,6 +211,31 @@ layui.config({
                     },500);
                 }else{
                     layer.msg(obj.msg || "添加失败");
+                }
+            }
+        });
+    }
+    function updateCourse(condi){
+        layer.load(2);
+        $.Ajax({
+            async: false,
+            url:server + "/ADMINM/aftersales/updateCourse",
+            dataType: "json",
+            method: 'post',
+            data:condi,
+            success: function(obj) {
+                layer.closeAll();
+                if(obj.code == 0){
+                    layer.msg("修改成功");
+
+                    setTimeout(function(){
+                        //刷新父页面
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name);
+               		    parent.layer.close(index);
+                    },500);
+                }else{
+                    layer.msg(obj.msg || "修改失败");
                 }
             }
         });

@@ -29,15 +29,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">手机号：</label>
             <div class="layui-input-block positionR">
-                <input name="username" placeholder="请输入您的手机号" type="text" lay-verify="required" class="layui-input" >
+                <input id="phone" name="phone" placeholder="请输入您的手机号" type="text" lay-verify="required" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">验证码：</label>
             <div class="layui-input-block">
                 <div class="layui-col-xs6">
-                    <label class="layadmin-user-login-icon" for="LAY-user-login-vercode"></label>
-                    <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required"
+                    <label class="layadmin-user-login-icon" for="code"></label>
+                    <input type="text" name="code" id="code" lay-verify="required"
                         placeholder="请输入验证码" class="layui-input">
                 </div>
                 <div class="layui-col-xs6">
@@ -48,6 +48,8 @@
                 </div>
             </div>
         </div>
+
+        <button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">提交</button>
     </form>
 </div> 
 

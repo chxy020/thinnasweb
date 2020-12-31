@@ -74,7 +74,9 @@ layui.config({
             // }
         },
         error: function (error) {
-            console.log(error)
+            window.sessionStorage.setItem("__userinfo","");
+            location.href = setter.loginUrl;
+            console.log(error);
         },
     });
 
@@ -87,10 +89,14 @@ layui.config({
                 $("#headimg").attr("src",user.headimg);
             }
             $("#phone").html(user.phone || "");
-            $("#username").html(user.username || "");
+            $("#username").html(user.name || "");
 
             window.__user = user;
+        }else{
+            window.sessionStorage.setItem("__userinfo","");
+            location.href = setter.loginUrl;
         }
+
         // $.Ajax({
         //     async: false,
         //     type: "GET",
@@ -207,7 +213,7 @@ layui.config({
                 success: function(obj) {
                     if(obj.code == 0){
                         window.sessionStorage.setItem("__userinfo","");
-                        location.href = '/ADMINM/static/views/user/login.html';
+                        location.href = setter.loginUrl;
                     }else{
                         layer.msg(obj.msg);
                     }

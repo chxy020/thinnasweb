@@ -102,7 +102,7 @@ layui.config({
             layer.open({
                 type: 2,
                 title: '添加教程',
-                area: ['500px', '300px'],
+                area: ['720px', '350px'],
                 btn: ['确定', '取消'],
                 btnAlign: 'c',
                 maxmin: true,
@@ -118,7 +118,7 @@ layui.config({
             layer.open({
                 type: 2,
                 title: '编辑教程',
-                area: ['500px', '300px'],
+                area: ['720px', '350px'],
                 btn: ['确定', '取消'],
                 btnAlign: 'c',
                 maxmin: true,

@@ -17,16 +17,16 @@ layui.config({
     var server = setter.baseUrl;
     var uri = window.location.search;
     
-    var role_ID = setter.getUrlParam("role_ID",uri) || "";
+    var roleId = setter.getUrlParam("roleId",uri) || "";
     
-    if(role_ID){
+    if(roleId){
         //编辑
         // $.Ajax({
         //     async: false,
         //     url: server + "/ADMINM/role/toEdit",
         //     dataType: "json",
         //     method: 'get',
-        //     data:{"ROLE_ID":role_ID},
+        //     data:{"roleId":roleId},
         //     success: function(obj) {
         //         if(obj.code == 1){
         //             changeRoleHtml(obj.data || {});
@@ -36,7 +36,7 @@ layui.config({
                
         //     }
         // });
-        var roleData =  window.sessionStorage.getItem("role_" + role_ID);
+        var roleData =  window.sessionStorage.getItem("role_" + roleId);
         if(roleData){
             roleData = JSON.parse(roleData);
             changeRoleHtml(roleData);
@@ -56,7 +56,7 @@ layui.config({
         // condi.PARENT_ID = 1;
         // condi.parentId = 1;
 
-        if(role_ID){
+        if(roleId){
             //编辑
             editRole(condi);
         }else{
@@ -96,7 +96,7 @@ layui.config({
     }
 
     function editRole(condi){
-        condi.roleId = role_ID;
+        condi.roleId = roleId;
 
         $.Ajax({
             async: false,

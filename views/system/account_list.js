@@ -381,11 +381,11 @@ layui.config({
         // // console.log(table.checkStatus('test-table-operate').data); // 获取表格中选中行的数据
         if (obj.checked && obj.type == 'one') {
             var devi = {};
-            devi = obj.data.USER_ID;
+            devi = obj.data.userId;
             arrangeList.push(devi);
         }
         else if (!obj.checked && obj.type == 'one') {
-            var index = arrangeList.indexOf(obj.data.USER_ID);
+            var index = arrangeList.indexOf(obj.data.userId);
             if (index > -1) {
                 arrangeList.splice(index, 1);
             }
@@ -397,7 +397,7 @@ layui.config({
         else if (obj.checked && obj.type == 'all') {
             $.each(table.checkStatus('test-table-operate').data, function(idx, con) {
                 var devi = {};
-                devi = con.USER_ID;
+                devi = con.userId;
 
                 arrangeList.push(devi);
             });
@@ -461,7 +461,7 @@ layui.config({
             // console.log("data.id=====",data.id)
             // console.log("data.jz=====",data.jz)
             var condi = {};
-            condi.USER_ID = data.USER_ID;
+            condi.userId = data.userId;
             if(data.STATUS==1){
                 // data.jz=2
                 // console.log("data.jz=====11",data.jz)
@@ -600,16 +600,16 @@ layui.config({
                     return layer.msg("请选择再批量删除")
                 }
                 layer.confirm('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后无法恢复！确定删除吗？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',{title:'删除提醒',btnAlign:'c'}, function() {
+                    
                     //获取选中数目
                     $.Ajax({
                         async: false,
                         type: "post",
-                        // url: url+"/roomtemplate/batchRemove",
-                        url:server + "/ADMINM/user/deleteAllU",
+                        url:server + "/ADMINM/user/batchDelete",
                         dataType: "json",
                         //成功的回调函数
                         data: {
-                            "USER_IDS":arrangeList.join(",")
+                            "ids":arrangeList.join(',')
                         },
                         xhrFields: {
                             withCredentials: true
@@ -617,7 +617,7 @@ layui.config({
                         success: function(obj) {
                             var list = obj.list || [];
                             var msg = list[0] || {};
-                            if (msg.code == 1) {
+                            if (msg.code == 0) {
                                 layer.msg("删除成功");
                                 tableRender();
                             } else {
