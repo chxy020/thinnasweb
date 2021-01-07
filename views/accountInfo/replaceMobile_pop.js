@@ -74,7 +74,16 @@ layui.config({
             //成功的回调函数
             success: function (obj) {
                 if (obj.code == 0) {
-                    
+                    layer.msg("修改成功");
+
+                    window.sessionStorage.setItem("__userinfo",JSON.stringify(obj.data));
+
+                    setTimeout(function(){
+                        //刷新父页面
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name);
+               		    parent.layer.close(index);
+                    },500);
                 }else{
                     layer.msg(obj.data || "修改手机号失败");
                 }

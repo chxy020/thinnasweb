@@ -29,27 +29,28 @@ layui.config({
             method: 'post',
             data:{"device_id":device_id},
             success: function(obj) {
-                if(obj.code == 1){
-                    changeDetailInfoHtml(obj.deviceInfo || {});
-                    renderUserTable(obj.userLsList || []);
-                    renderUserSpaceTable(obj.userSpaceList || []);
+                if(obj.code == 0){
+                    changeDetailInfoHtml(obj.data || {});
+                    
+                    // renderUserTable(obj.userLsList || []);
+                    // renderUserSpaceTable(obj.userSpaceList || []);
 
 
-                    var table1 = [];
-                    table1.push('<p>当前用户：<span>' + obj.countUser + '</span></p>');
-					table1.push('<p>历史用户：<span>' + obj.countUserLs + '</span></p>');
-					table1.push('<p>已使用：<span>' + obj.useDays + '天</span></p>');
-                    $("#tableinfo1").html(table1.join(''));
+                    // var table1 = [];
+                    // table1.push('<p>当前用户：<span>' + obj.countUser + '</span></p>');
+					// table1.push('<p>历史用户：<span>' + obj.countUserLs + '</span></p>');
+					// table1.push('<p>已使用：<span>' + obj.useDays + '天</span></p>');
+                    // $("#tableinfo1").html(table1.join(''));
 
-                    var info = obj.deviceInfo || {};
-                    var table2 = [];
-                    table2.push('<p><span>' + info.total + 'MB</span></p>');
-					table2.push('<p>可用：<span>' + info.available + 'MB</span></p>');
-					table2.push('<p>已用：<span>' + info.used + 'MB</span></p>');
-					table2.push('<p>文件数：<span>' + info.times + '</span></p>');
-                    $("#tableinfo2").html(table2.join(''));
+                    // var info = obj.deviceInfo || {};
+                    // var table2 = [];
+                    // table2.push('<p><span>' + info.total + 'MB</span></p>');
+					// table2.push('<p>可用：<span>' + info.available + 'MB</span></p>');
+					// table2.push('<p>已用：<span>' + info.used + 'MB</span></p>');
+					// table2.push('<p>文件数：<span>' + info.times + '</span></p>');
+                    // $("#tableinfo2").html(table2.join(''));
                 }else{
-                    layer.msg(obj.msg || "获取角色详情错误");
+                    layer.msg(obj.msg || "获取设备详情错误");
                 }
             }
         });
@@ -57,9 +58,10 @@ layui.config({
 
     function changeDetailInfoHtml(obj){
         var html = [];
-        html.push('<p class="bt"><span>' + obj.deviceid + '</span>(' + obj.nickname + '的设备)</p>');
+        // ' + obj.device_id + '
+        html.push('<p class="bt"><span>' + obj.device_id + '</span>(' + obj.nickname + '的设备)</p>');
 		html.push('<p class="states">' + (+obj.status == 1 ? "在线" : "离线") + '</p>');
-		html.push('<p>IP：<span>192.168.1.1</span></p>');
+		html.push('<p>IP：<span>'+ (obj.ip || "") +'</span></p>');
 		html.push('<p>存储方式：<span>RAID5</span></p>');
 		html.push('<p>磁盘：<span>1</span></p>');
 		html.push('<p>可靠性能：<span>高</span></p>');
@@ -69,18 +71,19 @@ layui.config({
         var html = [];
         html.push('<div class="detalisinfo">');
         html.push('<div class="state situation_A">');
-        html.push('状态<p>' + (obj.status_BIND == 1 ? "已绑定" : "未绑定") + '</p>');
+        // html.push('状态<p>' + (obj.status_BIND == 1 ? "已绑定" : "未绑定") + '</p>');
+        html.push('状态<p>已绑定</p>');
         html.push('</div>');
         html.push('<div class="state situation_B">');
-        html.push('管理员<p>'+ obj.uname +'<span>('+ obj.phone + ')</span></p>');
+        html.push('管理员<p>'+ obj.nickname +'<span>('+ (obj.phone || "") + ')</span></p>');
         html.push('</div>');
         html.push('</div>');
         html.push('<div class="detalisinfo">');
         html.push('<div class="state situation_C">');
-        html.push('绑定时间<p>' + obj.bindtime + '</p>');
+        html.push('绑定时间<p>' + (obj.createtime || "") + '</p>');
         html.push('</div>');
         html.push('<div class="state situation_D">');
-        html.push('激活时间<p>' + obj.bindtime + '</p>');
+        html.push('激活时间<p>' + (obj.createtime || "") + '</p>');
         html.push('</div>');
         html.push('</div>');
         $("#info2").html(html.join(''));
@@ -180,24 +183,25 @@ layui.config({
     }
 
     function renderUserLsTable(){
-        var keywords = $("#keyword").val() || "";
+        var search = $("#keyword").val() || "";
         //表格C加载渲染
         table.render({
             elem: '#test-table-operateC',
             height: '378',//必须留着
-            url: server + "/ADMINM/device/DeviceOperationLs",
-            method: 'get',
+            // url: server + "/ADMINM/device/DeviceOperationLs",
+            url: server + "/ADMINM/logger/getUserDeviceLog",
+            method: 'post',
             where:{
-                "keywords":keywords||"",
-                "DEVICEID":deviceid,
-                "bindtimeStart":bindtimeStart,
-                "bindtimeEnd":bindtimeEnd
+                "search":search||"",
+                // "device_id":device_id,
+                "device_id":"jjj",
+                "startTime":bindtimeStart ?  bindtimeStart + " 00:00:00" : "",
+                "endTime":bindtimeEnd ? bindtimeEnd + " 00:00:00" : ""
             },
             xhrFields: {
                 withCredentials: true
-            }
-            
-            ,page: {
+            },
+            page: {
                 layout: ['prev', 'page', 'next', 'count', 'skip']
             },
             cols: [
@@ -206,14 +210,20 @@ layui.config({
                         field: 'nickname',
                         title: '用户',
                         align: 'left',
+                        templet: function(data) {
+                            if(data.appUser){
+                                return data.appUser.nickname;
+                            }
+                            return "";
+                        },
                     }, 
                     {
-                        field: 'operation',
+                        field: 'content',
                         title: '操作历史',
                         align: 'left',
                     },
                     {
-                        field: 'createtime',
+                        field: 'created_at',
                         title: '操作时间',
                         align: 'left',
                     }
@@ -225,13 +235,13 @@ layui.config({
                     top.location.href = setter.loginUrl;
                     return;
                 }
-                if(res.code == 1){
+                if(res.code == 0){
                     //res 即为原始返回的数据
                     return {
                         "code": 0,
                         "msg": "",
                         "count": res.count,
-                        "data": res.deviceCzlsList
+                        "data": res.data
                     };
                 }else{
                     return {
@@ -247,7 +257,7 @@ layui.config({
             limit: 15,
             skin: 'line',
             even: true,
-            limits: [5, 10, 15],
+            limits: [10, 15,30],
             done: function(res, curr, count) {
                 // table_data = res.data;
 

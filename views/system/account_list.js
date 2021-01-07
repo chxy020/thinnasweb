@@ -46,7 +46,7 @@ layui.config({
     function changeUserStatus(condi){
         $.Ajax({
             async: false,
-            url: server + "/ADMINM/user/editUs",
+            url: server + "/ADMINM/user/update",
             dataType: "json",
             method: 'post',
             data:condi,
@@ -462,19 +462,19 @@ layui.config({
             // console.log("data.jz=====",data.jz)
             var condi = {};
             condi.userId = data.userId;
-            if(data.STATUS==1){
+            if(data.status==1){
                 // data.jz=2
                 // console.log("data.jz=====11",data.jz)
                 // layer.msg("账号已禁用")
                 //把数据提交到接口里
-                condi.STATUS = 0;
+                condi.status = 0;
                 
             }else{
                 // data.jz=1
                 // layer.msg("账号已启用")
                 // console.log("data.jz=====22",data.jz)
                 //把数据提交到接口里
-                condi.STATUS = 1;
+                condi.status = 1;
             }
             changeUserStatus(condi);
 

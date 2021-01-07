@@ -1,0 +1,37 @@
+1.参数说明：
+
+```
+totalUser：总用户数
+	totalUserX：x轴数据
+	totalUserY：y轴数据
+dailyLife：日活用户数
+	同上
+userProportion：设备用户比例
+	同上
+deviceProportion：外部设备比例
+	deviceProportionX：x轴数据
+	deviceProportionY：y轴数据
+	userProportion1：备数总设
+	userProportion2：外部设备比例
+publicIp：公网ip数
+	publicIpX
+	publicIpY
+	publicIp
+storage_capacity：存储容量
+	storage_capacity_X
+	storage_capacity_Y
+	storage_capacity
+share_space：共享空间数
+	同上
+dailyLifeInterval：日活用户时段
+	dailyLifeIntervalX：x轴数据
+	dailyLifeIntervalY：
+		all：全部数据数
+		upload：上传数
+		download：下载数
+		select：游览数
+classified：存储文件分类统计
+	storage_capacity_X
+	storage_capacity_Y
+map：地图（还没写完）
+```

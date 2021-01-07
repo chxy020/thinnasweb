@@ -22,25 +22,17 @@
 		<div class="layui-card">
 			<div class="layui-form layui-col-space5">	
 				<div class="layui-input-inline layui-show-xs-block">
-					<input type="text" name="username" placeholder="搜索姓名/电话/操作内容" autocomplete="off" class="layui-input">
+					<input type="text" id="keyword" name="keyword"  placeholder="搜索姓名/操作内容" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-input-inline layui-show-xs-block">
-					<select name="contrller">
-						<option value="">选择账号</option>
-						<option value="0">张三</option>
-						<option value="1">李四</option>
-						<option value="2">王五</option>
-					</select>
-				</div>
-				<div class="layui-input-inline layui-show-xs-block">
-					<select name="contrller">
-						<option value="">选择操作类型</option>
-						<option value="0">添加</option>
-						<option value="1">修改</option>
-						<option value="2">删除</option>
-						<option value="3">浏览</option>
-						<option value="4">登录</option>
-						<option value="5">退出</option>
+					<select id="typeselect" name="contrller" lay-filter="component-typeselect" >
+						<option value="">全部操作类型</option>
+						<option value="添加">添加</option>
+						<option value="修改">修改</option>
+						<option value="删除">删除</option>
+						<option value="浏览">浏览</option>
+						<option value="登陆">登陆</option>
+						<option value="登出">登出</option>
 					</select>
 				</div>
 				
@@ -48,7 +40,6 @@
 					<input type="text" name="date" id="rangetime" placeholder="开始时间 | 结束时间" autocomplete="off" class="layui-input">
 				</div>
 				<div class="layui-input-inline layui-show-xs-block clearfix">
-					<button class="layui-btn layui-ds" data-type="search" id="search"><i class="layui-icon">&#xe615;</i></button>
 					<button class="layui-btn layui-ds layui-btn-primary" data-type="refresh" id="refresh" data="刷新">
 						<i class="layui-icon">&#xe666;</i>
 					</button>

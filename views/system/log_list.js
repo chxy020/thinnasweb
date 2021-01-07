@@ -37,16 +37,16 @@ layui.config({
         }
     });
 
-    $.Ajax({
-        async: false,
-        url: server + "/ADMINM/user/listUserName",
-        dataType: "json",
-        method: 'get',
-        success: function(obj) {
-            console.log(obj);
-            userNameSelectHtml(obj.userNames||[]);
-        }
-    });
+    // $.Ajax({
+    //     async: false,
+    //     url: server + "/ADMINM/user/listUserName",
+    //     dataType: "json",
+    //     method: 'get',
+    //     success: function(obj) {
+    //         console.log(obj);
+    //         userNameSelectHtml(obj.userNames||[]);
+    //     }
+    // });
 
     function userNameSelectHtml(userNames){
         for (i = 0; i < userNames.length; i++) {
@@ -64,14 +64,13 @@ layui.config({
         table.render({
             elem: '#test-table-operate',
             height: 'full-60',//必须留着
-            url: server + "/ADMINM/oplog/listOpLog",
-            method: 'get',
+            url: server + "/ADMINM/logger/getAppOperationLog",
+            method: 'post',
             where:{
-                "keywords":keywords||"",
-                "TYPE":types,
-                "USERNAME":username,
-                "timeStart":bindtimeStart,
-                "timeEnd":bindtimeEnd
+                "search":keywords||"",
+                "o_state":types,
+                "startTime":bindtimeStart ?  bindtimeStart + " 00:00:00" : "",
+                "endTime":bindtimeEnd ? bindtimeEnd + " 00:00:00" : ""
             },
             xhrFields: {
                 withCredentials: true
@@ -110,26 +109,44 @@ layui.config({
                         }
                     },
                     {
-                        field: 'username',
+                        field: 'loginName',
                         title: '操作账号',
                         align: 'left',
+                        templet: function(data) {
+                            if(data.appUser){
+                                return data.appUser.loginName || "";
+                            }
+                            return "";
+                        }
                     }, {
-                        field: 'name',
+                        field: 'nickname',
                         title: '昵称',
                         align: 'left',
+                        templet: function(data) {
+                            if(data.appUser){
+                                return data.appUser.nickname || "";
+                            }
+                            return "";
+                        }
                     },
                     {
-                        field: 'role_NAME',
+                        field: 'rolename',
                         title: '角色',
                         align: 'left',
+                        templet: function(data) {
+                            if(data.appUser){
+                                return data.appUser.rolename || "";
+                            }
+                            return "";
+                        }
                     },
                     {
-                        field: 'createtime',
+                        field: 'created_at',
                         title: '操作时间',
                         align: 'left',
                     },
                     {
-                        field: 'rp_LENGTH',
+                        field: 'rp_length',
                         title: '响应时长',
                         align: 'left',
                     },
@@ -155,13 +172,13 @@ layui.config({
                     top.location.href = setter.loginUrl;
                     return;
                 }
-                if(res.code == 1){
+                if(res.code == 0){
                     //res 即为原始返回的数据
                     return {
                         "code": 0,
                         "msg": "",
                         "count": res.count,
-                        "data": res.opLogList
+                        "data": res.data
                     };
                 }else{
                     return {
@@ -177,7 +194,7 @@ layui.config({
             limit: 15,
             skin: 'line',
             even: true,
-            limits: [5, 10, 15],
+            limits: [10, 15,30],
             done: function(res, curr, count) {
                 // table_data = res.data;
 
