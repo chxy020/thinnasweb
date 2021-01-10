@@ -14,6 +14,68 @@ layui.config({
     var isFull = false;
     var mapCode = "100000";
 
+    var chartData;
+    function getAllChartData(){
+        $.Ajax({
+            async: false,
+            type: "POST",
+            url: server + "/ADMINM/echarts/getEchartsData",
+            datatype: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            //成功的回调函数
+            success: function (obj) {
+                if(obj.code == 0){
+                    var data = obj.data || {};
+                    chartData = data;
+                    //总用户数
+                    var totalUser = data.totalUser || null;
+                    if(totalUser){
+                        var count = totalUser.totalUser || 0;
+                        $("#totalUser").html('<span>'+count+'</span>个');
+                    }
+                    var dailyLife = data.dailyLife || null;
+                    if(dailyLife){
+                        var count = dailyLife.dailyLife || 0;
+                        $("#dailyLife").html('<span>'+count+'</span>个');
+                    }
+                    var userProportion = data.userProportion || null;
+                    if(userProportion){
+                        var count = userProportion.userProportion || 0;
+                        $("#userProportion").html('<span>'+count+'</span>%');
+                    }
+                    var deviceProportion = data.deviceProportion || null;
+                    if(deviceProportion){
+                        var userProportion1 = deviceProportion.userProportion1 || 0;
+                        var userProportion2 = deviceProportion.userProportion2 || 0;
+                        $("#userProportion1").html(userProportion1 + '<i>台</i>');
+                        $("#userProportion2").html(userProportion2 + '%');
+                    }
+                    var publicIp = data.publicIp || null;
+                    if(publicIp){
+                        var publicIp = publicIp.publicIp || 0;
+                        $("#publicIp").html('<span>' + publicIp +'</span>个');
+                    }
+                    var storage_capacity = data.storage_capacity || null;
+                    if(storage_capacity){
+                        var storage_capacity = storage_capacity.storage_capacity || 0;
+                        $("#storage_capacity").html('<span>' + storage_capacity +'</span>');
+                    }
+                    var share_space = data.share_space || null;
+                    if(share_space){
+                        var share_space = share_space.share_space || 0;
+                        $("#share_space").html('<span>' + share_space +'个</span>');
+                    }
+                }
+            },
+            error: function (error) {
+            },
+        });
+    }
+
+    
+
     var mapOptions = {
         title:{
             text:"中国",
@@ -136,14 +198,14 @@ layui.config({
     }
 
 
-    function lineChart(){
+    function lineChart(xdata,ydata){
         var option = {
             tooltip: {
                 trigger: 'axis'
             },
             xAxis: [{
                 type: 'category',
-                data: ['2019-01','2019-02','2019-03','2019-04','2019-05','2019-06'],
+                data: xdata || [],
                 show:false
             }],
             yAxis: [{
@@ -173,7 +235,7 @@ layui.config({
                 name: '用户数',
                 type: 'line',
                 symbolSize: 0,
-                data: [23,60,20,36,23,85],
+                data: ydata || [],
                 lineStyle: {
                     normal: {
                         width: 2,
@@ -209,32 +271,34 @@ layui.config({
         return option;
     }
 
-    function lineChart2(){
+    function lineChart2(data){
         let dataC1 =[120, 132, 101, 134, 90, 230, 210, 182, 191, 234, 260, 280];
         let dataC2 =[220, 182, 191, 210, 230, 270, 270, 201, 154, 140, 240, 250]
         let dataC3 =[150, 232, 201, 154, 190, 180, 210, 150, 182, 201, 154, 190]
         let dataD1 =[150, 232, 201, 154, 190, 180, 210, 150, 182, 201, 154, 190]
         let dataD2 =[150, 232, 201, 154, 190, 180, 210, 150, 182, 201, 154, 190]
         let dataD3 =[200, 232, 201, 200, 190, 190, 210, 190, 182, 201, 154, 190]
-        let xData = ['01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00', '23:00'];
-        
+        // let xData = ['01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00', '23:00'];
+        let xData = data.dailyLifeIntervalX || [];
+        let all = data.all || [];
+        let download = data.download || [];
+        let select = data.select || [];
+        let upload = data.upload || [];
         for(var i = 0;i<xData.length;i++){
-            dataC1.splice(i,1,{name:xData[i],value:dataC1[i]});
-            dataC2.splice(i,1,{name:xData[i],value:dataC2[i]});
-            dataC3.splice(i,1,{name:xData[i],value:dataC3[i]});
-            dataD1.splice(i,1,{name:xData[i],value:dataD1[i]});
-            dataD2.splice(i,1,{name:xData[i],value:dataD2[i]});
-            dataD3.splice(i,1,{name:xData[i],value:dataD3[i]});
+            all.splice(i,1,{name:xData[i],value:all[i]});
+            download.splice(i,1,{name:xData[i],value:download[i]});
+            select.splice(i,1,{name:xData[i],value:select[i]});
+            upload.splice(i,1,{name:xData[i],value:upload[i]});
+            // dataC1.splice(i,1,{name:xData[i],value:dataC1[i]});
+            // dataC2.splice(i,1,{name:xData[i],value:dataC2[i]});
+            // dataC3.splice(i,1,{name:xData[i],value:dataC3[i]});
+            // dataD1.splice(i,1,{name:xData[i],value:dataD1[i]});
+            // dataD2.splice(i,1,{name:xData[i],value:dataD2[i]});
+            // dataD3.splice(i,1,{name:xData[i],value:dataD3[i]});
         }
-        console.log(dataC1);
-        console.log(dataC2);
-        console.log(dataC3);
-        console.log(dataD1);
-        console.log(dataD2);
-        console.log(dataD3);
 
         var fontColor = '#30eee9';
-        option = {
+        var option = {
             grid: {
                 left: '5%',
                 right: '2%',
@@ -346,7 +410,7 @@ layui.config({
                             }
                         }
                     },
-                    data:dataC1
+                    data:upload
                 },
                 {
                     name: '下载',
@@ -375,7 +439,7 @@ layui.config({
                             }
                         }
                     },
-                    data: dataC2
+                    data: download
                 },
                 {
                     name: '浏览',
@@ -403,7 +467,7 @@ layui.config({
                             }
                         }
                     },
-                    data: dataC3
+                    data: select
                 },
                 {
                     name: '全部',
@@ -431,20 +495,82 @@ layui.config({
                             }
                         }
                     },
-                    data: dataD1
+                    data: all
                 }
             ]
         };
         return option;
     }
 
-    function pieChart(){
+    function pieChart(data){
+        var serise = [{
+            value: 5,
+            name: '文档',
+            itemStyle: {
+                color: "#FBB033",
+                borderColor: "rgba(50,123,250,1)",
+                borderWidth: 0
+            }
+        },
+        {
+            value: 2,
+            name: '图片',
+            itemStyle: {
+                color: "#8D83FE",
+                borderColor: "rgba(244,201,7,1)",
+                borderWidth: 0
+            }
+        },
+        {
+            value: 3,
+            name: '视频',
+            itemStyle: {
+                color: "#007FFD",
+                borderColor: "rgba(23,216,161,1)",
+                borderWidth: 0
+            }
+        },
+        {
+            value: 4,
+            name: '音频',
+            itemStyle: {
+                color: "#F1D669",
+                borderColor: "rgba(122,60,235,1)",
+                borderWidth: 0
+            }
+        },
+        {
+            value: 5,
+            name: '应用',
+            itemStyle: {
+                color: "#87E187",
+                borderColor: "rgba(15,197,243,1)",
+                borderWidth: 0
+            }
+        },
+        {
+            value: 6,
+            name: '其它',
+            itemStyle: {
+                color: "#D2CFD0",
+                borderColor: "rgba(15,197,243,1)",
+                borderWidth: 0
+            }
+        }];
+
+        var storage_capacity_X = data.storage_capacity_X || [];
+        var storage_capacity_Y = data.storage_capacity_Y || [];
+        for(var i = 0,len = storage_capacity_Y.length; i < len; i++){
+            serise[i].name = storage_capacity_Y[i].name;
+            serise[i].value = storage_capacity_Y[i].value;
+        }
+
         var option = {
             legend: {
                 orient: 'vertical',
                 top: "center",
                 right: "5%",
-                data: ['文档', '图片', '视频', '音频', '应用', '其它'],
+                data: storage_capacity_X,
                 textStyle: {
                     color: "#fff",
                     fontSize: 16
@@ -472,61 +598,7 @@ layui.config({
                     length2: 20,
                     smooth: true
                 },
-                data: [{
-                        value: 5,
-                        name: '文档',
-                        itemStyle: {
-                            color: "#FBB033",
-                            borderColor: "rgba(50,123,250,1)",
-                            borderWidth: 0
-                        }
-                    },
-                    {
-                        value: 2,
-                        name: '图片',
-                        itemStyle: {
-                            color: "#8D83FE",
-                            borderColor: "rgba(244,201,7,1)",
-                            borderWidth: 0
-                        }
-                    },
-                    {
-                        value: 3,
-                        name: '视频',
-                        itemStyle: {
-                            color: "#007FFD",
-                            borderColor: "rgba(23,216,161,1)",
-                            borderWidth: 0
-                        }
-                    },
-                    {
-                        value: 4,
-                        name: '音频',
-                        itemStyle: {
-                            color: "#F1D669",
-                            borderColor: "rgba(122,60,235,1)",
-                            borderWidth: 0
-                        }
-                    },
-                    {
-                        value: 5,
-                        name: '应用',
-                        itemStyle: {
-                            color: "#87E187",
-                            borderColor: "rgba(15,197,243,1)",
-                            borderWidth: 0
-                        }
-                    },
-                    {
-                        value: 6,
-                        name: '其它',
-                        itemStyle: {
-                            color: "#D2CFD0",
-                            borderColor: "rgba(15,197,243,1)",
-                            borderWidth: 0
-                        }
-                    }
-                ]
+                data:serise
             }]
         };
         return option;
@@ -542,7 +614,7 @@ layui.config({
     function addLineChart(){
         var line1 = $("#line1");
         linechart1 = echarts.init(line1[0]);
-        var option = lineChart();
+        var option = lineChart(chartData.totalUser.totalUserX,chartData.totalUser.totalUserY);
         option.series[0].name = "用户数";
         option.series[0].lineStyle.normal.color = {
             type: 'linear',
@@ -559,7 +631,7 @@ layui.config({
 
         var line2 = $("#line2");
         linechart2 = echarts.init(line2[0]);
-        var option = lineChart();
+        var option = lineChart(chartData.dailyLife.dailyLifeX,chartData.dailyLife.dailyLifeY);
         option.series[0].name = "日活用户数";
         option.series[0].lineStyle.normal.color = {
             type: 'linear',
@@ -576,7 +648,7 @@ layui.config({
 
         var line3 = $("#line3");
         linechart3 = echarts.init(line3[0]);
-        var option = lineChart();
+        var option = lineChart(chartData.userProportion.userProportionX,chartData.userProportion.userProportionY);
         option.series[0].name = "设备用户比例";
         option.series[0].lineStyle.normal.color = {
             type: 'linear',
@@ -593,8 +665,8 @@ layui.config({
 
         var line4 = $("#line4");
         linechart4 = echarts.init(line4[0]);
-        var option = lineChart();
-        option.series[0].name = "备数总设";
+        var option = lineChart(chartData.deviceProportion.deviceProportionX,chartData.deviceProportion.deviceProportionY);
+        option.series[0].name = "设备数总";
         option.series[0].lineStyle.normal.color = {
             type: 'linear',
             colorStops: [{
@@ -610,7 +682,7 @@ layui.config({
 
         var line5 = $("#line5");
         linechart5 = echarts.init(line5[0]);
-        var option = lineChart();
+        var option = lineChart(chartData.publicIp.publicIpX,chartData.publicIp.publicIpY);
         option.series[0].name = "公网IP数";
         option.series[0].lineStyle.normal.color = {
             type: 'linear',
@@ -627,7 +699,7 @@ layui.config({
 
         var line6 = $("#line6");
         linechart6 = echarts.init(line6[0]);
-        var option = lineChart();
+        var option = lineChart(chartData.storage_capacity.storage_capacity_X,chartData.storage_capacity.storage_capacity_Y);
         option.series[0].name = "存储容量";
         option.series[0].lineStyle.normal.color = {
             type: 'linear',
@@ -644,7 +716,7 @@ layui.config({
 
         var line7 = $("#line7");
         linechart7 = echarts.init(line7[0]);
-        var option = lineChart();
+        var option = lineChart(chartData.share_space.share_space_X,chartData.share_space.share_space_Y);
         option.series[0].name = "共享空间数";
         option.series[0].lineStyle.normal.color = {
             type: 'linear',
@@ -664,7 +736,7 @@ layui.config({
     function addUserActiveLine(){
         var useractiveline = $("#useractiveline");
         userLineChart = echarts.init(useractiveline[0]);
-        var option = lineChart2();
+        var option = lineChart2(chartData.dailyLifeInterval);
         userLineChart.setOption(option);
     }
 
@@ -673,14 +745,20 @@ layui.config({
         
         var filetypepie = $("#filetypepie");
         fileTypePieChart = echarts.init(filetypepie[0]);
-        var option = pieChart();
+        var option = pieChart(chartData.classified);
         fileTypePieChart.setOption(option);
     }
     
     getCurrentDate();
+
+    getAllChartData();
+
     addLineChart();
+
     addUserActiveLine();
+
     addFileTypePie();
+
     mapInit();
 
     $("#console_top_full").bind("click",function(){

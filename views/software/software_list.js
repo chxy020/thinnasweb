@@ -31,7 +31,7 @@ layui.config({
     getNowApp();
 
     function getNowApp(){
-        var server = "http://139.196.147.194:8084";
+        // var server = "http://139.196.147.194:8084";
         layer.load(2);
         $.Ajax({
             async: true,

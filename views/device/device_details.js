@@ -32,15 +32,19 @@ layui.config({
                 if(obj.code == 0){
                     changeDetailInfoHtml(obj.data || {});
                     
-                    // renderUserTable(obj.userLsList || []);
+                    renderUserTable(obj.userLsList || []);
                     // renderUserSpaceTable(obj.userSpaceList || []);
 
 
-                    // var table1 = [];
-                    // table1.push('<p>当前用户：<span>' + obj.countUser + '</span></p>');
-					// table1.push('<p>历史用户：<span>' + obj.countUserLs + '</span></p>');
-					// table1.push('<p>已使用：<span>' + obj.useDays + '天</span></p>');
-                    // $("#tableinfo1").html(table1.join(''));
+                    var createtime = obj.data.createtime || "";
+                    var now = new Date().getTime();
+                    var days = 0;
+
+                    var table1 = [];
+                    table1.push('<p>当前用户：<span>1</span></p>');
+					table1.push('<p>历史用户：<span>' + obj.data.uidnum + '</span></p>');
+					table1.push('<p>已使用：<span>' + days + '天</span></p>');
+                    $("#tableinfo1").html(table1.join(''));
 
                     // var info = obj.deviceInfo || {};
                     // var table2 = [];
@@ -95,28 +99,39 @@ layui.config({
         table.render({
             elem: '#test-table-operateA',
             height: '278',//必须留着
-            // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-            // url: server + "/ADMINM/user/listUsers",
-            method: 'get',
+            url: server + "/ADMINM/logger/getUserDeviceLog",
+            method: 'post',
+            where:{
+                "search":"",
+                "device_id":"",
+                "startTime":"",
+                "endTime":""
+            },
             xhrFields: {
                 withCredentials: true
-            }
-            ,data: list
-            ,cols: [
+            },
+            //,data: list
+            cols: [
                 [ //表头
                     {
                         field: 'nickname',
-                        title: '用户名',
+                        title: '用户',
                         align: 'left',
+                        templet: function(data) {
+                            if(data.appUser){
+                                return data.appUser.nickname;
+                            }
+                            return "";
+                        },
                     }, 
                     {
-                        field: 'operation',
+                        field: 'content',
                         title: '操作历史',
                         align: 'left',
                     },
                     {
-                        field: 'createtime',
-                        title: '时间',
+                        field: 'created_at',
+                        title: '操作时间',
                         align: 'left',
                     }
                     

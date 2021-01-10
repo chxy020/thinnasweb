@@ -61,7 +61,7 @@ layui.config({
 
     function saveApp(){
         layer.load(2);
-        server = "http://139.196.147.194:8084"
+        // server = "http://139.196.147.194:8084"
         var url = server + "/jqkj/user/updateAppVersion";
         var formdata = new FormData(document.getElementById("form"))
         $.Ajax({
