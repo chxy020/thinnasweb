@@ -35,12 +35,12 @@ layui.config({
         layer.load(2);
         $.Ajax({
             async: true,
-            url: server + "/jqkj/tvApk/getNowApp",
+            url: server + "/ADMINM/user/getNowApp",
             dataType: "json",
             method: 'get',
             success: function(obj) {
                 layer.closeAll();
-                if(obj.status == 0){
+                if(obj.code == 0){
                     var list = obj.data || [];
                     buildNowVersionHtml(list);
                 }else{
@@ -109,6 +109,8 @@ layui.config({
     }
 
     function updateApp(t,v){
+        t = t || "";
+        v = v || "";
         layer.open({
             type: 2,
             title: '更新软件版本',

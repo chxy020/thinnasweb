@@ -64,13 +64,13 @@ layui.config({
         layer.load(2);
         $.Ajax({
             async: true,
-            url: server + "/jqkj/tvApk/getTypeAllApp",
+            url: server + "/ADMINM/user/getTypeAllApp",
             dataType: "json",
             method: 'get',
             data:{type:type},
             success: function(obj) {
                 layer.closeAll();
-                if(obj.status == 0){
+                if(obj.code == 0){
                     var list = obj.data || [];
                     buildAllVersionHtml(list);
                 }else{
@@ -88,13 +88,13 @@ layui.config({
         layer.load(2);
         $.Ajax({
             async: true,
-            url: server + "/jqkj/file/logicalDel",
+            url: server + "/ADMINM/user/logicalDel",
             dataType: "json",
             method: 'post',
             data:{id:id,isdelete:1},
             success: function(obj) {
                 layer.closeAll();
-                if(obj.status == 0){
+                if(obj.code == 0){
                     getVersionList(tabid);
                     // var list = obj.data || [];
                     // buildAllVersionHtml(list);

@@ -60,7 +60,7 @@ layui.config({
                     var storage_capacity = data.storage_capacity || null;
                     if(storage_capacity){
                         var storage_capacity = storage_capacity.storage_capacity || 0;
-                        $("#storage_capacity").html('<span>' + storage_capacity +'</span>');
+                        $("#storage_capacity").html('<span>' + (+storage_capacity/1024/1024).toFixed(2) +'</span>TB');
                     }
                     var share_space = data.share_space || null;
                     if(share_space){
@@ -89,7 +89,7 @@ layui.config({
             }
         },
         geo: {
-            map: '100000',
+            map: 'china',
             label: {
                 normal: {
                     show: false,
@@ -121,17 +121,54 @@ layui.config({
             }
         },
         series: [
+            // {
+            //     type: 'scatter',
+            //     coordinateSystem: 'geo',
+            //     zlevel: 2,
+            //     symbolSize: 6,
+            //     itemStyle: {
+            //         normal: {
+            //             color: '#54FAFE',
+            //         }
+            //     },
+            //     data: [
+            //         {name:"河北",value:100}
+            //     ]
+            // },
+            // {
+            //     // name: '全国',
+            //     type: 'map',
+            //     map: 'china',
+            //     zoom:1.2,
+            //     geoIndex: 0,
+            //     label: {
+            //         show: true
+            //     },
+            //     nameMap:{
+            //     },
+            //     data: [
+                    
+            //     ]
+            // },
             {
-                type: 'scatter',
+                type: 'effectScatter',
                 coordinateSystem: 'geo',
-                zlevel: 2,
-                symbolSize: 6,
-                itemStyle: {
+                label: {
                     normal: {
-                        color: '#54FAFE',
-                    }
+                        show: true,
+                        color: '#ffffff',
+                        fontWeight: 'bold',
+                        position: 'insideLeft',
+                        formatter: function(para) {
+                            // return para.name + '-' + '{cnNum|' + para.data.value[2] + '}'
+                            return para.data.value[2];
+                        }
+                    },
                 },
-                data: []
+                symbol: 'circle',
+                symbolSize :1,
+                data: [],
+                zlevel: 1
             }
         ]
     };
@@ -809,32 +846,34 @@ layui.config({
         "山西":"140000"
     };
 
+    var geoCoordMap;
     var mapChart;
     function mapInit(){
         
         mapChart = echarts.init($("#mapchart")[0]);
         
-        mapChart.on('click', function(params){
-            console.log(params);
+        // mapChart.on('click', function(params){
+        //     console.log(params);
             
-            if (!params.name){
-                return;
-            }
-            // if (this.config.adcodepath.length == 4) return;
-            var adcode = chinaCode[params.name] || "";
-            if(!adcode){
-                return;
-            }
-            mapCode = adcode;
-            registerMap(adcode);
-        }.bind(this));
+        //     if (!params.name){
+        //         return;
+        //     }
+        //     // if (this.config.adcodepath.length == 4) return;
+        //     var adcode = chinaCode[params.name] || "";
+        //     if(!adcode){
+        //         return;
+        //     }
+        //     mapCode = adcode;
+        //     registerMap(adcode);
+        // }.bind(this));
 
         registerMap(mapCode);
     }
 
     function registerMap(code) {
-        // const _url = `assets/echarts/hebei.json`;
-        let _url = `/ADMINM/static/assets/geoJson/100000.json`;
+        const _url = `/assets/geoJson/100000.json`;
+        // let _url = `/ADMINM/static/assets/geoJson/100000.json`;
+
         if(code != "100000"){
             if(code.substring(2,6) == "0000"){
                 //省
@@ -854,17 +893,68 @@ layui.config({
         $.Ajax({
             async: false,
             url: _url,
-            dataType: "text",
+            dataType: "json",
             method: 'get',
             success: function(mapjson) {
-                echarts.registerMap(code, mapjson);
+                echarts.registerMap(code == "100000" ? "china" : code, mapjson);
 
-                mapOptions.geo.map = code;
+                // mapOptions.geo.map = code;
+                
+                geoCoordMap = {};
+                var features = mapjson.features;
+                features.forEach(item =>{
+                    // 地区名称
+                    var name = item.properties.name;
+                    // 地区经纬度
+                    geoCoordMap[name] = item.properties.cp || item.properties.center;
+                });
+                var mapdata = chartData.map || [];
+
+                // mapdata = [
+                //     {"name":"北京","value":200},
+                //     {"name":"广东","value":100}
+                // ];
+                
+                // mapOptions
+                setSeries(mapdata);
+
                 mapChart.setOption(mapOptions);
                 mapChart.resize();
             },
 
         });
+    }
+
+
+    function setSeries(mapdata) {
+        
+        // mapOptions.series[0].data = mapdata;
+        mapOptions.series[0].data = convertData(mapdata || []);
+
+        setMapLiHtml(mapdata);
+    }
+
+    function convertData(outdata){
+        let res = [];
+        for (let i = 0; i < outdata.length; i++) {
+            let geoCoord = geoCoordMap[outdata[i].name];
+            if (geoCoord) {
+                res.push({
+                    name: outdata[i].name,
+                    value: geoCoord.concat(outdata[i].value),
+                });
+            }
+        }
+        return res;
+    }
+
+    function setMapLiHtml(data){
+        var ul = [];
+        for(var i = 0,len = data.length; i < len; i++){
+            var item = data[i];
+            ul.push('<li>' + (i + 1) + '.' +  item.name + ':' + item.value + '</li>');
+        }
+        $("#mapdatali").html(ul.join(''));
     }
 
     $("#mapbackbtn").bind("click",function(){

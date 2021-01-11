@@ -16,8 +16,18 @@ layui.config({
     var server = setter.baseUrl;
     var uri = window.location.search;
     
-    var user = window.parent.__user || {};
+    var userInfo = {};
+    function getUserInfo(userid){
+        var user = window.sessionStorage.getItem("__userinfo") || "";
+        if(user){
+            user = JSON.parse(user);
+            userInfo = user;
+        }else{
+            top.location.href = setter.loginUrl;
+        }
+    }
     
+    getUserInfo();
 
     var type = +setter.getUrlParam("t",uri) || "";
     var version = setter.getUrlParam("v",uri) || "";
@@ -28,13 +38,13 @@ layui.config({
         $("#title").html(titles[type]);
         $("#appicon").addClass(icons[type]);
     }
+    
     if(version){
         $("#versionnum").html(version);
     }
     
     $("#username").val("test");
 
-    console.log(user.username,type,version)
 
     // var userHeadImg = "images/headImg.png";
 
@@ -50,31 +60,137 @@ layui.config({
     // }
     // setUserInfoHtml();
 
+    var _token;
+    var url = server + "/ADMINM/qiniu/getQiniuyinToken";
+    $.Ajax({
+        async: false,
+        url: url,
+        // dataType: "json",
+        method: 'post',
+        // data:formdata,
+        // processData:false,   //  告诉jquery不要处理发送的数据
+        // contentType:false,   // 告诉jquery不要设置content-Type请求头
+        success: function(obj) {
+            layer.closeAll();
+            
+            if(obj.code == 0){
+                var token = obj.data;
+                _token = token;
+            }
+        },
+        error:function(){
+            layer.closeAll();
+        }
+    });
+
+
+    var videoKey;
+    var videoSize;
+    var videoType = "mp4";
+    var observer = {
+        next(res){
+            var total = Math.ceil(res.total.percent);
+            if(total == 100){
+                videoSize = res.total.size;
+
+                $("#videoSize").html((videoSize/1024/1024).toFixed(2)+"MB");
+            }
+            $("#uploadbg").show();
+            $('#progressbar1').LineProgressbar({
+                percentage: total,
+                duration:0
+            });
+        },
+        error(err){
+            layer.msg("上传视频错误");
+            $("#file").val('');
+            // console.log("error----",err);
+        },
+        complete(res){
+            $("#uploadbg").hide();
+            layer.msg("上传视频成功");
+            videoKey = res.key;
+        }
+    };
     
+    function uploadFile(files){
+        if(_token){
+            var putExtra = {};
+            var config = {
+                // useCdnDomain: true,
+                // region: qiniu.region.z2
+            };
+            var guid = getGuid();
+            var observable = qiniu.upload(files,guid, _token, putExtra, config)
+            var subscription = observable.subscribe(observer) // 上传开始
+            // or
+            // var subscription = observable.subscribe(next, error, complete) // 这样传参形式也可以
+            // subscription.unsubscribe() // 上传取消
+        }else{
+            layer.msg("没有获取到token");
+        }
+    }
+
+
+
+	function getGuid(){
+		var guid = "";
+		for (var i = 1; i <= 32; i++){
+			var n = Math.floor(Math.random()*16.0).toString(16);
+			guid += n;
+			if((i==8)||(i==12)||(i==16)||(i==20)){
+				guid += "-";
+			}
+		}
+		return guid;
+	};
+
+
+
+
+    $("#file").bind("change",function(obj){
+        var files = obj.currentTarget.files;
+        uploadFile(files[0]);
+    });
+
+
     //监听提交
     form.on('submit(submit)', function(data){
         
-        saveApp();
+        if(!videoKey){
+            layer.msg("没有上传文件");
+            return false;
+        }
+        var condi = {};
+        condi.fileKey = videoKey;
+        condi.fileSize = videoSize;
+        condi.version = data.field.version;
+        condi.description = data.field.description;
+        condi.username = userInfo.username;
+
+        saveApp(condi);
         return false;
     });
 
 
-    function saveApp(){
+    function saveApp(condi){
         layer.load(2);
         // server = "http://139.196.147.194:8084"
-        var url = server + "/jqkj/user/updateAppVersion";
-        var formdata = new FormData(document.getElementById("form"))
+        // var url = server + "/jqkj/user/updateAppVersion";
+        // var formdata = new FormData(document.getElementById("form"))
+
         $.Ajax({
-            url: url,
-            // dataType: "json",
+            async: false,
+            url: server + "/ADMINM/user/updateAppVersion",
+            dataType: "json",
             method: 'post',
-            data:formdata,
-            processData:false,   //  告诉jquery不要处理发送的数据
-            contentType:false,   // 告诉jquery不要设置content-Type请求头
+            data:condi,
+            // processData:false,   //  告诉jquery不要处理发送的数据
+            // contentType:false,   // 告诉jquery不要设置content-Type请求头
             success: function(obj) {
                 layer.closeAll();
 
-                if(obj.status == 1){
+                if(obj.code == 1){
                     layer.msg("上传成功");
                     
                     setTimeout(function(){

@@ -35,13 +35,68 @@
             color: #fff;
         }
     </style>
+    <style>
+        .layui-form-label {
+            width: 90px;
+        }
+        .layui-input-block {
+            margin-left: 120px;
+        }
+
+        
+        .htmleaf-container{
+            margin: 0 auto;
+        }
+        .htmleaf-content-bg{
+            position: fixed;
+            left:0;
+            top:0;
+            bottom: 0;
+            right: 0;
+            background-color:rgba(0,0,0,.8);
+        }
+        .htmleaf-content{
+            width: 600px;
+            height: 100px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            margin-left:-300px;
+            margin-top:-50px;
+            color: #fff;
+        }
+        .center{text-align:center;}
+        .progressbar {
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 35px;
+            position: relative;
+            background-color: #EEEEEE;
+            box-shadow: inset 0px 1px 1px rgba(0,0,0,.1);
+        }
+
+        .proggress{
+            height: 8px;
+            width: 10px;
+            background-color: #3498db;
+            margin-top:20px
+        }
+
+        .percentCount{
+            float:right;
+            margin-top: 10px;
+            clear: both;
+            font-weight: bold;
+            font-family: Arial
+        }
+    </style>
 </head>
 <body>
-<form method="post" id="form" name="form" enctype="multipart/form-data" class="layui-form" >
+<form name="form" class="layui-form" >
     <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0; ">
         <div style="margin-left:35px;margin-bottom:20px">
             <h4 class="softbt" id="title">AI存储APP</h4>
-            <i id="appicon" class="layui-icon iconfont "></i> 当前版本：V <span id="versionnum">1.0.0.0</span>
+            <i id="appicon" class="layui-icon iconfont "></i> 当前版本：V <span id="versionnum">无</span>
         </div>
 
         <div class="layui-form-item">
@@ -49,7 +104,7 @@
             <div class="layui-input-block">
                 <input type="file" class="layui-input" accept=".apk,.exe" id="file" name="file" />
             </div>
-
+            <div style="margin-left: 120px;margin-top: 10px;"><span class="unit" id="videoSize">0M</span></div>
             <!-- 
             <div class="layui-input-block">
                 <button type="button" class="layui-btn" id="test5"><i class="layui-icon"></i>选择文件</button>
@@ -63,7 +118,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">更新版本：</label>
             <div class="layui-input-block">
-                <input type="text" placeholder="单行输入" lay-verify="required" autocomplete="off" class="layui-input" id="version" name="version">
+                <input type="number" placeholder="单行输入" lay-verify="required" autocomplete="off" class="layui-input" id="version" name="version">
             </div>
         </div>
         <!-- 
@@ -93,6 +148,16 @@
 
     <button style="display: none;" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit" id="submit">提交</button>
 </form>
+
+<div id="uploadbg" class="htmleaf-content-bg" style="display: none;">
+    <div class="htmleaf-content">
+        <h3 class="center">上传进度条</h3>
+        <div id="progressbar1"></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qiniu-js/3.1.2/qiniu.min.js"></script>
+<script src="../../js/jquery.lineProgressbar.js" type="text/javascript" charset="utf-8"></script>
 <script src="update_pop.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
