@@ -12,7 +12,7 @@ layui.config({
     var server = setter.baseUrl;
     var timer = null;
     var isFull = false;
-    var mapCode = "100000";
+    
 
     var chartData;
     function getAllChartData(){
@@ -74,6 +74,59 @@ layui.config({
         });
     }
 
+    // 0 用户 1 设备
+    var mapType = 0;
+    var cityName = "全国";
+    var mapCode = "100000";
+    var mapDataList = [];
+    function getMapChartData(type,country,mapType){
+        $.Ajax({
+            async: true,
+            type: "POST",
+            url: server + "/ADMINM/echarts/getMapList",
+            datatype: 'json',
+            data:{
+                type:type,
+                country:country,
+                mapType:mapType
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            //成功的回调函数
+            success: function (obj) {
+                if(obj.code == 0){
+                    var mapdata = obj.data || [];
+
+                    mapdata = mapdata.filter(function(item){
+                        var name = item.name;
+                        var mapname = mapDataList.filter(function(d){
+                            return d.indexOf(name) > -1;
+                        });
+                        item.name = mapname[0] || name;
+                        return +item.value > 0;
+                    });
+
+                    // mapdata = [
+                    //     {"name":"北京","value":200},
+                    //     {"name":"广东","value":100}
+                    // ];
+                    
+                    // mapOptions
+                    setSeries(mapdata);
+
+                    mapOptions.geo.map = mapCode == "100000" ? "china" : mapCode;
+                    mapOptions.series[1].map = mapCode == "100000" ? "china" : mapCode;
+                    
+
+                    mapChart.setOption(mapOptions);
+                    mapChart.resize();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
     
 
     var mapOptions = {
@@ -86,6 +139,15 @@ layui.config({
                 color:'#fff',
                 fontSize:22,
                 fontWeight:"normal"
+            }
+        },
+        tooltip: {
+            show: true,
+            formatter: function(params) {
+                var data = params.data || "";
+                if (data) {
+                    return '&nbsp;&nbsp;' + params.name + '&nbsp;&nbsp;&nbsp;' + data.value[2] + '&nbsp;&nbsp;';
+                }
             }
         },
         geo: {
@@ -120,6 +182,42 @@ layui.config({
                 }
             }
         },
+        // visualMap: {
+        //     show:false,
+        //     left: '3%',
+        //     bottom: '6%',
+        //     itemHeight:15,
+        //     itemWidth:15,
+        //     pieces: [{
+        //         gte: 1000,
+        //         label: "1000",
+        //         color: "#F72A22"
+        //     }, {
+        //         gte: 800,
+        //         lt: 1000,
+        //         label: "800-1000",
+        //         color: "#FF8226"
+        //     }, {
+        //         gte: 600,
+        //         lt: 800,
+        //         label: "600-800",
+        //         color: "#FFF200"
+        //     }, {
+        //         gte: 300,
+        //         lt: 600,
+        //         label: "300-600",
+        //         color: "#4DFAFF"
+        //     }, {
+        //         lt: 300,
+        //         gte: 0,
+        //         label: "0-300",
+        //         color: "#0FFF64"
+        //     }],
+        //     textStyle:{
+        //         color:"#fff",
+        //         fontSize: "14px"
+        //     }
+        // },
         series: [
             // {
             //     type: 'scatter',
@@ -135,21 +233,7 @@ layui.config({
             //         {name:"河北",value:100}
             //     ]
             // },
-            // {
-            //     // name: '全国',
-            //     type: 'map',
-            //     map: 'china',
-            //     zoom:1.2,
-            //     geoIndex: 0,
-            //     label: {
-            //         show: true
-            //     },
-            //     nameMap:{
-            //     },
-            //     data: [
-                    
-            //     ]
-            // },
+            
             {
                 type: 'effectScatter',
                 coordinateSystem: 'geo',
@@ -169,6 +253,21 @@ layui.config({
                 symbolSize :1,
                 data: [],
                 zlevel: 1
+            },
+            {
+                // name: '全国',
+                type: 'map',
+                map: 'china',
+                zoom:1.2,
+                geoIndex: 0,
+                label: {
+                    show: true
+                },
+                nameMap:{
+                },
+                data: [
+                    
+                ]
             }
         ]
     };
@@ -846,41 +945,46 @@ layui.config({
         "山西":"140000"
     };
 
+
     var geoCoordMap;
     var mapChart;
     function mapInit(){
         
         mapChart = echarts.init($("#mapchart")[0]);
         
-        // mapChart.on('click', function(params){
-        //     console.log(params);
+        mapChart.on('click', function(params){
+            console.log(params);
             
-        //     if (!params.name){
-        //         return;
-        //     }
-        //     // if (this.config.adcodepath.length == 4) return;
-        //     var adcode = chinaCode[params.name] || "";
-        //     if(!adcode){
-        //         return;
-        //     }
-        //     mapCode = adcode;
-        //     registerMap(adcode);
-        // }.bind(this));
+            if (!params.name){
+                return;
+            }
+            // // if (this.config.adcodepath.length == 4) return;
+            var adcode = chinaCode[params.name] || "";
+            if(!adcode){
+                return;
+            }
+            cityName = params.name;
+            mapCode = adcode;
+            registerMap(adcode);
+
+        }.bind(this));
 
         registerMap(mapCode);
     }
 
     function registerMap(code) {
-        const _url = `/assets/geoJson/100000.json`;
-        // let _url = `/ADMINM/static/assets/geoJson/100000.json`;
+        // let _url = `/assets/geoJson/100000.json`;
+        let _url = `/ADMINM/static/assets/geoJson/100000.json`;
 
         if(code != "100000"){
             if(code.substring(2,6) == "0000"){
                 //省
                 _url = `/ADMINM/static/assets/geoJson/100000/` + code + ".geoJson";
+                // _url = `/assets/geoJson/100000/` + code + ".geoJson";
             }else if(code.substring(4,6) == "00"){
                 //市
                 let file = code.substring(0,2);
+                // _url = `/assets/geoJson/100000/` + file + "0000/" + code + ".geoJson";
                 _url = `/ADMINM/static/assets/geoJson/100000/` + file + "0000/" + code + ".geoJson";
             }else{
                 //县
@@ -899,7 +1003,7 @@ layui.config({
                 echarts.registerMap(code == "100000" ? "china" : code, mapjson);
 
                 // mapOptions.geo.map = code;
-                
+                mapDataList = [];
                 geoCoordMap = {};
                 var features = mapjson.features;
                 features.forEach(item =>{
@@ -907,21 +1011,12 @@ layui.config({
                     var name = item.properties.name;
                     // 地区经纬度
                     geoCoordMap[name] = item.properties.cp || item.properties.center;
+                    mapDataList.push(name);
                 });
-                var mapdata = chartData.map || [];
 
-                // mapdata = [
-                //     {"name":"北京","value":200},
-                //     {"name":"广东","value":100}
-                // ];
+                getMapChartData(cityName == "全国" ? 0 : 1,cityName == "全国" ? "" : cityName,mapType);
                 
-                // mapOptions
-                setSeries(mapdata);
-
-                mapChart.setOption(mapOptions);
-                mapChart.resize();
-            },
-
+            }
         });
     }
 
@@ -930,6 +1025,7 @@ layui.config({
         
         // mapOptions.series[0].data = mapdata;
         mapOptions.series[0].data = convertData(mapdata || []);
+        mapOptions.series[1].data = convertData(mapdata || []);
 
         setMapLiHtml(mapdata);
     }
@@ -960,6 +1056,7 @@ layui.config({
     $("#mapbackbtn").bind("click",function(){
         if(mapCode != "100000"){
             mapCode = "100000";
+            cityName = "全国";
             registerMap(mapCode);
         }
     });
@@ -967,10 +1064,14 @@ layui.config({
     $("#usermap").bind("click",function(){
         $("#usermap").addClass("on");
         $("#devicemap").removeClass("on");
+        mapType = 0;
+        registerMap(mapCode);
     });
     $("#devicemap").bind("click",function(){
         $("#devicemap").addClass("on");
         $("#usermap").removeClass("on");
+        mapType = 1;
+        registerMap(mapCode);
     });
 
     var tout = null;

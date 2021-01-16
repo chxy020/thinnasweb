@@ -6,3 +6,20 @@ Hzsj!1234
 
 前端页面上传路径
 /home/tomcat7/webapps/ADMINM/static
+
+
+
+赵书贤:
+放到139.196.147.194的服务器上
+
+赵书贤:
+地址：/home/Java/nas/static
+
+http://139.196.147.194:8080/ADMINM/static/xx.html
+
+
+http://139.196.147.194:8080/ADMINM/static/views/user/login.html
+jqkj
+Jqkj123
+
+验证码区分大小写
