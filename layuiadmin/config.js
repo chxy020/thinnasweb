@@ -63,8 +63,8 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
 
 		,loginUrl:'/ADMINM/static/views/user/login.html'
 		//全局配置url
-		// ,baseUrl:'http://139.196.147.194:8080'
-		,baseUrl:' http://81.70.37.92:8081'
+		,baseUrl:'http://139.196.147.194:8080'
+		// ,baseUrl:' http://81.70.37.92:8081'
 		// ,baseUrl:'http://127.0.0.1:8083'
 		//验证码的url
 		,smsUrl:'https://f.longjuli.com'

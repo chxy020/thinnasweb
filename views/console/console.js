@@ -79,6 +79,8 @@ layui.config({
     var cityName = "全国";
     var mapCode = "100000";
     var mapDataList = [];
+    var usedUserNum = 0;
+    var totalUserNum = 0;
     function getMapChartData(type,country,mapType){
         $.Ajax({
             async: true,
@@ -96,7 +98,11 @@ layui.config({
             //成功的回调函数
             success: function (obj) {
                 if(obj.code == 0){
-                    var mapdata = obj.data || [];
+                    var data = obj.data || {};
+                    var mapdata = data.map || [];
+
+                    usedUserNum = data.usedUserNum || 0;
+                    totalUserNum = data.totalUserNum || 0;
 
                     mapdata = mapdata.filter(function(item){
                         var name = item.name;
@@ -416,10 +422,11 @@ layui.config({
         let dataD3 =[200, 232, 201, 200, 190, 190, 210, 190, 182, 201, 154, 190]
         // let xData = ['01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00', '23:00'];
         let xData = data.dailyLifeIntervalX || [];
-        let all = data.all || [];
-        let download = data.download || [];
-        let select = data.select || [];
-        let upload = data.upload || [];
+        let yData = data.dailyLifeIntervalY || {};
+        let all = yData.all || [];
+        let download = yData.download || [];
+        let select = yData.select || [];
+        let upload = yData.upload || [];
         for(var i = 0;i<xData.length;i++){
             all.splice(i,1,{name:xData[i],value:all[i]});
             download.splice(i,1,{name:xData[i],value:download[i]});
@@ -953,7 +960,7 @@ layui.config({
         mapChart = echarts.init($("#mapchart")[0]);
         
         mapChart.on('click', function(params){
-            console.log(params);
+            // console.log(params);
             
             if (!params.name){
                 return;
@@ -1051,6 +1058,7 @@ layui.config({
             ul.push('<li>' + (i + 1) + '.' +  item.name + ':' + item.value + '</li>');
         }
         $("#mapdatali").html(ul.join(''));
+        $("#allmapdata").html('在线用户数：<span class="a">' + usedUserNum + '</span>/<span>'+totalUserNum+'</span>');
     }
 
     $("#mapbackbtn").bind("click",function(){
@@ -1091,5 +1099,12 @@ layui.config({
                 mapChart.resize();
             }
         },500);
-    })
+    });
+
+
+    //定时刷新数据
+    setInterval(function(){
+        getAllChartData();
+        getMapChartData(cityName == "全国" ? 0 : 1,cityName == "全国" ? "" : cityName,mapType);
+    }.bind(this), 5 * 60 * 1000);
 });
