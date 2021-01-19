@@ -721,10 +721,10 @@ layui.config({
             },
             tooltip: {
                 trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
+                formatter: '{b} : {c} ({d}%)'
             },
             series: [{
-                name: '半径模式',
+                name: '文件类型',
                 type: 'pie',
                 radius: ['30%', '60%'],
                 center: ['40%', '50%'],
