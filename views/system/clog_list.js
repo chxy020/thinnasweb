@@ -59,7 +59,8 @@ layui.config({
         table.render({
             elem: '#test-table-operate',
             height: 'full-60',//必须留着
-            url: server + "/ADMINM/logger/getSysOperationLog",
+            // url: server + "/ADMINM/logger/getSysOperationLog",
+            url: server + "/ADMINM/logger/getAppOperationLog",
             method: 'post',
             where:{
                 "search":keywords||"",
@@ -67,6 +68,7 @@ layui.config({
                 "startTime":bindtimeStart ?  bindtimeStart + " 00:00:00" : "",
                 "endTime":bindtimeEnd ? bindtimeEnd + " 00:00:00" : ""
             },
+            
             xhrFields: {
                 withCredentials: true
             }
@@ -74,7 +76,8 @@ layui.config({
                 layout: ['prev', 'page', 'next', 'count', 'skip']
             },
             cols: [
-                [ //表头
+                [
+                    //表头
                     {
                         type: 'checkbox',
                         fixed: 'left',
@@ -89,26 +92,44 @@ layui.config({
                         }
                     },
                     {
-                        field: 'username',
+                        field: 'loginName',
                         title: '操作账号',
-                        align: 'left'
+                        align: 'left',
+                        templet: function(data) {
+                            if(data.appUser){
+                                return data.appUser.loginName || "";
+                            }
+                            return "";
+                        }
                     }, {
-                        field: 'name',
+                        field: 'nickname',
                         title: '昵称',
-                        align: 'left'
+                        align: 'left',
+                        templet: function(data) {
+                            if(data.appUser){
+                                return data.appUser.nickname || "";
+                            }
+                            return "";
+                        }
                     },
                     {
-                        field: 'roleName',
+                        field: 'rolename',
                         title: '角色',
-                        align: 'left'
+                        align: 'left',
+                        templet: function(data) {
+                            if(data.appUser){
+                                return data.appUser.rolename || "";
+                            }
+                            return "";
+                        }
                     },
                     {
-                        field: 'createtime',
+                        field: 'created_at',
                         title: '操作时间',
                         align: 'left',
                     },
                     {
-                        field: 'rpLength',
+                        field: 'rp_length',
                         title: '响应时长',
                         align: 'left',
                     },
@@ -128,6 +149,7 @@ layui.config({
                         align: 'left',
                     }
                 ]
+                
             ],
             parseData: function(res){
                 if(res.code == 302){
