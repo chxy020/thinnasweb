@@ -972,7 +972,13 @@ layui.config({
             }
             cityName = params.name;
             mapCode = adcode;
+            
             registerMap(adcode);
+
+            if(adcode != "100000"){
+                $("#pbackbtn").html(" > " + cityName);
+                $("#pbackbtn").show();
+            }
 
         }.bind(this));
 
@@ -1066,6 +1072,8 @@ layui.config({
             mapCode = "100000";
             cityName = "全国";
             registerMap(mapCode);
+
+            $("#pbackbtn").hide();
         }
     });
 
