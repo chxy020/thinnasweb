@@ -304,5 +304,31 @@ to {transform:translate3d(100%,0,0)}
     margin: 0 10px 0 0;
 }
 
+.layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a {
+    color: #fff;
+}
+.layui-nav .layui-nav-item a:hover i{
+    color: #3691FF;
+}
+.layui-nav .layui-this a i{
+    color: #fff;
+}
 
+
+
+.layui-side-menu .layui-nav .layui-nav-item .layui-icon{
+    font-size: 18px;
+    margin-top: -21px;
+    margin-left: -1px;
+}
+
+.layui-side-menu .layui-nav .layui-nav-item .layui-icon.icon-data-analysis,.layui-side-menu .layui-nav .layui-nav-item .layui-icon.icon-zu13 {
+    font-size: 16px;
+    margin-top: -19px;
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover {
+    background-color: rgba(54, 145, 255, 0.3);
+    color: #fff;
+}
 
