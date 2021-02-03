@@ -128,7 +128,7 @@ layui.config({
     
     function buildMenuData(data){
         var html = [];
-        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-data-analysis","icon-fuwu2","icon-xitongguanli","","","","","icon-jurassic_apply"]
+        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-fuwu2","icon-zu13","icon-shezhi","","","","","icon-zu12"]
         if(data && data.length > 0){
             data.forEach(function(obj){
                 var name = obj.menuName || "";
