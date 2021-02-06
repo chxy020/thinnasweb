@@ -8,14 +8,18 @@ layui.config({
     setter = layui.setter;
     // window.element = layui.element;
     var server = setter.baseUrl;
+	var uri = window.location.search;
+	var user_id = setter.getUrlParam("user_id",uri) || "";
 
     $.Ajax({
         async: false,
         type: "POST",
         // url: server + "/ADMINM/main/index",
-        url: server + "/ADMINM/menu/getParentMeun",
+        url: server + "/ADMINM/menu/getAuthorityOlnyMeun",
+		//url: server + "/ADMINM/menu/getParentMeun",
         // url: server + "/ADMINM/role",
         datatype: 'json',
+		data:{"userId":user_id},
         // contentType:"application/x-www-form-urlencoded",
         // crossDomain:true, //设置跨域为true
         xhrFields: {
@@ -27,10 +31,10 @@ layui.config({
                 // window.__user = obj.user;
                 // getUserInfo(obj.user.user_ID);
             }
-
             getUserInfo();
-            if(obj && obj instanceof Array){
-                let menu = obj || []
+            if(obj.data && obj.data instanceof Array){
+                let menu = obj.data || []
+				console.log(menu);
                 buildMenuData(menu);
             }
             // var data = msg.data;
@@ -85,7 +89,7 @@ layui.config({
         var user = window.sessionStorage.getItem("__userinfo") || "";
         if(user){
             user = JSON.parse(user);
-            if(user.headimg != "" && user.headimg.indexOf("headImg.png") == -1){
+            if(user.headimg != "" && user.headimg != null && user.headimg.indexOf("headImg.png") == -1){
                 $("#headimg").attr("src",user.headimg);
             }
             $("#phone").html(user.phone || "");
@@ -128,7 +132,7 @@ layui.config({
     
     function buildMenuData(data){
         var html = [];
-        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-fuwu2","icon-zu13","icon-shezhi","","","","","icon-zu12"]
+        var imgclass= ["","icon-data-analysis","icon-yonghuguanli","icon-shebeishebeiguanli","icon-xitongguanli","","","","","icon-data-analysis","icon-fuwu2","icon-xitongguanli","","","","","icon-jurassic_apply"]
         if(data && data.length > 0){
             data.forEach(function(obj){
                 var name = obj.menuName || "";

@@ -13,14 +13,18 @@ layui.config({
     var uri = window.location.search;
     
     var device_id = setter.getUrlParam("device_id",uri) || "";
-    device_id = "744c4da721fa5da1f7bef8aa5b291842";
+    //device_id = "744c4da721fa5da1f7bef8aa5b291842";
     
     if(!device_id){
         layer.msg("没有获取到设备id");
         return;
     }
+	
 
     if(device_id){
+
+		
+		
         //编辑
         $.Ajax({
             async: true,
@@ -30,13 +34,19 @@ layui.config({
             data:{"device_id":device_id},
             success: function(obj) {
                 if(obj.code == 0){
+					getUserSpaceUseOne();
                     changeDetailInfoHtml(obj.data || {});
                     
                     renderUserTable(obj.userLsList || []);
-                    // renderUserSpaceTable(obj.userSpaceList || []);
-
-
-                    var createtime = obj.data.createtime || "";
+                    renderUserSpaceTable();
+					//console.log(obj.data);
+					var createtime = "";
+					if(obj.data.createtime == null || obj.data.createtime == undefined || obj.data.createtime == ""){
+						createtime = "";
+					}else{
+						createtime = obj.data.createtime;
+					}
+                    //var createtime = obj.data.createtime || "";
                     var now = new Date().getTime();
                     var days = 0;
 
@@ -59,6 +69,25 @@ layui.config({
             }
         });
     }
+	
+	function getUserSpaceUseOne(){
+		$.ajax({
+			url: server + "ADMINM/device/getUserSpaceUseOne",
+			dataType: "json",
+			method: 'post',
+			data:{"device_id":device_id},
+			async: true,
+			success:function(data){
+				console.log(data);
+				var table2 = [];
+				table2.push('<p><span>'+fileSize(data.data.total_space*(1024*1024))+'</span></p>');
+				table2.push('<p>可用：<span>'+fileSize((data.data.total_space*(1024*1024))-data.data.used_space)+'</span></p>');
+				table2.push('<p>已用：<span>'+fileSize(data.data.used_space)+'</span></p>');
+				table2.push('<p>文件数：<span>'+data.data.file_num+'</span></p>');
+				$("#tableinfo2").html(table2.join(''));
+			}
+		})
+	}
 
     function changeDetailInfoHtml(obj){
         var html = [];
@@ -69,7 +98,7 @@ layui.config({
 		html.push('<p>存储方式：<span>RAID5</span></p>');
 		html.push('<p>磁盘：<span>1</span></p>');
 		html.push('<p>可靠性能：<span>高</span></p>');
-		html.push('<p>容量：<span>' + obj.total + 'MB</span></p>');
+		html.push('<p>容量：<span>' + fileSize(obj.total*1024*1024) + '</span></p>');
         $("#info1").html(html.join(''));
 
         var html = [];
@@ -101,25 +130,37 @@ layui.config({
             height: '278',//必须留着
             url: server + "/ADMINM/logger/getUserDeviceLog",
             method: 'post',
-            where:{
-                "search":"",
-                "device_id":"",
-                "startTime":"",
-                "endTime":""
-            },
+            // where:{
+            //     "search":"",
+            //     "device_id":"",
+            //     "startTime":"",
+            //     "endTime":""
+            // },
+			where:{
+			    "device_id":device_id
+			},
             xhrFields: {
                 withCredentials: true
             },
             //,data: list
             cols: [
                 [ //表头
+				{
+				    field: 'id',
+				    title: '序号',
+				    unresize: 'false',
+				    width: 60,
+				    templet: function(data) {
+				        return data.LAY_INDEX;
+				    }
+				},
                     {
                         field: 'nickname',
                         title: '用户',
                         align: 'left',
                         templet: function(data) {
                             if(data.appUser){
-                                return data.appUser.nickname;
+                                return data.appUser.loginName;
                             }
                             return "";
                         },
@@ -137,6 +178,28 @@ layui.config({
                     
                 ]
             ],
+			parseData: function(res){
+			    if(res.code == 302){
+			        top.location.href = setter.loginUrl;
+			        return;
+			    }
+			    if(res.code == 0){
+			        //res 即为原始返回的数据
+			        return {
+			            "code": 0,
+			            "msg": "",
+			            "count": res.count,
+			            "data": res.data
+			        };
+			    }else{
+			        return {
+			            "code": 0,
+			            "msg": "接口数据错误",
+			            "count": 0, 
+			            "data": [] 
+			        }
+			    }
+			},
             page: false,
             event: true,
             limit: 15,
@@ -151,19 +214,31 @@ layui.config({
         });
     }
 
-    function renderUserSpaceTable(list){
+    function renderUserSpaceTable(){
         table.render({
             elem: '#test-table-operateB',
             height: '278',//必须留着
             // url: "https://f.longjuli.com/meeting/findMeetingBylayui" //数据接口
-            // url: server + "/ADMINM/user/listUsers",
-            method: 'get',
+            url: server + "/ADMINM/device/getSpaceUse",
+            method: 'post',
             xhrFields: {
                 withCredentials: true
-            }
-            ,data: list
+            },
+            //,data: {"device_id":device_id}
+			where:{
+			    "device_id":device_id
+			}
             ,cols: [
                 [ //表头
+				{
+				    field: 'id',
+				    title: '序号',
+				    unresize: 'false',
+				    width:60,
+				    templet: function(data) {
+				        return data.LAY_INDEX;
+				    }
+				},
                     {
                         field: 'nickname',
                         title: '用户',
@@ -174,18 +249,20 @@ layui.config({
                         title: '空间使用情况',
                         align: 'left',
                         templet: function(data) {
-                            return data.total + "MB | 可用" + data.used + "MB | 已用" + data.available +"MB";
+                            return fileSize(data.total_space * (1024*1024)) + " | 可用" + fileSize(data.total_space * (1024*1024) - data.used_space) + " | 已用" + fileSize(data.used_space);
                         },
                     },
                     {
-                        field: 'filecount',
+                        field: 'file_num',
                         title: '文件数',
                         align: 'left',
                     }
                     
                 ]
             ],
-            limit: 15,
+			page: false,
+			event: true,
+			limit: 15,
             done: function(res, curr, count) {
                 // table_data = res.data;
     
@@ -196,6 +273,29 @@ layui.config({
             },
         });
     }
+	
+	
+	function fileSize(file_size){
+		if (file_size < 1024) {
+		    return file_size + "B";
+		} else if (file_size < (1024*1024)) {
+			var temp = file_size / 1024;
+			temp = temp.toFixed(2);
+			return temp + 'KB';
+		} else if (file_size < (1024*1024*1024)) {
+			var temp = file_size / (1024*1024);
+			temp = temp.toFixed(2);
+			return temp + 'MB';
+		} else if (file_size < (1024*1024*1024*1024)){
+			var temp = file_size / (1024*1024*1024);
+			temp = temp.toFixed(2);
+			return temp + 'GB';
+		}else{
+			var temp = file_size / (1024*1024*1024*1024);
+			temp = temp.toFixed(2);
+			return temp + 'TB';
+		}
+	}
 
     function renderUserLsTable(){
         var search = $("#keyword").val() || "";
@@ -204,12 +304,12 @@ layui.config({
             elem: '#test-table-operateC',
             height: '378',//必须留着
             // url: server + "/ADMINM/device/DeviceOperationLs",
-            url: server + "/ADMINM/logger/getUserDeviceLog",
+            url: server + "/ADMINM/logger/getUserDeviceByLayuiLog",
             method: 'post',
             where:{
                 "search":search||"",
-                // "device_id":device_id,
-                "device_id":"jjj",
+                "device_id":device_id,
+                //"device_id":"jjj",
                 "startTime":bindtimeStart ?  bindtimeStart + " 00:00:00" : "",
                 "endTime":bindtimeEnd ? bindtimeEnd + " 00:00:00" : ""
             },
@@ -221,13 +321,22 @@ layui.config({
             },
             cols: [
                 [ //表头
+					{
+						field: 'id',
+						title: '序号',
+						unresize: 'false',
+						width:60,
+						templet: function(data) {
+							return data.LAY_INDEX;
+						}
+					},
                     {
-                        field: 'nickname',
+                        //field: 'nickname',
                         title: '用户',
                         align: 'left',
                         templet: function(data) {
                             if(data.appUser){
-                                return data.appUser.nickname;
+                                return data.appUser.loginName;
                             }
                             return "";
                         },
@@ -269,10 +378,9 @@ layui.config({
             },
             page: true,
             event: true,
-            limit: 15,
+            limit: 10,
             skin: 'line',
-            even: true,
-            limits: [10, 15,30],
+            limits: [10,15,30],
             done: function(res, curr, count) {
                 // table_data = res.data;
 

@@ -1,0 +1,102 @@
+<!doctype html>
+<html  class="x-admin-sm">
+<head>
+<meta charset="UTF-8">
+<title>thinNAS-账户管理</title>
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" href="./../css/index.css">
+<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="./../css/login.css">
+<link rel="stylesheet" href="./../font_icon/iconfont.css"><!-- 阿里自定义图标 -->
+<link rel="stylesheet" href="./../css/reset.css">
+<link rel="stylesheet" href="./../css/resettable.css">
+
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script src="../../js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div class="layui-fluid">
+	<div class="layui-row">
+		<div class="layui-card">
+			<div class="layui-form layui-col-space5">	
+				<div class="layui-input-inline layui-show-xs-block">
+					<input type="text" name="username" placeholder="搜索姓名/手机号" autocomplete="off" class="layui-input">
+				</div>
+				<div class="layui-input-inline layui-show-xs-block">
+					<select name="contrller">
+						<option value="">筛选角色</option>
+						<option value="0">张三</option>
+						<option value="1">张三</option>
+					</select>
+				</div>
+				<div class="layui-input-inline layui-show-xs-block">
+					<select name="contrller">
+						<option value="">选择状态</option>
+						<option value="0">待确认</option>
+						<option value="1">已确认</option>
+						<option value="2">已收货</option>
+						<option value="3">已取消</option>
+						<option value="4">已完成</option>
+						<option value="5">已作废</option>
+					</select>
+				</div>
+				<div class="layui-input-inline layui-show-xs-block">
+					<button class="layui-btn layui-ds" data-type="search" id="search"><i class="layui-icon">&#xe615;</i></button>
+				</div>
+			</div>
+			<div class="pt10 clearfix pop_text">
+				<button class="layui-btn layui-ds layui-btn-primary" data-type="add" id="add" data="添加">
+					<i class="layui-icon">&#xe654;</i>
+				</button>
+				<button class="layui-btn layui-ds layui-btn-primary" data-type="del" id="del" data="删除">
+					<i class="layui-icon">&#xe640;</i>
+				</button>
+				<button class="layui-btn layui-ds layui-btn-primary" data-type="resetPassword" id="resetPassword" data="重置密码">
+					<i class="layui-icon">&#xe672;</i>
+				</button>
+				<button class="layui-btn layui-ds layui-btn-primary" data-type="refresh" id="refresh" data="刷新">
+					<i class="layui-icon">&#xe666;</i>
+				</button>
+			</div>
+			<table id="test-table-operate" lay-filter="test-table-operate"></table>
+			<script type="text/html" id="test-table-operate-barDemo">
+				<a class="layui-icon table-icon-style" lay-event="edit" id="edit">&#xe642;</a>
+				<a class="layui-icon table-icon-style" lay-event="del" id="del">&#xe640;</a>
+				<div class="switchStyle" lay-event="switch" id="switch">
+					{{#  if(d.jz == 1){ }}
+					<input type="checkbox" checked="" lay-skin="switch"><!--开-->
+					{{#  } else{ }}
+					<input type="checkbox" lay-skin="switch">
+					{{#  } }}
+				</div>
+			</script>
+
+			<!-- 点击查看更多操作 三部分组成 CSS html js  3.10 -->
+			<!-- <script type="text/html" id="test-table-operate-barDemoMore">
+				<div class="moreOperate">
+					<a herf="javascript:;" class="textA">更多操作</a>
+					<div class="moreOperateA">
+						<div class="moreOperateArr"></div>
+						<div class="moreOperateAa">
+							99999999999999999999
+						</div>
+					</div>
+				</div>
+			</script> -->
+			<!-- 点击查看更多操作 三部分组成 CSS html js  3.10 end-->
+						
+		</div>
+	</div>
+</div>
+<script src="account_list.--js.js"></script>
+
+<script>
+	
+</script>
+
+
+</body>
+</html>
+

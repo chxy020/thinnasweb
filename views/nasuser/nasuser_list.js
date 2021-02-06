@@ -150,7 +150,14 @@ layui.config({
                         align: 'left',
                         width: 60,
                         templet: function(data) {
-                            return data.sex == 1 ? "男" : "女";
+							if(data.sex == 1){
+								return "男";
+							}else if(data.sex == 2){
+								return "女";
+							}else{
+								return "-";
+							}
+                            //return data.sex == 1 ? "男" : "女";
                         },
                     },
                     {
@@ -173,8 +180,8 @@ layui.config({
                         align: 'left',
                     },
                     {
-                        field: 'useDeviceConut',
-                        title: '使用设备数',
+                        field: 'space_num',
+                        title: '使用空间数',
                         align: 'left',
                     },
                     {
@@ -182,8 +189,8 @@ layui.config({
                         title: '管理设备数',
                         align: 'left',
                         templet: function(data) {
-                            return data.device_num + "<i class='layui-icon iconfont icon-zu201' lay-event='equipment'></i>"
-                        },
+							return data.device_num + "<i class='layui-icon iconfont icon-zu201' lay-event='equipment'></i>"
+						}	
                     },
                     {
                         field: 'userSpaces',
@@ -229,13 +236,13 @@ layui.config({
                                     //     usedStr += parseInt(item.available)
                                     // });
                                     var item = userSpaceListArr[i] || {};
-                                    htmlStr += "<tr><td>"+ item.name +"</td><td>"+ item.total_space + "MB | 可用" + (item.total_space - item.used_space) + "MB | 已用" + item.used_space +"MB</td><td>"+item.device_id+"</td></tr>";
-                                    usedStr += parseInt(item.used_space);
+                                    htmlStr += "<tr><td>"+ item.isCloudSpace +"</td><td>"+ setter.getFileSize(item.totalSpace*1024*1024) + " | 可用" + setter.getFileSize((item.totalSpace - item.usedSpace)*1024*1024) + " | 已用" + setter.getFileSize(item.usedSpace*1024*1024) +"</td><td>"+item.deviceId+"</td></tr>";
+                                    usedStr += parseInt(item.totalSpace - item.usedSpace);
                                 }
                                 // console.log("htmlStr====",htmlStr);
                                 var contStr = "<div class='moreOperate leftS'><i class='layui-icon iconfont icon-zu204' lay-event='space'></i><div class='moreOperateA'><div class='moreOperateArr'></div><div class='moreOperateAa'><table class='tableb'><tr><th>空间类型</th><th>空间使用情况</th><th>所属NAS设备</th></tr>"+htmlStr+"</table></div></div></div>"
                                 // console.log("contStr====",contStr);
-                                return +usedStr+'MB'+contStr;
+                                return setter.getFileSize(usedStr*1024*1024)+contStr;
                             }else{
                                 return "0MB";
                             }

@@ -60,12 +60,34 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
 			var r = uri.substr(1).match(reg);
 			if (r != null) return r[2]; return null;//返回参数值
 		}
+		,getFileSize:function(file_size){
+			if (file_size < 1024) {
+				return file_size + "B";
+			} else if (file_size < (1024*1024)) {
+				var temp = file_size / 1024;
+				temp = temp.toFixed(2);
+				return temp + 'KB';
+			} else if (file_size < (1024*1024*1024)) {
+				var temp = file_size / (1024*1024);
+				temp = temp.toFixed(2);
+				return temp + 'MB';
+			} else if (file_size < (1024*1024*1024*1024)){
+				var temp = file_size / (1024*1024*1024);
+				temp = temp.toFixed(2);
+				return temp + 'GB';
+			}else{
+				var temp = file_size / (1024*1024*1024*1024);
+				temp = temp.toFixed(2);
+				return temp + 'TB';
+			}
+		}
 
 		,loginUrl:'/ADMINM/static/views/user/login.html'
+		
 		//全局配置url
 		,baseUrl:'http://139.196.147.194:8080'
 		// ,baseUrl:' http://81.70.37.92:8081'
-		// ,baseUrl:'http://127.0.0.1:8083'
+		//,baseUrl:'http://127.0.0.1:8080'
 		//验证码的url
 		,smsUrl:'https://f.longjuli.com'
 	});

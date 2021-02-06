@@ -64,7 +64,8 @@ layui.config({
         table.render({
             elem: '#test-table-operate',
             height: 'full-60',//必须留着
-            url: server + "/ADMINM/logger/getAppOperationLog",
+            
+            url: server + "/ADMINM/logger/getSysOperationLog",
             method: 'post',
             where:{
                 "search":keywords||"",
@@ -93,8 +94,7 @@ layui.config({
                 layout: ['prev', 'page', 'next', 'count', 'skip']
             },
             cols: [
-                [
-                    //表头
+                [ //表头
                     {
                         type: 'checkbox',
                         fixed: 'left',
@@ -109,44 +109,26 @@ layui.config({
                         }
                     },
                     {
-                        field: 'loginName',
+                        field: 'username',
                         title: '操作账号',
-                        align: 'left',
-                        templet: function(data) {
-                            if(data.appUser){
-                                return data.appUser.loginName || "";
-                            }
-                            return "";
-                        }
+                        align: 'left'
                     }, {
-                        field: 'nickname',
+                        field: 'name',
                         title: '昵称',
-                        align: 'left',
-                        templet: function(data) {
-                            if(data.appUser){
-                                return data.appUser.nickname || "";
-                            }
-                            return "";
-                        }
+                        align: 'left'
                     },
                     {
-                        field: 'rolename',
+                        field: 'roleName',
                         title: '角色',
-                        align: 'left',
-                        templet: function(data) {
-                            if(data.appUser){
-                                return data.appUser.rolename || "";
-                            }
-                            return "";
-                        }
+                        align: 'left'
                     },
                     {
-                        field: 'created_at',
+                        field: 'createtime',
                         title: '操作时间',
                         align: 'left',
                     },
                     {
-                        field: 'rp_length',
+                        field: 'rpLength',
                         title: '响应时长',
                         align: 'left',
                     },

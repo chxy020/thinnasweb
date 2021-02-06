@@ -6,69 +6,6 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "19798087",
-      "name": "组 12",
-      "font_class": "zu12",
-      "unicode": "e614",
-      "unicode_decimal": 58900
-    },
-    {
-      "icon_id": "19798103",
-      "name": "组 13",
-      "font_class": "zu13",
-      "unicode": "e615",
-      "unicode_decimal": 58901
-    },
-    {
-      "icon_id": "19798105",
-      "name": "组 14",
-      "font_class": "shezhi",
-      "unicode": "e616",
-      "unicode_decimal": 58902
-    },
-    {
-      "icon_id": "15843810",
-      "name": "组 184",
-      "font_class": "yonghuguanli",
-      "unicode": "e62e",
-      "unicode_decimal": 58926
-    },
-    {
-      "icon_id": "15843811",
-      "name": "组 189",
-      "font_class": "xitongguanli",
-      "unicode": "e781",
-      "unicode_decimal": 59265
-    },
-    {
-      "icon_id": "15843812",
-      "name": "组 191",
-      "font_class": "data-analysis",
-      "unicode": "e694",
-      "unicode_decimal": 59028
-    },
-    {
-      "icon_id": "15843814",
-      "name": "组 188",
-      "font_class": "shebeishebeiguanli",
-      "unicode": "e603",
-      "unicode_decimal": 58883
-    },
-    {
-      "icon_id": "15843817",
-      "name": "组 190",
-      "font_class": "fuwu2",
-      "unicode": "e705",
-      "unicode_decimal": 59141
-    },
-    {
-      "icon_id": "8526692",
-      "name": "审核",
-      "font_class": "shenhe",
-      "unicode": "e69a",
-      "unicode_decimal": 59034
-    },
-    {
       "icon_id": "1031625",
       "name": "ios",
       "font_class": "ios",
@@ -186,6 +123,48 @@
       "font_class": "shiyongjiaocheng",
       "unicode": "e69c",
       "unicode_decimal": 59036
+    },
+    {
+      "icon_id": "4487894",
+      "name": "数据",
+      "font_class": "data-analysis",
+      "unicode": "e694",
+      "unicode_decimal": 59028
+    },
+    {
+      "icon_id": "7665982",
+      "name": "设备",
+      "font_class": "shebeishebeiguanli",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "9697575",
+      "name": "用户",
+      "font_class": "yonghuguanli",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "5383656",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e781",
+      "unicode_decimal": 59265
+    },
+    {
+      "icon_id": "680951",
+      "name": "服务2",
+      "font_class": "fuwu2",
+      "unicode": "e705",
+      "unicode_decimal": 59141
+    },
+    {
+      "icon_id": "12163490",
+      "name": "系统管理",
+      "font_class": "xitongguanli",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
     },
     {
       "icon_id": "4818701",

@@ -87,7 +87,7 @@ layui.config({
             where:{
                 "search":keywords||"",
                 "device_status":status,
-                "startTime":bindtimeStart ?  bindtimeStart + " 00:00:00" : "",
+                "startTime":bindtimeStart ? bindtimeStart + " 00:00:00" : "",
                 "endTime":bindtimeEnd ? bindtimeEnd + " 00:00:00" : "",
                 "uid":uid
             },
@@ -182,9 +182,13 @@ layui.config({
                     //     },
                     // },
                     {
-                        field: 'uname',
+                        field: 'phone',
                         title: '管理员',
                         align: 'left',
+						templet: function(data) {
+						    // console.log(data)
+						    return data.phone;
+						}
                         // templet: function(data) {
                         //     // return data.denglv + "<i class='layui-icon table-icon-style3' lay-event='openlog' id='openlog'>&#xe60e;</i>"
                         //     return data.uname + "<span style='font-size:12px;color:#888'> "+data.tel+"</span>"
@@ -203,6 +207,9 @@ layui.config({
                         field: 'uidnum',
                         title: '设备用户数',
                         align: 'left',
+						templet: function(data) {
+							return 1;
+						}
                     },
 
                     {
@@ -211,7 +218,7 @@ layui.config({
                         align: 'left',
                         width:100,
                         templet: function(data) {
-                            return data.available+'MB'
+                            return setter.getFileSize(data.available*1024*1024);
                             // console.log("data=========+++",data)
                             //编辑
                             // var userSpaceListArr = [];
@@ -431,7 +438,7 @@ layui.config({
                 type: 2,
                 title: '设备详情',
                 offset: 'rb',
-                area: ['80%', '100%'],
+                area: ['85%', '100%'],
                 // btn: ['保存', '取消'],
                 // btnAlign: 'c',
                 maxmin: true,

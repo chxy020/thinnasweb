@@ -147,11 +147,12 @@ layui.config({
             //成功的回调函数
             success: function (data) {
                 if(data.code == 0){
+					console.log(data.data);
                     saveAccountName();
 
                     window.sessionStorage.setItem("__userinfo",JSON.stringify(data.data));
 
-                    location.href = "../index.html"
+                    location.href = "../index.html?user_id="+data.data.userId
 
                     // window.location.href="main/index";
                     // alert("登录成功");

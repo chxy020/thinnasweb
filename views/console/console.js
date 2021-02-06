@@ -60,7 +60,7 @@ layui.config({
                     var storage_capacity = data.storage_capacity || null;
                     if(storage_capacity){
                         var storage_capacity = storage_capacity.storage_capacity || 0;
-                        $("#storage_capacity").html('<span>' + (+storage_capacity/1024/1024).toFixed(2) +'</span>TB');
+                        $("#storage_capacity").html('<span>' + (setter.getFileSize(storage_capacity)) +'</span>');
                     }
                     var share_space = data.share_space || null;
                     if(share_space){
